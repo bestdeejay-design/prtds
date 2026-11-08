@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Administración · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script type="module" src="/assets/js/admin.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><strong>PRTDS</strong><span>Para todos. Para todo.</span></a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="/">Buscar</a>
+        <a href="/socio">Socios</a>
+        <a href="/salud">Estado</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="gate">
+      <h2>Administración del catálogo</h2>
+      <p class="muted small">
+        Taxonomía, pipeline de publicación, contratos y mantenimiento del índice de búsqueda.
+      </p>
+      <form id="gate-form" class="field-row split">
+        <div class="field">
+          <label for="token">Token de administración</label>
+          <input id="token" type="password" placeholder="prtds-admin-…" autocomplete="current-password" />
+        </div>
+        <div class="field" style="align-self:end"><button class="btn primary" type="submit">Entrar</button></div>
+      </form>
+      <div id="gate-error" style="margin-top:10px"></div>
+      <div class="notice tiny" style="margin-top:6px">
+        Entorno de demostración: token <span class="mono">prtds-demo-admin-token</span>.
+        En producción: identidad real, roles separados y auditoría; secretos fuera del repositorio.
+      </div>
+    </section>
+
+    <div id="panel" class="hidden stack">
+      <div class="spread" style="margin:18px 0 4px">
+        <h1 style="margin:0">Administración</h1>
+        <div class="btn-row">
+          <button class="btn small" id="refresh">Actualizar</button>
+          <button class="btn small ghost" id="logout">Salir</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <h2>Panel §15 — lo que no se puede confundir</h2>
+        <div id="stats" class="metrics"></div>
+        <div id="stats-notes" class="stack" style="margin-top:12px"></div>
+      </section>
+
+      <section class="card">
+        <h2>Categorías <span class="badge neutral">la taxonomía es dato, no código</span></h2>
+        <p class="muted small">
+          El catálogo es universal: se crea una categoría y sus sinónimos de búsqueda sin despliegue.
+        </p>
+        <form id="category-form" class="stack">
+          <div class="field-row split">
+            <div class="field"><label for="cat-slug">Slug</label><input id="cat-slug" type="text" pattern="[a-z0-9-]+" placeholder="viveros" required /></div>
+            <div class="field"><label for="cat-name">Nombre (es)</label><input id="cat-name" type="text" placeholder="Viveros y jardinería" required /></div>
+          </div>
+          <div class="field-row split">
+            <div class="field"><label for="cat-parent">Categoría padre (slug)</label><input id="cat-parent" type="text" placeholder="hogar (opcional)" /></div>
+            <div class="field"><label for="cat-intent">Acción principal</label>
+              <select id="cat-intent">
+                <option value="whatsapp">WhatsApp</option>
+                <option value="call">Llamada</option>
+                <option value="booking">Reserva / turno</option>
+                <option value="request" selected>Solicitud</option>
+                <option value="purchase">Compra</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label for="cat-syn">Sinónimos de búsqueda (separados por coma)</label>
+            <input id="cat-syn" type="text" placeholder="plantas, jardin, vivero" /></div>
+          <div class="field"><label for="cat-desc">Descripción (es)</label><input id="cat-desc" type="text" maxlength="1000" /></div>
+          <div class="btn-row"><button class="btn primary" type="submit">Crear categoría</button></div>
+          <div id="category-message"></div>
+        </form>
+        <div id="categories" style="margin-top:14px"></div>
+      </section>
+
+      <section class="card">
+        <h2>Pipeline de publicación</h2>
+        <p class="muted small">
+          staging → validación → moderación → publicación. Una fila del registro maestro no es una ficha pública.
+        </p>
+        <form id="publication-form" class="field-row split">
+          <div class="field"><label for="pub-slug">Empresa (slug)</label><input id="pub-slug" type="text" placeholder="bodega-mboriahu-staging" required /></div>
+          <div class="field"><label for="pub-status">Nuevo estado</label>
+            <select id="pub-status">
+              <option value="staging">staging</option>
+              <option value="validated">validated</option>
+              <option value="moderated">moderated</option>
+              <option value="published">published</option>
+              <option value="archived">archived</option>
+              <option value="draft">draft</option>
+            </select>
+          </div>
+          <div class="field" style="align-self:end"><button class="btn primary" type="submit">Aplicar</button></div>
+        </form>
+        <div id="publication-message"></div>
+      </section>
+
+      <section class="card">
+        <h2>Mantenimiento</h2>
+        <div class="btn-row">
+          <button class="btn" id="reindex">Reconstruir índice de búsqueda</button>
+          <button class="btn danger" id="reseed">Reiniciar datos de demostración</button>
+        </div>
+        <div id="maintenance-message" style="margin-top:10px"></div>
+      </section>
+
+      <section class="card">
+        <h2>Liquidaciones y eventos</h2>
+        <div class="table-wrap" id="settlements"></div>
+        <h3 style="margin-top:16px">Últimos eventos del ledger</h3>
+        <div class="table-wrap" id="events"></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

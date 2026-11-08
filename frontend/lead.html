@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Estado de mi solicitud · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script type="module" src="/assets/js/lead.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><strong>PRTDS</strong><span>Para todos. Para todo.</span></a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="/">Buscar</a>
+        <a href="/salud">Estado</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="muted small"><a href="/">← Volver a la búsqueda</a></p>
+
+    <section class="card" id="lookup">
+      <h2>Consultá el estado de una solicitud</h2>
+      <p class="muted small">
+        Ingresá la referencia que te dimos al enviar la solicitud o al abrir WhatsApp
+        (por ejemplo <span class="mono">PRTDS-2026-000001</span>).
+      </p>
+      <form id="lookup-form" class="searchbar">
+        <label class="hidden" for="ref">Referencia</label>
+        <input id="ref" type="text" placeholder="PRTDS-000000 o WA-000000-XXXXXX" autocomplete="off" />
+        <button class="btn primary" type="submit">Ver estado</button>
+      </form>
+      <div id="lookup-error" style="margin-top:10px"></div>
+    </section>
+
+    <div id="detail" class="stack" style="margin-top:14px"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p style="margin:0">
+        Por tu privacidad, esta página no muestra datos de contacto ni información comercial
+        interna. Solo el estado de tu solicitud.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

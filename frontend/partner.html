@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Panel de socios · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script type="module" src="/assets/js/partner.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><strong>PRTDS</strong><span>Para todos. Para todo.</span></a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="/">Buscar</a>
+        <a href="/salud">Estado</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="gate">
+      <h2>Panel del comercio</h2>
+      <p class="muted small">
+        Ingresá con el token de tu cuenta de socio. Aquí confirmás o rechazás las solicitudes
+        y cargás los resultados realmente ocurridos: esa conciliación es la base de cualquier
+        liquidación.
+      </p>
+      <form id="gate-form" class="field-row split">
+        <div class="field">
+          <label for="token">Token de socio</label>
+          <input id="token" type="password" placeholder="prtds-socio-…" autocomplete="current-password" />
+        </div>
+        <div class="field" style="align-self:end">
+          <button class="btn primary" type="submit">Entrar</button>
+        </div>
+      </form>
+      <div id="gate-error"></div>
+      <div class="notice tiny" style="margin-top:6px">
+        Entorno de demostración: el token de operaciones <span class="mono">prtds-demo-partner-token</span>
+        ve todas las empresas; los tokens por comercio están en <span class="mono">README.md</span>.
+        En producción la entrada será con identidad real y roles separados.
+      </div>
+    </section>
+
+    <div id="panel" class="hidden">
+      <div class="spread" style="margin:18px 0 10px">
+        <div>
+          <h1 style="margin:0" id="panel-title">Panel</h1>
+          <p class="muted small" style="margin:4px 0 0" id="panel-subtitle"></p>
+        </div>
+        <div class="btn-row">
+          <button class="btn small" id="refresh">Actualizar</button>
+          <button class="btn small ghost" id="logout">Salir</button>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="dashboard">Panel</button>
+        <button role="tab" aria-selected="false" data-tab="leads">Solicitudes</button>
+        <button role="tab" aria-selected="false" data-tab="settlements">Liquidaciones</button>
+      </div>
+
+      <section id="tab-dashboard" role="tabpanel"></section>
+      <section id="tab-leads" role="tabpanel" class="hidden"></section>
+      <section id="tab-settlements" role="tabpanel" class="hidden"></section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p style="margin:0">
+        Confirmar un resultado que no ocurrió distorsiona la atribución y las liquidaciones.
+        Una impresión o un clic de WhatsApp no es un cliente traído.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
