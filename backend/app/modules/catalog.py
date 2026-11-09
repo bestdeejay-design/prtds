@@ -96,33 +96,56 @@ def categories_tree(session: Session, *, include_inactive: bool = False) -> list
         stmt = stmt.where(Category.is_active.is_(True))
     rows = list(session.scalars(stmt).all())
 
-    counts = dict(
-        session.execute(
-            select(CompanyCategory.category_id, func.count(func.distinct(CompanyCategory.company_id)))
-            .join(Company, Company.id == CompanyCategory.company_id)
-            .where(Company.publication_status == PublicationStatus.PUBLISHED)
-            .group_by(CompanyCategory.category_id)
-        ).all()
-    )
-    primary_counts = dict(
-        session.execute(
-            select(Company.primary_category_id, func.count(Company.id))
-            .where(Company.publication_status == PublicationStatus.PUBLISHED)
-            .group_by(Company.primary_category_id)
-        ).all()
-    )
+    # A company belongs to a category either as its primary one or through a
+    # link row — in the demo dataset it is always both, so summing the two
+    # sources counted every card twice: the chip promised "Gastronomía 7" and
+    # the search then returned 3. The badge is a set of distinct companies.
+    companies_by_category: dict[str, set[str]] = {}
+
+    def _add(category_id: str | None, company_id: str) -> None:
+        if not category_id:
+            return
+        companies_by_category.setdefault(category_id, set()).add(company_id)
+
+    for category_id, company_id in session.execute(
+        select(CompanyCategory.category_id, CompanyCategory.company_id)
+        .join(Company, Company.id == CompanyCategory.company_id)
+        .where(Company.publication_status == PublicationStatus.PUBLISHED)
+    ).all():
+        _add(category_id, company_id)
+
+    for category_id, company_id in session.execute(
+        select(Company.primary_category_id, Company.id).where(
+            Company.publication_status == PublicationStatus.PUBLISHED
+        )
+    ).all():
+        _add(category_id, company_id)
 
     by_parent: dict[str | None, list[Category]] = {}
     for cat in rows:
         by_parent.setdefault(cat.parent_id, []).append(cat)
 
+    def subtree_ids(cat: Category) -> list[str]:
+        collected = [cat.id]
+        for child in by_parent.get(cat.id, []):
+            collected.extend(subtree_ids(child))
+        return collected
+
     def own_count(cat: Category) -> int:
-        return counts.get(cat.id, 0) + primary_counts.get(cat.id, 0)
+        return len(companies_by_category.get(cat.id, set()))
+
+    def subtree_count(cat: Category) -> int:
+        merged: set[str] = set()
+        for category_id in subtree_ids(cat):
+            merged |= companies_by_category.get(category_id, set())
+        return len(merged)
 
     def serialize(cat: Category) -> dict[str, Any]:
         children = [serialize(child) for child in by_parent.get(cat.id, [])]
-        # a parent category reports its own companies plus every descendant's
-        company_count = own_count(cat) + sum(child["published_companies"] for child in children)
+        # a parent reports the distinct companies of its whole subtree: a card
+        # tagged in two child categories is counted once, and the number on the
+        # chip equals the number of cards the search will actually return
+        company_count = subtree_count(cat)
         return {
             "id": cat.id,
             "slug": cat.slug,
@@ -703,27 +726,37 @@ def search(
 
     companies = list(session.scalars(stmt).all())
 
+    # Каждая сортировка заканчивается именем и slug: без этого карточки с
+    # одинаковой датой или ценой идут в порядке, который выбирает база, и
+    # порядок плавает между запросами — на пагинации карточка могла бы
+    # повториться на двух страницах или не попасть ни на одну.
+    def _tiebreak(c: Company) -> tuple[str, str]:
+        return (c.display_name.lower(), c.slug)
+
     scored = sorted(
         companies,
         key=lambda c: (
             -_matches_query(c, needle or ""),
-            c.display_name.lower(),
+            *_tiebreak(c),
         ),
     )
     if sort == "name":
-        scored = sorted(companies, key=lambda c: c.display_name.lower())
+        scored = sorted(companies, key=_tiebreak)
     elif sort == "recent":
+        oldest = datetime.min.replace(tzinfo=timezone.utc)
         scored = sorted(
             companies,
-            key=lambda c: _aware(c.published_at) or datetime.min.replace(tzinfo=timezone.utc),
-            reverse=True,
+            key=lambda c: (
+                -(_aware(c.published_at) or oldest).timestamp(),
+                *_tiebreak(c),
+            ),
         )
     elif sort == "price_asc":
         def _min_price(c: Company) -> int:
             prices = [int(o.base_price) for o in c.offers if o.is_active and o.base_price]
             return min(prices) if prices else 10**15
 
-        scored = sorted(companies, key=_min_price)
+        scored = sorted(companies, key=lambda c: (_min_price(c), *_tiebreak(c)))
 
     # A promoted card never occupies an organic ranking slot: it is shown only in
     # the labelled advertising block (§13.4). With a small catalogue this also

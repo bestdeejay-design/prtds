@@ -100,11 +100,35 @@ function actionButtons(item) {
   return buttons.join("");
 }
 
+/* Путь категории. Фильтр по категории включает все её подкатегории (дерево
+ * таксономии), поэтому карточка суши-доставки законно попадает в «Gastronomía».
+ * Без подписи это выглядит как сломанный фильтр — карточка сама показывает,
+ * через какую подкатегорию она здесь: «Gastronomía › Delivery de comida».
+ * Каждая часть в своём <span>, чтобы словарь переводов нашёл их по отдельности. */
+const categoryPaths = {};
+
+function indexCategoryPaths(nodes, trail) {
+  (nodes || []).forEach((node) => {
+    const path = [...trail, node.name_es];
+    categoryPaths[node.slug] = path;
+    indexCategoryPaths(node.children || [], path);
+  });
+}
+
+function categoryTrail(item) {
+  const trail = state.category ? categoryPaths[item.category_slug] : null;
+  const names = trail && trail.length > 1 ? trail : item.category ? [item.category] : [];
+  if (!names.length) return "";
+  return `<span class="cat-trail">${names
+    .map((name) => `<span>${escapeHtml(name)}</span>`)
+    .join('<span class="sep">›</span>')}</span>`;
+}
+
 function renderResult(item, { sponsored = false } = {}) {
   const branch = item.primary_branch;
   const offer = item.offers_preview?.[0];
   const meta = [
-    item.category ? `<span>${escapeHtml(item.category)}</span>` : "",
+    categoryTrail(item),
     item.barrios?.length ? `<span>${escapeHtml(item.barrios.slice(0, 3).join(", "))}</span>` : "",
     branch ? `<span>Hoy: ${escapeHtml(hoursToday(branch.opening_hours))}</span>` : "",
     item.min_price_display ? `<span>Desde <strong>${escapeHtml(item.min_price_display)}</strong></span>` : "",
@@ -196,10 +220,30 @@ async function loadResults() {
     const payload = await get(`/api/search?${params.toString()}`);
     const items = payload.results || [];
     el.title.textContent = state.category || state.q ? "Resultados" : "Empresas publicadas";
-    el.count.textContent = `${payload.total} ${payload.total === 1 ? "ficha" : "fichas"}${payload.tracked_impressions ? ` · ${payload.tracked_impressions} impresiones registradas` : ""}`;
+    // счётчик собирается из отдельных <span>: строка «3 fichas · 1 en publicidad»
+    // целиком не переводится, а её части — переводятся
+    el.count.innerHTML = [
+      `<span>${payload.total} ${payload.total === 1 ? "ficha" : "fichas"}</span>`,
+      payload.total_sponsored ? `<span>${payload.total_sponsored} en publicidad</span>` : "",
+      payload.tracked_impressions ? `<span>${payload.tracked_impressions} impresiones registradas</span>` : "",
+    ]
+      .filter(Boolean)
+      .join('<span class="sep">·</span>');
+
+    const sponsoredItems = payload.sponsored?.items || [];
     el.results.innerHTML = items.length
       ? items.map((item) => renderResult(item)).join("")
-      : `<div class="notice warn">
+      : sponsoredItems.length
+        ? /* Органики нет, но под фильтр подошла оплаченная позиция (§13.4):
+             говорить «ничего не найдено» рядом с подходящей карточкой — неправда. */
+          `<div class="notice warn">
+          <span>No hay fichas orgánicas para esta búsqueda.</span>
+          <span>Abajo hay una posición contratada que coincide con el filtro.</span>
+          <div class="tiny" style="margin-top:6px">
+            <span>La publicidad nunca ocupa el lugar de la mejor oferta objetiva.</span>
+          </div>
+        </div>`
+        : `<div class="notice warn">
           Sin resultados para esta búsqueda. Probá con menos palabras, sin acentos u otro barrio.
           <div class="tiny" style="margin-top:6px">
             Sugerencia: para buscar por precio usá el filtro «Precio máximo» y el orden «Precio más bajo».
@@ -337,6 +381,7 @@ async function boot() {
       get("/api/meta/status").catch(() => null),
     ]);
     state.categories = cats.categories || [];
+    indexCategoryPaths(state.categories, []);
     state.facets = facets;
     renderChips();
     renderFacets();

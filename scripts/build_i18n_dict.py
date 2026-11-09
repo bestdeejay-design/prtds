@@ -28,7 +28,11 @@ OUT = ROOT / "frontend" / "assets" / "js" / "i18n-dict.js"
 #: (регулярное выражение, замена для ru, замена для en)
 PATTERNS: list[tuple[str, str, str]] = [
     (r"^Hoy: (.+)$", r"Сегодня: $1", r"Today: $1"),
-    (r"^(\d+) fichas · (\d+) impresiones registradas$", r"$1 карточек · $2 показов записано", r"$1 listings · $2 impressions recorded"),
+    # по-русски счётчик читаем как подписи («карточек: 3»), иначе при единице
+    # получалось «1 показов записано»
+    (r"^(\d+) fichas · (\d+) impresiones registradas$", r"карточек: $1 · записано показов: $2", r"$1 listings · $2 impressions recorded"),
+    (r"^(\d+) en publicidad$", r"$1 в рекламе", r"$1 in advertising"),
+    (r"^(\d+) impresiones registradas$", r"записано показов: $1", r"$1 impressions recorded"),
     (r"^(\d+) fichas$", r"карточек: $1", r"$1 listings"),
     (r"^(\d+) ficha$", r"$1 карточка", r"$1 listing"),
     (r"^Página (\d+) de (\d+)$", r"Страница $1 из $2", r"Page $1 of $2"),
@@ -64,7 +68,7 @@ PATTERNS: list[tuple[str, str, str]] = [
     (r"^Fichas publicadas en este entorno: (\d+)\. Personas jurídicas en el registro: (\d+) \(no son fichas\)\.$",
      r"Карточек в этом окружении: $1. Юридических лиц в реестре: $2 (это не карточки).",
      r"Listings published in this environment: $1. Legal entities in the registry: $2 (they are not listings)."),
-    (r"^(\d+) (\d+) fichas · (\d+) impresiones registradas$", r"$2 карточек · $3 показов записано", r"$2 listings · $3 impressions recorded"),
+    (r"^(\d+) (\d+) fichas · (\d+) impresiones registradas$", r"карточек: $2 · записано показов: $3", r"$2 listings · $3 impressions recorded"),
     (r"^Estado de la ficha$", r"Статус карточки", r"Listing status"),
     (r"^(.+) · PRTDS$", r"$1 · PRTDS", r"$1 · PRTDS"),
 ]

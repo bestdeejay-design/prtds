@@ -133,6 +133,95 @@ def test_categories_tree_is_nested_and_counted(client):
     assert roots["gastronomia"]["published_companies"] >= 1
 
 
+def test_barrio_facet_count_equals_the_cards_the_filter_returns(client):
+    """Счётчик у баррио в фильтре — это карточки, которые выдаст поиск.
+
+    Регрессия: фасет считал филиалы, поэтому у компании с двумя точками в одном
+    районе бейдж показывал на единицу больше, чем карточек в выдаче.
+    """
+    facets = client.get("/api/facets").json()
+    assert facets["barrios"], "фасеты баррио пусты"
+    for row in facets["barrios"]:
+        payload = client.get(
+            "/api/search", params={"barrio": row["name"], "limit": 50}
+        ).json()
+        shown = payload["total_organic"] + payload["total_sponsored"]
+        assert row["count"] == shown, (
+            f"баррио {row['name']}: в фильтре {row['count']}, в выдаче {shown}"
+        )
+
+
+def test_tied_sorts_fall_back_to_name_and_slug(client):
+    """При равной дате или цене порядок определяет имя, а не база.
+
+    Без вторичного ключа карточки с одинаковой датой публикации шли в порядке,
+    который выбирает СУБД: порядок плавал между запросами, и на пагинации
+    карточка могла повториться на двух страницах или не попасть ни на одну.
+    """
+    import re
+
+    recent = client.get("/api/search", params={"sort": "recent", "limit": 50}).json()["results"]
+    keys = [(item["published_at"] or "", item["display_name"].lower(), item["slug"]) for item in recent]
+    for left, right in zip(keys, keys[1:]):
+        assert left[0] >= right[0], "даты публикации должны убывать"
+        if left[0] == right[0]:
+            assert (left[1], left[2]) < (right[1], right[2]), "при равной дате — по имени и slug"
+
+    def price_of(item: dict) -> int:
+        raw = item.get("min_price_display")
+        return int(re.sub(r"\D", "", raw)) if raw else 10**15
+
+    priced = client.get("/api/search", params={"sort": "price_asc", "limit": 50}).json()["results"]
+    price_keys = [(price_of(item), item["display_name"].lower(), item["slug"]) for item in priced]
+    assert price_keys == sorted(price_keys), "цена вверх, при равной цене — по имени и slug"
+
+
+def test_pagination_over_a_tied_sort_never_repeats_or_loses_a_card(client):
+    for sort in ("relevance", "name", "recent", "price_asc"):
+        whole = [
+            item["slug"]
+            for item in client.get("/api/search", params={"sort": sort, "limit": 50}).json()["results"]
+        ]
+        walked: list[str] = []
+        page = 1
+        while True:
+            payload = client.get("/api/search", params={"sort": sort, "limit": 3, "page": page}).json()
+            walked.extend(item["slug"] for item in payload["results"])
+            assert page <= payload["page_count"]
+            if page >= payload["page_count"]:
+                break
+            page += 1
+        assert walked == whole, f"{sort}: пагинация по 3 карточки разошлась с общей выдачей"
+
+
+def test_category_badge_equals_the_cards_the_filter_returns(client):
+    """The number on a chip must be the number of cards the filter shows.
+
+    Regression: the badge summed primary-category assignments and explicit
+    category links, and in the demo dataset every card has both, so each card
+    was counted twice ("Gastronomía 7" → the search returned 3). A parent also
+    summed its children instead of counting distinct companies.
+    """
+    tree = client.get("/api/categories").json()["categories"]
+
+    def walk(nodes):
+        for node in nodes:
+            yield node
+            yield from walk(node.get("children") or [])
+
+    checked = 0
+    for node in walk(tree):
+        payload = client.get(
+            "/api/search", params={"category": node["slug"], "limit": 50}
+        ).json()
+        shown = payload["total_organic"] + payload["total_sponsored"]
+        assert node["published_companies"] == shown, (
+            f"{node['slug']}: бейдж {node['published_companies']} ≠ карточек {shown}"
+        )
+        checked += 1
+    assert checked >= 40  # the whole taxonomy is checked, not one lucky branch
+
+
 def test_admin_can_create_a_category_with_synonyms_without_a_deploy(client):
     response = client.post(
         "/api/admin/categories",

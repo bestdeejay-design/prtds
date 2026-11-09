@@ -195,6 +195,10 @@ input:focus, select:focus, textarea:focus {
 .result-head h3 { margin: 0; font-size: 1.02rem; }
 .result-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 6px; color: var(--ink-soft); font-size: .82rem; }
 .result-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+/* «Gastronomía › Delivery de comida»: почему карточка попала в эту выборку */
+.cat-trail { display: inline-flex; align-items: baseline; gap: 4px; }
+.cat-trail .sep { opacity: .5; }
+#results-count .sep { margin: 0 5px; opacity: .5; }
 
 /* ---------- offers / price ---------- */
 .offer { border-top: 1px solid var(--line); padding: 12px 0; }

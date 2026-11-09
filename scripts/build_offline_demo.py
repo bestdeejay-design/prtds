@@ -26,17 +26,29 @@ import argparse
 import json
 import re
 import shutil
+import sqlite3
 import sys
 import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 FRONTEND = ROOT / "frontend"
 JS_DIR = FRONTEND / "assets" / "js"
+
+#: локальный поиск демо (scripts/offline_search.js) — подключается только к
+#: странице поиска, на реальном сайте этого файла нет.
+ENGINE_JS = ROOT / "scripts" / "offline_search.js"
+
+#: база, которую читает запущенный API; из неё берутся признаки для фильтров
+DEFAULT_DB = ROOT / "backend" / "data" / "prtds_dev.db"
+
+#: ключ снимка, в котором лежит срез каталога для локального поиска
+CATALOG_KEY = "GET /api/search#catalog"
 
 #: shared modules first, then the page module (order matters: the offline shim
 #: re-declares pathParam/queryParam *after* api.js but *before* the page code).
@@ -50,7 +62,9 @@ PAGES = {
         "module": "search.js",
         "path": "/",
         "title": "Búsqueda",
-        "needs": ["/api/search", "/api/categories", "/api/facets", "/api/meta/status", "/api/whatsapp-link", "/api/call-link"],
+        # записанные ответы /api/search странице не нужны: выборку считает
+        # локальный движок по снимку каталога (CATALOG_KEY)
+        "needs": ["/api/search#catalog", "/api/categories", "/api/facets", "/api/meta/status", "/api/whatsapp-link", "/api/call-link"],
     },
     "empresa.html": {
         "module": "company.js",
@@ -114,26 +128,42 @@ SEARCH_PRICES = ["100000", "500000"]
 
 
 def search_combos() -> list[dict[str, str]]:
-    """Комбинации фильтров, которые записываются с живого API."""
-    combos: list[dict[str, str]] = [{"page": "1", "limit": "20"}]
+    """Комбинации фильтров, которые записываются с живого API.
+
+    Это контрольные снимки для scripts/check_offline_search.js (сверка демо с
+    бэкендом без запущенного сервера). Самому демо они больше не нужны: выборку
+    считает локальный движок. Запросы повторяют браузерные дословно — поиск
+    всегда добавляет sort, поэтому и здесь он есть в каждой комбинации.
+    """
+    base = {"sort": "relevance", "page": "1", "limit": "20"}
+    combos: list[dict[str, str]] = [dict(base)]
     for query in SEARCH_QUERIES:
-        combos.append({"q": query, "page": "1", "limit": "20"})
+        combos.append({"q": query, **base})
     for key, values in (
         ("category", SEARCH_CATEGORIES),
         ("barrio", SEARCH_BARRIOS),
         ("channel", SEARCH_CHANNELS),
-        ("sort", SEARCH_SORTS),
         ("max_price", SEARCH_PRICES),
     ):
         for value in values:
-            combos.append({key: value, "page": "1", "limit": "20"})
+            combos.append({key: value, **base})
+    for value in SEARCH_SORTS:
+        combos.append({"sort": value, "page": "1", "limit": "20"})
     combos += [
         {"q": "celular", "sort": "price_asc", "page": "1", "limit": "20"},
-        {"q": "manicura", "barrio": "Las Mercedes", "page": "1", "limit": "20"},
-        {"category": "belleza", "channel": "whatsapp", "page": "1", "limit": "20"},
+        {"q": "manicura", "barrio": "Las Mercedes", **base},
+        {"category": "belleza", "channel": "whatsapp", **base},
         {"category": "gastronomia", "sort": "name", "page": "1", "limit": "20"},
-        {"q": "yerba mate", "max_price": "100000", "page": "1", "limit": "20"},
-        {"category": "vehiculos", "barrio": "Centro", "page": "1", "limit": "20"},
+        {"q": "yerba mate", "max_price": "100000", **base},
+        {"category": "vehiculos", "barrio": "Centro", **base},
+        {"category": "gastronomia", "sort": "recent", "page": "1", "limit": "20"},
+        {"category": "belleza", "barrio": "Centro", **base},
+        {"category": "supermercados", "channel": "delivery", **base},
+        {"barrio": "Centro", "channel": "whatsapp", "sort": "name", "page": "1", "limit": "20"},
+        {"q": "farmacia", "category": "salud", **base},
+        {"category": "tecnologia", "max_price": "5000000", **base},
+        {"sort": "price_asc", "page": "2", "limit": "20"},
+        {"category": "gastronomia", "page": "1", "limit": "2"},
     ]
     return combos
 
@@ -164,7 +194,217 @@ def http(base: str, path: str, *, method: str = "GET", body: Any = None, headers
             return error.code, {"detail": payload[:200]}
 
 
-def record(base: str) -> dict[str, Any]:
+def _aware(value: datetime) -> datetime:
+    return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+
+
+def catalog_index(base: str, db_path: Path) -> dict[str, Any]:
+    """Срез каталога, по которому демо считает выборку локально.
+
+    Данные собираются из двух источников и сверяются между собой:
+
+    * сами карточки — из живого API (``GET /api/search?limit=50``), чтобы демо
+      рисовало ровно те же объекты, что и сайт;
+    * признаки для фильтров и сортировок — из той же базы, которую читает API:
+      категории (основная и связанные), опубликованные филиалы с баррио и
+      каналами, цены активных предложений, поисковый блок.
+
+    Нормализация текста выполняется настоящим ``fold()`` из бэкенда, а не его
+    пересказом, поэтому совпадение с сервером проверяемо, а не на глаз.
+    Порядок компаний — порядок строк в базе: сортировки в Python и JS устойчивы,
+    значит при равном ключе оба дают одинаковую последовательность.
+    """
+    if not db_path.exists():
+        raise SystemExit(f"нет файла базы для снимка каталога: {db_path}")
+
+    payloads: dict[str, dict[str, Any]] = {}
+    dump: dict[str, Any] = {}
+    page = 1
+    while True:
+        status, dump = http(base, f"/api/search?page={page}&limit=50")
+        if status != 200 or not isinstance(dump, dict):
+            raise SystemExit(f"API не отдал каталог (HTTP {status}) — сервер запущен на {base}?")
+        for item in dump.get("results", []):
+            payloads[item["slug"]] = item
+        # продвинутые карточки (§13.4) приходят отдельным блоком — их тоже берём,
+        # иначе снимок каталога потеряет ровно те компании, что в рекламе
+        for item in (dump.get("sponsored") or {}).get("items", []):
+            payloads.setdefault(item["slug"], item)
+        if page >= int(dump.get("page_count") or 1):
+            break
+        page += 1
+    if not payloads:
+        raise SystemExit("API вернул пустой каталог — нечего записывать в демо")
+
+    backend_dir = str(ROOT / "backend")
+    if backend_dir not in sys.path:
+        sys.path.insert(0, backend_dir)
+    from app.core.text import fold  # noqa: PLC0415 — та же нормализация, что в API
+
+    connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    connection.row_factory = sqlite3.Row
+
+    rows = list(
+        connection.execute(
+            """
+            SELECT c.slug              AS slug,
+                   c.search_text       AS search_text,
+                   b.name              AS brand_name,
+                   pc.name_es          AS primary_category_name,
+                   pc.slug             AS primary_category_slug
+            FROM companies c
+            LEFT JOIN brands b ON b.id = c.brand_id
+            LEFT JOIN categories pc ON pc.id = c.primary_category_id
+            WHERE upper(c.publication_status) = 'PUBLISHED'
+            ORDER BY c.rowid
+            """
+        ).fetchall()
+    )
+
+    missing = sorted(set(payloads) - {row["slug"] for row in rows})
+    extra = sorted({row["slug"] for row in rows} - set(payloads))
+    if missing or extra:
+        raise SystemExit(
+            "сервер и база разошлись — снимок был бы неверным. "
+            f"нет в базе: {missing or '—'}; нет в API: {extra or '—'}"
+        )
+
+    links: dict[str, list[str]] = {}
+    for row in connection.execute(
+        """
+        SELECT c.slug AS slug, cat.slug AS category_slug
+        FROM company_categories cc
+        JOIN companies c ON c.id = cc.company_id
+        JOIN categories cat ON cat.id = cc.category_id
+        WHERE upper(c.publication_status) = 'PUBLISHED'
+        """
+    ):
+        links.setdefault(row["slug"], []).append(row["category_slug"])
+
+    barrios: dict[str, list[str]] = {}
+    cities: dict[str, list[str]] = {}
+    channels: dict[str, dict[str, bool]] = {}
+    for row in connection.execute(
+        """
+        SELECT c.slug AS slug, b.barrio AS barrio, b.city AS city,
+               b.whatsapp_e164 AS whatsapp, b.phone_e164 AS phone,
+               b.delivery_available AS delivery, b.pickup_available AS pickup
+        FROM branches b
+        JOIN companies c ON c.id = b.company_id
+        WHERE upper(b.publication_status) = 'PUBLISHED'
+          AND upper(c.publication_status) = 'PUBLISHED'
+        """
+    ):
+        slug = row["slug"]
+        if row["barrio"]:
+            barrios.setdefault(slug, []).append(row["barrio"])
+        if row["city"]:
+            cities.setdefault(slug, []).append(row["city"])
+        flags = channels.setdefault(
+            slug, {"whatsapp": False, "phone": False, "delivery": False, "pickup": False}
+        )
+        if row["whatsapp"]:
+            flags["whatsapp"] = True
+        if row["phone"]:
+            flags["phone"] = True
+        if row["delivery"]:
+            flags["delivery"] = True
+        if row["pickup"]:
+            flags["pickup"] = True
+
+    #: цена участвует в фильтре, если предложение активно и цена не NULL
+    prices: dict[str, list[int]] = {}
+    #: а в сортировке «цена вверх» бэкенд ignores нулевые цены — как и здесь
+    sort_prices: dict[str, list[int]] = {}
+    for row in connection.execute(
+        """
+        SELECT c.slug AS slug, o.base_price AS base_price
+        FROM offers o
+        JOIN companies c ON c.id = o.company_id
+        WHERE o.is_active = 1 AND o.base_price IS NOT NULL
+          AND upper(c.publication_status) = 'PUBLISHED'
+        """
+    ):
+        prices.setdefault(row["slug"], []).append(int(row["base_price"]))
+        if int(row["base_price"]):
+            sort_prices.setdefault(row["slug"], []).append(int(row["base_price"]))
+
+    category_tree = [
+        {"slug": row["slug"], "parent_slug": row["parent_slug"]}
+        for row in connection.execute(
+            """
+            SELECT c.slug AS slug, p.slug AS parent_slug
+            FROM categories c
+            LEFT JOIN categories p ON p.id = c.parent_id
+            """
+        )
+    ]
+    connection.close()
+
+    #: надбавка за свежесть фиксируется на момент сборки: иначе через месяц
+    #: порядок в демо молча изменился бы и перестал совпадать с записями
+    horizon = datetime.now(timezone.utc) - timedelta(days=30)
+
+    companies: list[dict[str, Any]] = []
+    for row in rows:
+        slug = row["slug"]
+        payload = payloads[slug]
+        display_name = payload["display_name"]
+        search_text = row["search_text"] or ""
+        score_parts = [
+            display_name,
+            search_text,
+            payload.get("short_description_es") or "",
+            row["brand_name"] or "",
+            row["primary_category_name"] or "",
+        ]
+        published_at = payload.get("published_at")
+        fresh = 0
+        if published_at:
+            stamp = _aware(datetime.fromisoformat(published_at))
+            if stamp >= horizon:
+                fresh = 5
+        category_slugs = list(dict.fromkeys(filter(None, [row["primary_category_slug"], *links.get(slug, [])])))
+        companies.append(
+            {
+                "slug": slug,
+                "display_name": display_name,
+                "fold_name": fold(display_name),
+                "score_blob": fold(" ".join(part for part in score_parts if part)),
+                "search_blob": fold(search_text),
+                "category_slugs": category_slugs,
+                "barrios": sorted(set(barrios.get(slug, []))),
+                "cities": sorted(set(cities.get(slug, []))),
+                "channels": channels.get(
+                    slug, {"whatsapp": False, "phone": False, "delivery": False, "pickup": False}
+                ),
+                "prices": prices.get(slug, []),
+                "min_price_sort": min(sort_prices[slug]) if sort_prices.get(slug) else None,
+                "verification_level": payload.get("verification_level"),
+                "is_promoted": bool(payload.get("is_promoted")),
+                "published_at": published_at,
+                "fresh_bonus": fresh,
+                "payload": payload,
+            }
+        )
+
+    sponsored_meta = dump.get("sponsored") or {}
+    return {
+        "meta": {
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "source": "GET /api/search?page=1&limit=50 + база, которую читает API",
+            "companies_total": len(companies),
+            "categories_total": len(category_tree),
+            "ranking_note_es": dump.get("ranking_note_es"),
+            "sponsored_label_es": sponsored_meta.get("label_es"),
+            "sponsored_note_es": sponsored_meta.get("note_es"),
+        },
+        "categories": category_tree,
+        "companies": companies,
+    }
+
+
+def record(base: str, db_path: Path) -> dict[str, Any]:
     """Capture every response the six pages need, from the live server."""
     snapshot: dict[str, Any] = {}
 
@@ -177,6 +417,9 @@ def record(base: str) -> dict[str, Any]:
         put("GET", path)
 
     # --- search page -----------------------------------------------------
+    # срез каталога для локального поиска (демо считает выборку само)
+    snapshot[CATALOG_KEY] = {"status": 200, "body": catalog_index(base, db_path)}
+    # контрольные снимки ответов бэкенда — для сверки в check_offline_search.js
     for params in search_combos():
         put("GET", f"/api/search?{search_query_string(params)}")
 
@@ -254,7 +497,7 @@ def strip_modules(source: str) -> str:
     return EXPORT_RE.sub("", IMPORT_RE.sub("", source))
 
 
-def inline_js(files: list[str], offline_path: str) -> str:
+def inline_js(files: list[str], offline_path: str, *, engine: bool = False) -> str:
     parts: list[str] = []
     seen: dict[str, str] = {}
     for name in files:
@@ -296,32 +539,11 @@ function queryParam(name) {{
   return new URLSearchParams("").get(name);
 }}
 
-/* Нормализация строки запроса поиска: браузер собирает её сам, поэтому ключ
-   приводится к каноническому виду, а при отсутствии точной записи параметры
-   отбрасываются по очереди — фильтр показывает ближайший записанный результат. */
-function canonicalSearch(rawSearch) {{
-  const incoming = new URLSearchParams(rawSearch || "");
-  const order = ["q", "category", "barrio", "channel", "max_price", "sort", "campaign_id", "page", "limit"];
-  const out = new URLSearchParams();
-  for (const key of order) {{
-    const value = incoming.get(key);
-    if (value) out.set(key, value);
-  }}
-  if (!out.has("page")) out.set("page", "1");
-  if (!out.has("limit")) out.set("limit", "20");
-  return out;
-}}
-
-function searchCandidates(rawSearch) {{
-  const params = canonicalSearch(rawSearch);
-  const keys = ["GET /api/search?" + params.toString()];
-  for (const key of ["max_price", "channel", "barrio", "category", "sort", "q"]) {{
-    if (!params.has(key)) continue;
-    params.delete(key);
-    keys.push("GET /api/search?" + params.toString());
-  }}
-  return keys;
-}}
+/* Поиск больше не ищет записанный ответ по ключу: выборка считается локально
+   по снимку каталога (scripts/offline_search.js). Раньше браузер всегда слал
+   sort=relevance, записи были без него, и «запасной» подбор ключей отбрасывал
+   сам фильтр — клик по категории показывал весь каталог. */
+const CATALOG = (SNAPSHOT["{CATALOG_KEY}"] || {{}}).body || {{ companies: [], categories: [] }};
 
 /* la red se sustituye por respuestas grabadas del API real */
 window.__PRTDS_OFFLINE__ = true;
@@ -335,7 +557,14 @@ window.fetch = async function offlineFetch(input, init = {{}}) {{
     `${{method}} ${{path}}${{search}}`,
     `${{method}} ${{path}}`,
   ];
-  if (method === "GET" && path === "/api/search") candidates.push(...searchCandidates(search));
+  if (method === "GET" && path === "/api/search") {{
+    const payload = window.__PRTDS_OFFLINE_SEARCH__(search, CATALOG);
+    OFFLINE_NOTES.push(`GET /api/search${{search}} → локальный расчёт (${{payload.total}} органических, ${{payload.total_sponsored}} рекламных)`);
+    return new Response(JSON.stringify(payload), {{
+      status: 200,
+      headers: {{ "Content-Type": "application/json" }},
+    }});
+  }}
   if (method === "GET" && path === "/api/partner/leads") candidates.push("GET /api/partner/leads?limit=50");
   if (method === "GET" && path.startsWith("/api/leads/")) candidates.push("GET /api/leads/PRTDS-2026-000001");
   if (method === "GET" && path.startsWith("/api/companies/")) candidates.push("GET /api/companies/nails-mburucuya");
@@ -363,13 +592,15 @@ window.fetch = async function offlineFetch(input, init = {{}}) {{
   );
 }};
 """
+    # движок локального поиска вставляется до шима: shim его вызывает
+    engine_source = ENGINE_JS.read_text(encoding="utf-8") + "\n\n" if engine else ""
     shared = [part for part, name in zip(parts, files) if name in SHARED]
     page = [part for part, name in zip(parts, files) if name not in SHARED]
-    return "\n\n".join(shared) + "\n" + shim + "\n" + "\n".join(page)
+    return "\n\n".join(shared) + "\n" + engine_source + shim + "\n" + "\n".join(page)
 
 
-def build(base: str, out_dir: Path) -> Path:
-    snapshot = record(base)
+def build(base: str, out_dir: Path, db_path: Path = DEFAULT_DB) -> Path:
+    snapshot = record(base, db_path)
     if out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True)
@@ -398,7 +629,11 @@ def build(base: str, out_dir: Path) -> Path:
 
     for name, meta in PAGES.items():
         source_html = (FRONTEND / _source_name(name)).read_text(encoding="utf-8")
-        js = inline_js(SHARED + [meta["module"]], meta["path"])
+        js = inline_js(
+            SHARED + [meta["module"]],
+            meta["path"],
+            engine="/api/search#catalog" in meta["needs"],
+        )
         snapshot_json = json.dumps(
             subset(snapshot, meta["needs"]), ensure_ascii=False, separators=(",", ":")
         )
@@ -434,6 +669,9 @@ def build(base: str, out_dir: Path) -> Path:
         (out_dir / name).write_text(html, encoding="utf-8")
 
     # a reader for people who open the folder without a server
+    catalog_meta = (snapshot.get(CATALOG_KEY) or {}).get("body", {}).get("meta", {})
+    catalog_companies = catalog_meta.get("companies_total", 0)
+    catalog_categories = catalog_meta.get("categories_total", 0)
     readme = f"""# PRTDS — демонстрация без подключения
 
 Открой **index.html** двойным кликом. Сервер и интернет не нужны.
@@ -442,6 +680,14 @@ def build(base: str, out_dir: Path) -> Path:
 Настоящие страницы PRTDS (тот же HTML, CSS и JavaScript, что отдаёт сервер),
 но ответы API записаны заранее в `snapshot.json` — {len(snapshot)} записей.
 Ничего никуда не отправляется и не сохраняется.
+
+Поиск — исключение: он не подставляет записанный ответ, а считает выборку сам
+по снимку каталога ({catalog_companies} карточек, {catalog_categories} категорий)
+по тем же правилам, что и бэкенд (категория вместе с подкатегориями, баррио,
+канал, цена, сортировка, пагинация, рекламный блок отдельно). Совпадение с
+сервером проверяет `scripts/check_offline_search.js`: он сравнивает демо и
+бэкенд на всех категориях, баррио, каналах, сортировках и ценах, на случайных
+комбинациях фильтров и на настоящих кликах по интерфейсу.
 
 ## Страницы
 | Файл | Что показывает | Доступ |
@@ -460,16 +706,26 @@ def build(base: str, out_dir: Path) -> Path:
 брендов и баррио не переводятся, потому что это данные продавцов.
 
 ## Что попробовать
-1. index.html → поиск `manicura` (записан) → карточка → кнопка WhatsApp.
-2. empresa.html → форма заявки → «Enviar»: появится номер обращения.
-3. socio.html → токен → принять заявку → подтвердить продажу на 180000:
+1. index.html → чипс категории **Gastronomía**: карточек станет 3, и каждая
+   подпишет, почему она здесь — «Gastronomía › Delivery de comida». Фильтр по
+   категории всегда включает подкатегории, поэтому так и задумано.
+2. index.html → фильтр баррио, канала и «Цена до» вместе с сортировкой:
+   комбинации работают в любом составе.
+3. index.html → поиск `celular`: органических карточек нет, зато есть одна
+   оплаченная позиция — демо честно говорит об этом вместо «ничего не найдено»
+   (§13.4: реклама не занимает место лучшей объективной выдачи).
+4. index.html → поиск `manicura` → карточка → кнопка WhatsApp.
+5. empresa.html → форма заявки → «Enviar»: появится номер обращения.
+6. socio.html → токен → принять заявку → подтвердить продажу на 180000:
    система покажет GMV G. 180.000 и доход PRTDS G. 12.600 отдельно.
-4. salud.html → словарь событий: что каждое событие доказывает и чего НЕ доказывает.
+7. salud.html → словарь событий: что каждое событие доказывает и чего НЕ доказывает.
 
 ## Ограничения демо
-Записаны ответы только для нескольких запросов (см. `snapshot.json`);
-другие поисковые запросы ответят «нет записанных данных». Это не ошибка кода,
-а граница офлайн-сборки.
+* Всё, что меняет данные (заявка, подтверждение продажи, ликвидация),
+  возвращает записанный ответ: демо ничего не сохраняет и не отправляет.
+* Счётчик «записано показов» в демо локальный: события воронки никуда не пишутся.
+* Карточка компании открывается одна и та же (Nails Mburucuyá), ссылки на
+  остальные ficha ведут на неё же.
 
 ## Как получить живую версию
     git clone -b arena/36f33834-prtds https://github.com/bestdeejay-design/prtds.git
@@ -510,9 +766,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:8000")
     parser.add_argument("--out", default=str(ROOT / "docs" / "demo"))
+    parser.add_argument(
+        "--db",
+        default=str(DEFAULT_DB),
+        help="база, которую читает запущенный API (нужна для снимка каталога)",
+    )
     args = parser.parse_args()
 
-    archive = build(args.base_url, Path(args.out))
+    archive = build(args.base_url, Path(args.out), Path(args.db))
     size = archive.stat().st_size
     print(f"offline demo → {archive} ({size / 1024:.0f} KB)")
     print(f"страниц: {len(PAGES)} · открой index.html двойным кликом")
