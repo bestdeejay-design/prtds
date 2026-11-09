@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Panel de socios · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <style>
+/* PRTDS — mobile-first stylesheet (vanilla CSS, no build step).
+   Concept §02/§13.3: the card must work on a narrow screen and load fast on
+   mobile internet, with clear actions: WhatsApp, call, route, site, offer. */
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --ink: #14161d;
+  --ink-soft: #5b6070;
+  --line: #e3e6ef;
+  --brand: #2f3aa8;
+  --brand-soft: #eceefc;
+  --accent: #d97706;
+  --whatsapp: #1faa53;
+  --danger: #b4232a;
+  --danger-soft: #fdecec;
+  --ok: #147a4b;
+  --ok-soft: #e7f6ee;
+  --warn: #92600a;
+  --warn-soft: #fdf3e0;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(20, 22, 29, 0.06), 0 6px 20px rgba(20, 22, 29, 0.05);
+  --max: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 { line-height: 1.2; margin: 0 0 .5rem; }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; }
+h3 { font-size: 1rem; }
+
+p { margin: 0 0 .75rem; }
+
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85em; }
+
+/* ---------- layout ---------- */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 14px; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner { display: flex; align-items: center; gap: 12px; padding: 10px 14px; max-width: var(--max); margin: 0 auto; }
+.brand { display: flex; flex-direction: column; line-height: 1.1; }
+.brand strong { font-size: 1.05rem; letter-spacing: .02em; }
+.brand span { font-size: .68rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; }
+.topnav { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.topnav a {
+  font-size: .8rem; padding: 6px 10px; border-radius: 999px;
+  color: var(--ink-soft); border: 1px solid transparent;
+}
+.topnav a:hover { background: var(--brand-soft); color: var(--brand); text-decoration: none; }
+
+main { padding: 16px 0 56px; }
+
+.grid { display: grid; gap: 14px; }
+.grid.two { grid-template-columns: 1fr; }
+@media (min-width: 860px) {
+  .grid.two { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+}
+
+/* ---------- cards & surfaces ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.card + .card { margin-top: 12px; }
+.card h2 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.muted { color: var(--ink-soft); font-size: .88rem; }
+.small { font-size: .8rem; }
+.tiny { font-size: .74rem; }
+.right { text-align: right; }
+.nowrap { white-space: nowrap; }
+
+.notice {
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: .84rem;
+  border: 1px solid var(--line);
+  background: var(--brand-soft);
+  color: #26307d;
+}
+.notice.warn { background: var(--warn-soft); border-color: #f0dcb2; color: var(--warn); }
+.notice.danger { background: var(--danger-soft); border-color: #f3c9cb; color: var(--danger); }
+.notice.ok { background: var(--ok-soft); border-color: #bfe6cf; color: var(--ok); }
+
+/* ---------- badges ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .7rem; font-weight: 600; letter-spacing: .02em;
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--brand-soft); color: var(--brand);
+  border: 1px solid #d9ddf7;
+  text-transform: uppercase;
+}
+.badge.ad { background: #fff4e0; color: #8a5200; border-color: #f6dcae; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); border-color: #bfe6cf; }
+.badge.warn { background: var(--warn-soft); color: var(--warn); border-color: #f0dcb2; }
+.badge.danger { background: var(--danger-soft); color: var(--danger); border-color: #f3c9cb; }
+.badge.neutral { background: #f0f1f6; color: var(--ink-soft); border-color: var(--line); }
+
+/* ---------- forms ---------- */
+label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: 4px; }
+input[type="text"], input[type="search"], input[type="tel"], input[type="number"],
+input[type="password"], select, textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font: inherit;
+  color: inherit;
+}
+textarea { min-height: 88px; resize: vertical; }
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--brand); outline-offset: 1px; border-color: var(--brand);
+}
+.field { margin-bottom: 12px; }
+.field-row { display: grid; gap: 10px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .field-row.split { grid-template-columns: 1fr 1fr; } }
+
+.checkbox { display: flex; gap: 9px; align-items: flex-start; font-weight: 400; font-size: .84rem; }
+.checkbox input { width: 18px; height: 18px; margin-top: 2px; flex: none; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 11px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line); background: #fff; color: var(--ink);
+  font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer;
+  min-height: 44px; /* touch target */
+}
+.btn:hover { border-color: #c9cee0; text-decoration: none; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn.primary:hover { background: #262f8c; }
+.btn.whatsapp { background: var(--whatsapp); border-color: var(--whatsapp); color: #fff; }
+.btn.whatsapp:hover { background: #1a9447; }
+.btn.ghost { background: transparent; }
+.btn.danger { background: #fff; border-color: #eec4c6; color: var(--danger); }
+.btn.small { padding: 7px 10px; font-size: .8rem; min-height: 36px; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-row .btn { flex: 1 1 auto; }
+
+/* ---------- search ---------- */
+.hero { padding: 18px 0 6px; }
+.hero h1 { font-size: 1.6rem; margin-bottom: 4px; }
+.hero .tagline { color: var(--ink-soft); font-size: .92rem; margin-bottom: 14px; }
+
+.searchbar { display: flex; gap: 8px; }
+.searchbar input { flex: 1; }
+.searchbar .btn { flex: none; }
+
+.chips { display: flex; gap: 7px; overflow-x: auto; padding: 12px 0 4px; scrollbar-width: thin; }
+.chip {
+  flex: none; padding: 7px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+  font-size: .82rem; cursor: pointer; white-space: nowrap;
+}
+.chip[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+.chip .count { opacity: .7; font-size: .72rem; margin-left: 4px; }
+
+.filters { display: grid; gap: 10px; grid-template-columns: 1fr; margin-top: 10px; }
+@media (min-width: 700px) { .filters { grid-template-columns: repeat(4, 1fr); } }
+
+.result {
+  display: block; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 13px; box-shadow: var(--shadow);
+  color: inherit;
+}
+.result:hover { border-color: #c9cee0; text-decoration: none; }
+.result + .result { margin-top: 10px; }
+.result-head { display: flex; align-items: flex-start; gap: 10px; }
+.result-head h3 { margin: 0; font-size: 1.02rem; }
+.result-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 6px; color: var(--ink-soft); font-size: .82rem; }
+.result-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+/* ---------- offers / price ---------- */
+.offer { border-top: 1px solid var(--line); padding: 12px 0; }
+.offer:first-of-type { border-top: 0; }
+.offer-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.price { font-weight: 700; font-size: 1.02rem; white-space: nowrap; }
+.price s { color: var(--ink-soft); font-weight: 400; font-size: .84rem; margin-right: 6px; }
+.breakdown { margin: 6px 0 0; padding: 0; list-style: none; font-size: .8rem; color: var(--ink-soft); }
+.breakdown li { display: flex; justify-content: space-between; gap: 10px; }
+.conditional { color: var(--warn); }
+
+/* ---------- tables ---------- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .74rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); background: #fafbfe; }
+tbody tr:hover { background: #fafbfe; }
+td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- lists ---------- */
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 6px 12px; font-size: .86rem; }
+.kv dt { color: var(--ink-soft); }
+.kv dd { margin: 0; }
+
+ul.clean { margin: 0; padding-left: 18px; }
+ul.clean li { margin-bottom: 6px; }
+
+/* ---------- timeline ---------- */
+.timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line); }
+.timeline li { position: relative; padding: 0 0 14px 12px; }
+.timeline li::before {
+  content: ""; position: absolute; left: -25px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--line);
+}
+.timeline li.done::before { background: var(--ok); border-color: var(--ok); }
+.timeline li.current::before { background: var(--brand); border-color: var(--brand); }
+.timeline .when { color: var(--ink-soft); font-size: .76rem; }
+
+/* ---------- tabs ---------- */
+.tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 14px; overflow-x: auto; }
+.tabs button {
+  border: 0; background: transparent; padding: 10px 12px; font: inherit; font-size: .88rem;
+  color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.tabs button[aria-selected="true"] { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
+
+/* ---------- metrics ---------- */
+.metrics { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 700px) { .metrics { grid-template-columns: repeat(4, 1fr); } }
+.metric { background: #fafbfe; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; }
+.metric .value { font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.metric .label { font-size: .74rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .04em; }
+.metric .hint { font-size: .72rem; color: var(--ink-soft); margin-top: 3px; }
+
+/* ---------- footer ---------- */
+.footer { border-top: 1px solid var(--line); padding: 18px 0 30px; color: var(--ink-soft); font-size: .8rem; }
+.footer .wrap { display: grid; gap: 8px; }
+
+/* ---------- utilities ---------- */
+.hidden { display: none !important; }
+.stack > * + * { margin-top: 10px; }
+.spread { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
+.skeleton { background: linear-gradient(90deg, #eef0f6 25%, #f7f8fc 50%, #eef0f6 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 8px; height: 14px; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.error { color: var(--danger); font-size: .84rem; }
+
+
+/* ---- aviso de demostración sin conexión ---- */
+.offline-banner{position:sticky;top:0;z-index:60;background:#fff4d6;border-bottom:1px solid #e0b64a;
+  color:#5a4300;font:13px/1.45 system-ui,sans-serif;padding:8px 14px;text-align:center}
+.offline-banner strong{font-weight:700}
+.offline-banner a{color:#5a4300}
+
+</style>
+</head>
+<body>
+<div class="offline-banner"><strong>Demostración sin conexión.</strong> Интерфейс настоящий, данные записаны с работающего API и не сохраняются. Переходы:<a href="index.html" style="margin-left:10px">Búsqueda</a><a href="empresa.html" style="margin-left:10px">Ficha</a><a href="solicitud.html" style="margin-left:10px">Solicitud</a><a href="socio.html" style="margin-left:10px">Socios</a><a href="admin.html" style="margin-left:10px">Admin</a><a href="salud.html" style="margin-left:10px">Estado</a></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><strong>PRTDS</strong><span>Para todos. Para todo.</span></a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="index.html">Buscar</a>
+        <a href="salud.html">Estado</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="gate">
+      <h2>Panel del comercio</h2>
+      <p class="muted small">
+        Ingresá con el token de tu cuenta de socio. Aquí confirmás o rechazás las solicitudes
+        y cargás los resultados realmente ocurridos: esa conciliación es la base de cualquier
+        liquidación.
+      </p>
+      <form id="gate-form" class="field-row split">
+        <div class="field">
+          <label for="token">Token de socio</label>
+          <input id="token" type="password" placeholder="prtds-socio-…" autocomplete="current-password" />
+        </div>
+        <div class="field" style="align-self:end">
+          <button class="btn primary" type="submit">Entrar</button>
+        </div>
+      </form>
+      <div id="gate-error"></div>
+      <div class="notice tiny" style="margin-top:6px">
+        Entorno de demostración: el token de operaciones <span class="mono">prtds-demo-partner-token</span>
+        ve todas las empresas; los tokens por comercio están en <span class="mono">README.md</span>.
+        En producción la entrada será con identidad real y roles separados.
+      </div>
+    </section>
+
+    <div id="panel" class="hidden">
+      <div class="spread" style="margin:18px 0 10px">
+        <div>
+          <h1 style="margin:0" id="panel-title">Panel</h1>
+          <p class="muted small" style="margin:4px 0 0" id="panel-subtitle"></p>
+        </div>
+        <div class="btn-row">
+          <button class="btn small" id="refresh">Actualizar</button>
+          <button class="btn small ghost" id="logout">Salir</button>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-tab="dashboard">Panel</button>
+        <button role="tab" aria-selected="false" data-tab="leads">Solicitudes</button>
+        <button role="tab" aria-selected="false" data-tab="settlements">Liquidaciones</button>
+      </div>
+
+      <section id="tab-dashboard" role="tabpanel"></section>
+      <section id="tab-leads" role="tabpanel" class="hidden"></section>
+      <section id="tab-settlements" role="tabpanel" class="hidden"></section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p style="margin:0">
+        Confirmar un resultado que no ocurrió distorsiona la atribución y las liquidaciones.
+        Una impresión o un clic de WhatsApp no es un cliente traído.
+      </p>
+    </div>
+  </footer>
+<script>
+const SNAPSHOT = {"POST /api/partner/leads/PRTDS-2026-000005/decision":{"status":422,"body":{"detail":"transición no permitida: sale_confirmed → accepted. Permitidas: []"}},"POST /api/partner/leads/PRTDS-2026-000005/sale":{"status":200,"body":{"lead":{"id":"ld_1a1bf8af6742b0ba63ad7","ref_code":"PRTDS-2026-000005","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-09T09:01:57.748196+00:00","decided_at":"2026-11-09T09:01:57.762546+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000005.","params":{"session_ref":"offline-demo-builder"},"attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-09T09:01:57.760138+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"customer_name":"Ana Benítez","customer_phone":"+595981444222"},"event":{"id":"ev_1a1bf8af680338e335b6b","event_type":"sale_confirmed","amount_pyg":180000,"occurred_at":"2026-11-09T09:01:57.760138"},"settlement":{"id":"stl_1a1bf8af68133277db306","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-09T09:01:57.762412+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000005","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-DEMO-01","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},"explanation_es":"El importe confirmado es la venta del comercio (GMV). El ingreso de PRTDS es únicamente la comisión calculada según el contrato."}},"GET /api/partner/me":{"status":200,"body":{"id":"pu_1a1bd2070b5da1f2be8fb","full_name":"Encargada Nails Mburucuyá","role":"manager","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"scope":"single_company","contract":{"id":"ctr_1a1bd2070b342873fc968","number":"CTR-2026-001","status":"active","billing_model":"rev_share","counterparty_name":"Mburucuyá Beauty E.I.R.L. (demo)","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"signed_at":"2026-10-29T21:46:22.088922+00:00","valid_from":"2026-10-29T21:46:22.088922+00:00","valid_to":"2027-10-29T21:46:22.088922+00:00","attribution_window_days":7,"cap_amount_display":"G. 2.000.000","cap_period":"month","postpaid":true,"direct_costs_pyg":4000,"proof_requirements":{"kind":"manual_reconciliation","fields":["amount_pyg","proof_ref"]},"rule":{"id":"rule_1a1bd2070b01d231e9b98","name":"Belleza — 7% venta confirmada","applies_to":"sale_confirmed","rate_percent":7.0,"fixed_amount_display":"G. 0","max_per_event_display":null},"notes":null},"token_fingerprint":"34c0586a","note_es":"Los datos que ves aquí son solicitudes entregadas con consentimiento del cliente. Confirmar un resultado falso distorsiona la atribución y las liquidaciones."}},"GET /api/partner/dashboard":{"status":200,"body":{"funnel":{"company_id":"cmp_1a1bd20703d310684719a","since":null,"until":null,"events":[{"code":"search_result","stage":"awareness","count":8,"proves_es":"Mostrado en los resultados de búsqueda.","does_not_prove_es":"Que la persona esté interesada o haya comprado.","commissionable":false},{"code":"view","stage":"awareness","count":0,"proves_es":"Impresión de una tarjeta en un listado.","does_not_prove_es":"Interés real, lead o venta.","commissionable":false},{"code":"card_open","stage":"interest","count":7,"proves_es":"Interés en la empresa (ficha abierta).","does_not_prove_es":"Un lead calificado.","commissionable":false},{"code":"route_click","stage":"interest","count":0,"proves_es":"Intención de llegar al local.","does_not_prove_es":"Una visita efectivamente realizada.","commissionable":false},{"code":"site_click","stage":"interest","count":0,"proves_es":"Salida hacia el sitio del vendedor.","does_not_prove_es":"Una compra en ese sitio.","commissionable":false},{"code":"whatsapp_click","stage":"contact","count":8,"proves_es":"Intento de iniciar contacto por WhatsApp.","does_not_prove_es":"Mensaje recibido o conversación sostenida.","commissionable":false},{"code":"call_click","stage":"contact","count":5,"proves_es":"Intento de iniciar contacto por llamada.","does_not_prove_es":"Llamada efectivamente atendida.","commissionable":false},{"code":"lead_submitted","stage":"lead","count":5,"proves_es":"Solicitud entregada a PRTDS.","does_not_prove_es":"Solicitud aceptada, visita u pago.","commissionable":false},{"code":"lead_accepted","stage":"lead","count":5,"proves_es":"Aceptación / confirmación por parte del vendedor.","does_not_prove_es":"Dinero recibido por el vendedor.","commissionable":false},{"code":"lead_rejected","stage":"lead","count":0,"proves_es":"Rechazo documentado del vendedor.","does_not_prove_es":"Que la solicitud no existiera.","commissionable":false},{"code":"lead_cancelled","stage":"lead","count":0,"proves_es":"Cancelación documentada (cliente o vendedor).","does_not_prove_es":"Que la solicitud no existiera o no fuera atendida.","commissionable":false},{"code":"booking_confirmed","stage":"lead","count":0,"proves_es":"Turno/reserva confirmada por el proveedor.","does_not_prove_es":"Pago realizado.","commissionable":false},{"code":"visit_done","stage":"lead","count":0,"proves_es":"Visita/servicio marcado como realizado por el proveedor.","does_not_prove_es":"El importe cobrado.","commissionable":false},{"code":"sale_confirmed","stage":"sale","count":5,"proves_es":"Venta con evidencia aportada por el vendedor.","does_not_prove_es":"Derecho automático a comisión sin contrato.","commissionable":true},{"code":"receipt_matched","stage":"sale","count":0,"proves_es":"Venta conciliada contra un comprobante.","does_not_prove_es":"Derecho automático a comisión sin contrato.","commissionable":true},{"code":"repeat_purchase","stage":"retention","count":0,"proves_es":"Compra repetida dentro de los consentimientos otorgados.","does_not_prove_es":"Causalidad de una campaña sin verificación.","commissionable":true},{"code":"settlement_created","stage":"settlement","count":5,"proves_es":"Cálculo de comisión registrado en el ledger.","does_not_prove_es":"Dinero efectivamente cobrado por PRTDS.","commissionable":false}],"stages":[{"code":"awareness","count":8},{"code":"interest","count":7},{"code":"contact","count":13},{"code":"lead","count":10},{"code":"sale","count":5},{"code":"retention","count":0},{"code":"settlement","count":5}],"leads_by_status":{"sale_confirmed":5},"conversion":{"card_open_to_contact":1.8571,"contact_to_lead":0.3846,"lead_acceptance_rate":1.0,"lead_to_sale":1.0},"warning_es":"Impresión, clic o WhatsApp abierto NO equivalen a un cliente traído ni a una venta confirmada. Solo el contrato define qué se paga."},"economics":{"company_id":"cmp_1a1bd20703d310684719a","since":null,"until":null,"currency":"PYG","gmv_pyg":900000,"gmv_display":"G. 900.000","prtds_revenue_pyg":63000,"prtds_revenue_display":"G. 63.000","contribution_margin_pyg":43000,"contribution_margin_display":"G. 43.000","flagged_negative_margin_pyg":0,"flagged_negative_margin_display":"G. 0","flagged_commission_pyg":0,"avg_margin_per_operation_pyg":8600,"settlements_by_status":{"pending":5},"counters":{"leads_total":5,"confirmed_sales":5,"repeat_purchases":0,"new_customers_with_phone":4},"acquisition":{"spend_pyg":0,"spend_display":"G. 0","cost_per_lead_pyg":null,"cost_per_confirmed_sale_pyg":null},"alerts":[{"code":"negative_contribution_margin","count":0,"message_es":"Operaciones con margen de contribución no positivo: requieren renegociación antes de escalar."},{"code":"no_contract_basis","count":0,"message_es":"Ventas confirmadas sin contrato: ingreso cero. Oportunidad comercial, no un cobro pendiente."}],"warning_es":"GMV del comercio ≠ ingreso de PRTDS."},"card_health":{"publication_status":"published","verification_level":"partner_confirmed","branches":1,"offers":3,"stale_offers":0,"last_observed_at":"2026-11-08T15:46:22.088922+00:00"},"todo_es":["Confirmar o rechazar las solicitudes nuevas del día.","Cargar el importe y el comprobante de las ventas efectivamente realizadas.","Revisar las liquidaciones marcadas con margen no positivo."]}},"GET /api/partner/leads?limit=50":{"status":200,"body":{"total":5,"counts_by_status":{"sale_confirmed":5},"leads":[{"id":"ld_1a1bf8af6742b0ba63ad7","ref_code":"PRTDS-2026-000005","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-09T09:01:57.748196+00:00","decided_at":"2026-11-09T09:01:57.762546+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000005.","params":{"session_ref":"offline-demo-builder"},"attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-09T09:01:57.760138+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"customer_name":"Ana Benítez","customer_phone":"+595981444222"},{"id":"ld_1a1bd7e3cea64871d9e8c","ref_code":"PRTDS-2026-000004","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-08T23:28:49.386347+00:00","decided_at":"2026-11-08T23:28:49.422289+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000004.","params":{"session_ref":"offline-demo-builder"},"attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-08T23:28:49.412980+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bd7e3d090b22bf5c36","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"customer_name":"Ana Benítez","customer_phone":"+595981444222"},{"id":"ld_1a1bd2a23bd6f69e9edb5","ref_code":"PRTDS-2026-000003","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-08T21:56:57.917543+00:00","decided_at":"2026-11-08T21:56:57.969490+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":null,"message":"Consulta del smoke test","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Consulta del smoke test Ref: PRTDS-2026-000003.","params":{"session_ref":"smoke-1794175017"},"attribution":{"channel":"card","campaign_id":"smoke","method":"utm","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-08T21:56:57.966069+00:00","proof_ref":"SMOKE-0001","partner_note":"smoke","rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bd2a23f03ab438d597","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"customer_name":"Ana Benítez","customer_phone":"+595981555003832"},{"id":"ld_1a1bd29c9cf53ea8825ba","ref_code":"PRTDS-2026-000002","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-08T21:56:34.895155+00:00","decided_at":"2026-11-08T21:56:34.952884+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":null,"message":"Consulta del smoke test","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Consulta del smoke test Ref: PRTDS-2026-000002.","params":{"session_ref":"smoke-1794174994"},"attribution":{"channel":"card","campaign_id":"smoke","method":"utm","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-08T21:56:34.949758+00:00","proof_ref":"SMOKE-0001","partner_note":"smoke","rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bd29ca0703c88ba4f1","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"customer_name":"Ana Benítez","customer_phone":"+595981555003983"},{"id":"ld_1a1bd25a9650f7b133590","ref_code":"PRTDS-2026-000001","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-08T21:52:04.453380+00:00","decided_at":"2026-11-08T21:52:04.512537+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero turno para uñas esculpidas","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero turno para uñas esculpidas Ref: PRTDS-2026-000001.","params":{"session_ref":"live-walkthrough-1"},"attribution":{"channel":"card","campaign_id":"ig-demo","method":"utm","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-08T21:52:04.502796+00:00","proof_ref":"FACT-0042","partner_note":"Turno confirmado viernes 17:00","rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bd25a99b746c0f8057","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"customer_name":"Ana Benítez","customer_phone":"+595981555001"}]}},"GET /api/partner/settlements?limit=100":{"status":200,"body":{"total":5,"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-09T09:01:57.762412+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000005","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-DEMO-01","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd7e3d090b22bf5c36","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T23:28:49.421861+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000004","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-DEMO-01","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd2a23f03ab438d597","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T21:56:57.969305+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000003","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"SMOKE-0001","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd29ca0703c88ba4f1","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T21:56:34.952722+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000002","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"SMOKE-0001","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd25a99b746c0f8057","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T21:52:04.512109+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000001","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-0042","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."}]}}};
+(async () => {
+/* ---- api.js ---- */
+/* API client.
+ *
+ * Only relative URLs are used, so the same code runs behind the sandbox preview
+ * proxy, behind a Cloudflare Worker or behind Render — the browser never talks
+ * to localhost or to another origin (concept §13.3, sandbox preview rules).
+ */
+
+const SESSION_KEY = "prtds.session_ref";
+const ACTOR_KEY = "prtds.actor_ref";
+const PARTNER_TOKEN_KEY = "prtds.partner_token";
+const ADMIN_TOKEN_KEY = "prtds.admin_token";
+
+function randomRef(prefix) {
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  return prefix + Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/** Pseudonymous per-visit reference. Never derived from personal data. */
+function sessionRef() {
+  let value = sessionStorage.getItem(SESSION_KEY);
+  if (!value) {
+    value = randomRef("s_");
+    sessionStorage.setItem(SESSION_KEY, value);
+  }
+  return value;
+}
+
+function actorRef() {
+  return sessionStorage.getItem(ACTOR_KEY);
+}
+
+function setActorRef(value) {
+  if (value) sessionStorage.setItem(ACTOR_KEY, value);
+  else sessionStorage.removeItem(ACTOR_KEY);
+}
+
+const tokens = {
+  get partner() {
+    return sessionStorage.getItem(PARTNER_TOKEN_KEY) || "";
+  },
+  set partner(value) {
+    value ? sessionStorage.setItem(PARTNER_TOKEN_KEY, value) : sessionStorage.removeItem(PARTNER_TOKEN_KEY);
+  },
+  get admin() {
+    return sessionStorage.getItem(ADMIN_TOKEN_KEY) || "";
+  },
+  set admin(value) {
+    value ? sessionStorage.setItem(ADMIN_TOKEN_KEY, value) : sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  },
+};
+
+class ApiError extends Error {
+  constructor(status, detail, payload) {
+    super(typeof detail === "string" ? detail : "Error de red");
+    this.status = status;
+    this.detail = detail;
+    this.payload = payload;
+  }
+}
+
+async function parse(response) {
+  const text = await response.text();
+  let payload = null;
+  try {
+    payload = text ? JSON.parse(text) : null;
+  } catch {
+    payload = { detail: text.slice(0, 300) };
+  }
+  if (!response.ok) {
+    const detail =
+      (payload && (payload.detail || payload.message)) || `HTTP ${response.status}`;
+    throw new ApiError(response.status, detail, payload);
+  }
+  return payload;
+}
+
+async function api(path, { method = "GET", body, auth, headers = {} } = {}) {
+  const finalHeaders = {
+    "X-PRTDS-Session": sessionRef(),
+    ...headers,
+  };
+  if (actorRef()) finalHeaders["X-PRTDS-Actor"] = actorRef();
+  if (auth === "partner" && tokens.partner) finalHeaders["X-Partner-Token"] = tokens.partner;
+  if (auth === "admin" && tokens.admin) finalHeaders["X-Admin-Token"] = tokens.admin;
+  if (body !== undefined) finalHeaders["Content-Type"] = "application/json";
+
+  const response = await fetch(path, {
+    method,
+    headers: finalHeaders,
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  return parse(response);
+}
+
+const get = (path, options) => api(path, { ...options, method: "GET" });
+const post = (path, body, options) => api(path, { ...options, method: "POST", body });
+const patch = (path, body, options) => api(path, { ...options, method: "PATCH", body });
+
+/** Reads the slug from /empresa/{slug}. */
+function pathParam(index = 1) {
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  return decodeURIComponent(parts[index] || "");
+}
+
+function queryParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+
+/* ---- format.js ---- */
+/* Presentation helpers: Spanish (Paraguay), guaraníes without decimals,
+ * local timezone America/Asuncion (concept §02). */
+
+const TZ = "America/Asuncion";
+
+function fmtDateTime(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return new Intl.DateTimeFormat("es-PY", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: TZ,
+  }).format(date);
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return new Intl.DateTimeFormat("es-PY", { dateStyle: "medium", timeZone: TZ }).format(date);
+}
+
+/** PYG has no fractional units: 1250000 -> "G. 1.250.000". */
+function fmtPyg(amount) {
+  if (amount === null || amount === undefined) return "—";
+  const negative = amount < 0;
+  const digits = Math.abs(Number(amount)).toLocaleString("es-PY", { maximumFractionDigits: 0 });
+  return `${negative ? "-" : ""}G. ${digits.replaceAll(",", ".")}`;
+}
+
+const LEAD_STATUS_ES = {
+  submitted: { label: "Entregada", tone: "neutral", hint: "El comercio aún no respondió." },
+  accepted: { label: "Aceptada", tone: "ok", hint: "El comercio confirmó la solicitud." },
+  rejected: { label: "Rechazada", tone: "danger", hint: "El comercio no puede atenderla." },
+  booked: { label: "Turno confirmado", tone: "ok", hint: "Hay día y hora confirmados." },
+  visit_done: { label: "Servicio realizado", tone: "ok", hint: "El comercio marcó la visita como realizada." },
+  sale_confirmed: { label: "Venta confirmada", tone: "ok", hint: "Resultado confirmado con evidencia." },
+  cancelled: { label: "Cancelada", tone: "warn", hint: "Cancelada por el cliente o el comercio." },
+  expired: { label: "Vencida", tone: "warn", hint: "Sin respuesta dentro del plazo acordado." },
+};
+
+const SETTLEMENT_STATUS_ES = {
+  pending: { label: "Pendiente de conciliación", tone: "warn" },
+  approved: { label: "Aprobada", tone: "ok" },
+  flagged_negative_cm: { label: "Margen no positivo", tone: "danger" },
+  no_contract_basis: { label: "Sin contrato (ingreso 0)", tone: "neutral" },
+  disputed: { label: "En disputa", tone: "danger" },
+  void: { label: "Anulada", tone: "neutral" },
+  paid: { label: "Pagada", tone: "ok" },
+};
+
+const VERIFICATION_ES = {
+  unverified: { label: "Sin verificar", tone: "warn" },
+  source_only: { label: "Solo fuente registrada", tone: "neutral" },
+  partner_confirmed: { label: "Confirmado por el comercio", tone: "ok" },
+  field_verified: { label: "Verificado en campo", tone: "ok" },
+};
+
+const PUBLICATION_ES = {
+  draft: "Borrador",
+  staging: "Staging",
+  validated: "Validado",
+  moderated: "Moderado",
+  published: "Publicado",
+  archived: "Archivado",
+};
+
+function badge(text, tone = "neutral") {
+  return `<span class="badge ${tone}">${escapeHtml(text)}</span>`;
+}
+
+function statusBadge(map, key) {
+  const entry = map[key] || { label: key, tone: "neutral" };
+  return badge(entry.label, entry.tone);
+}
+
+function escapeHtml(value) {
+  if (value === null || value === undefined) return "";
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+/** Today's weekday key in local time ("mon", "tue", …) for opening hours. */
+function todayKey() {
+  const parts = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: TZ }).format(new Date());
+  return parts.toLowerCase();
+}
+
+function hoursToday(openingHours) {
+  const key = todayKey();
+  const slots = (openingHours || {})[key];
+  if (!slots || !slots.length) return "Cerrado hoy";
+  return slots.map(([open, close]) => `${open}–${close}`).join(", ");
+}
+
+function relativeAge(iso) {
+  if (!iso) return null;
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return null;
+  const hours = Math.round((Date.now() - then) / 3_600_000);
+  if (hours < 1) return "hace minutos";
+  if (hours < 48) return `hace ${hours} h`;
+  const days = Math.round(hours / 24);
+  return `hace ${days} días`;
+}
+
+
+/* ---- tracking.js ---- */
+/* Funnel instrumentation.
+ *
+ * The client only reports *attempts and impressions*. The server decides what an
+ * event proves, de-duplicates it and refuses commercial facts through this
+ * channel (concept §07). Nothing here may be read as a sale.
+ */
+
+
+
+function bucketKey(type, slug, extra = "") {
+  const now = new Date();
+  const bucket = `${now.getFullYear()}${now.getMonth()}${now.getDate()}${Math.floor(now.getHours() / 1)}`;
+  return `c_${sessionRef()}_${type}_${slug}_${extra}_${bucket}`;
+}
+
+/** Fire-and-forget: instrumentation must never block the user path. */
+function track(type, { companySlug, branchId, offerId, source, campaignId, amountPyg } = {}) {
+  const payload = {
+    event_type: type,
+    company_slug: companySlug || null,
+    branch_id: branchId || null,
+    offer_id: offerId || null,
+    source: source || null,
+    campaign_id: campaignId || null,
+    amount_pyg: amountPyg ?? null,
+    idempotency_key: bucketKey(type, companySlug || "", offerId || branchId || ""),
+  };
+  return post("/api/events", payload).catch((error) => {
+    console.warn("evento no registrado:", type, error.message);
+    return null;
+  });
+}
+
+/** UTM / QR parameters carried through the session so attribution has a source. */
+function utmFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  const utm = {};
+  ["source", "medium", "campaign", "term", "content"].forEach((key) => {
+    const value = params.get(`utm_${key}`);
+    if (value) utm[key] = value;
+  });
+  const campaign = params.get("campaign") || params.get("ref");
+  return { utm: Object.keys(utm).length ? utm : null, campaignId: campaign || null };
+}
+
+
+/* ---- offline shim (solo en esta сборка) ---- */
+(function () {
+  const memory = {};
+  const safeStorage = {
+    getItem: (key) => (key in memory ? memory[key] : null),
+    setItem: (key, value) => { memory[key] = String(value); },
+    removeItem: (key) => { delete memory[key]; },
+  };
+  try { window.sessionStorage.getItem("probe"); } catch (error) { window.sessionStorage = safeStorage; }
+  try { window.localStorage.getItem("probe"); } catch (error) { window.localStorage = safeStorage; }
+})();
+
+/* file:// no permite reescribir la URL: se ignora en vez de romper la página */
+history.replaceState = function noop() {};
+history.pushState = function noop() {};
+
+/* la página se comporta como si estuviera en esta ruta del sitio real */
+const OFFLINE_PATH = "/socio";
+function pathParam(index = 1) {
+  const parts = OFFLINE_PATH.split("/").filter(Boolean);
+  return decodeURIComponent(parts[index] || "");
+}
+function queryParam(name) {
+  return new URLSearchParams("").get(name);
+}
+
+/* la red se sustituye por respuestas grabadas del API real */
+window.__PRTDS_OFFLINE__ = true;
+const OFFLINE_NOTES = [];
+window.fetch = async function offlineFetch(input, init = {}) {
+  const method = (init.method || "GET").toUpperCase();
+  const url = typeof input === "string" ? input : input.url;
+  const [path, query = ""] = url.split("?");
+  const search = query ? "?" + query : "";
+  const candidates = [
+    `${method} ${path}${search}`,
+    `${method} ${path}`,
+  ];
+  if (method === "GET" && path === "/api/search") {
+    candidates.push("GET /api/search?limit=12");
+    candidates.push("GET /api/search?q=manicura&limit=12");
+  }
+  if (method === "GET" && path === "/api/partner/leads") candidates.push("GET /api/partner/leads?limit=50");
+  if (method === "GET" && path.startsWith("/api/leads/")) candidates.push("GET /api/leads/PRTDS-2026-000001");
+  if (method === "GET" && path.startsWith("/api/companies/")) candidates.push("GET /api/companies/nails-mburucuya");
+  if (method === "POST" && path.endsWith("/decision")) {
+    candidates.push(Object.keys(SNAPSHOT).find((key) => key.endsWith("/decision")) || "");
+  }
+  if (method === "POST" && path.endsWith("/sale")) {
+    candidates.push(Object.keys(SNAPSHOT).find((key) => key.endsWith("/sale")) || "");
+  }
+  if (method === "POST" && path.startsWith("/api/admin/")) candidates.push("POST /api/admin/reindex");
+
+  for (const key of candidates) {
+    const entry = SNAPSHOT[key];
+    if (!entry) continue;
+    OFFLINE_NOTES.push(key);
+    return new Response(JSON.stringify(entry.body), {
+      status: entry.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  OFFLINE_NOTES.push(`${method} ${path} → sin datos grabados`);
+  return new Response(
+    JSON.stringify({ detail: "Demostración sin conexión: esta respuesta no fue grabada." }),
+    { status: 404, headers: { "Content-Type": "application/json" } }
+  );
+};
+
+/* ---- partner.js ---- */
+/* Partner cabinet: manual reconciliation of requests and confirmed results.
+ *
+ * What the cabinet must make impossible to confuse (concept §07, §10, §15):
+ *  - a WhatsApp click is not a customer;
+ *  - the seller's amount (GMV) is not PRTDS revenue;
+ *  - a settlement without an active contract yields zero commission;
+ *  - a non-positive contribution margin is flagged, not hidden.
+ */
+
+
+
+
+const el = {
+  gate: document.getElementById("gate"),
+  gateForm: document.getElementById("gate-form"),
+  gateError: document.getElementById("gate-error"),
+  token: document.getElementById("token"),
+  panel: document.getElementById("panel"),
+  title: document.getElementById("panel-title"),
+  subtitle: document.getElementById("panel-subtitle"),
+  tabs: document.querySelectorAll(".tabs button"),
+  dashboard: document.getElementById("tab-dashboard"),
+  leads: document.getElementById("tab-leads"),
+  settlements: document.getElementById("tab-settlements"),
+};
+
+let me = null;
+let leadFilter = "";
+
+function metric(label, value, hint = "") {
+  return `<div class="metric"><div class="label">${escapeHtml(label)}</div>
+    <div class="value">${escapeHtml(value)}</div>
+    ${hint ? `<div class="hint">${escapeHtml(hint)}</div>` : ""}</div>`;
+}
+
+function eventRow(event) {
+  return `<tr>
+    <td><span class="mono tiny">${escapeHtml(event.code)}</span></td>
+    <td class="num">${event.count}</td>
+    <td class="tiny">${escapeHtml(event.proves_es)}</td>
+    <td class="tiny muted">${escapeHtml(event.does_not_prove_es)}</td>
+  </tr>`;
+}
+
+async function renderDashboard() {
+  el.dashboard.innerHTML = '<div class="card"><div class="skeleton"></div></div>';
+  const data = await get("/api/partner/dashboard", { auth: "partner" });
+  const funnel = data.funnel || {};
+  const econ = data.economics || {};
+  const counts = funnel.leads_by_status || {};
+  const conv = funnel.conversion || {};
+
+  const events = (funnel.events || []).filter((event) => event.count > 0);
+
+  el.dashboard.innerHTML = `
+    <div class="metrics">
+      ${metric("Solicitudes nuevas", counts.submitted || 0, "Entregadas, aún sin respuesta")}
+      ${metric("Aceptadas", counts.accepted || 0, "Confirmadas por el comercio")}
+      ${metric("Ventas confirmadas", counts.sale_confirmed || 0, "Con evidencia cargada")}
+      ${metric("Tasa de aceptación", conv.lead_acceptance_rate !== null ? `${(conv.lead_acceptance_rate * 100).toFixed(1)}%` : "—", "Aceptadas / entregadas")}
+    </div>
+
+    <div class="metrics" style="margin-top:10px">
+      ${metric("GMV del comercio", econ.gmv_display || fmtPyg(0), "Ventas confirmadas; NO es ingreso de PRTDS")}
+      ${metric("Ingreso PRTDS", econ.prtds_revenue_display || fmtPyg(0), "Solo comisión contractual")}
+      ${metric("Margen de contribución", econ.contribution_margin_display || fmtPyg(0), "Comisión − costos variables")}
+      ${metric("Recompras", econ.counters?.repeat_purchases || 0, "Dentro de los consentimientos")}
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2>Eventos registrados <span class="badge neutral">qué prueba cada uno</span></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Evento</th><th class="num">Cantidad</th><th>Qué prueba</th><th>Qué NO prueba</th></tr></thead>
+          <tbody>${events.map(eventRow).join("") || '<tr><td colspan="4" class="muted">Sin eventos en el período.</td></tr>'}</tbody>
+        </table>
+      </div>
+      <p class="tiny muted" style="margin:10px 0 0">${escapeHtml(funnel.warning_es || "")}</p>
+    </div>
+
+    <div class="card">
+      <h2>Alertas de economía</h2>
+      ${(econ.alerts || [])
+        .filter((alert) => alert.count > 0)
+        .map((alert) => `<div class="notice ${alert.code === "negative_contribution_margin" ? "danger" : "warn"}">
+            <strong>${escapeHtml(alert.code)}</strong> · ${alert.count} caso(s). ${escapeHtml(alert.message_es)}
+          </div>`)
+        .join("") || '<div class="notice ok">Sin alertas: todas las operaciones tienen margen positivo y contrato.</div>'}
+      ${data.card_health ? `<dl class="kv" style="margin-top:12px">
+          <dt>Estado de la ficha</dt><dd>${escapeHtml(data.card_health.publication_status)}</dd>
+          <dt>Verificación</dt><dd>${escapeHtml(data.card_health.verification_level)}</dd>
+          <dt>Sucursales / ofertas</dt><dd>${data.card_health.branches} / ${data.card_health.offers}</dd>
+          <dt>Ofertas con datos vencidos</dt><dd>${data.card_health.stale_offers}</dd>
+          <dt>Última observación</dt><dd>${escapeHtml(data.card_health.last_observed_at || "—")}</dd>
+        </dl>` : ""}
+      <h3 style="margin-top:14px">Tareas sugeridas</h3>
+      <ul class="clean small">${(data.todo_es || []).map((todo) => `<li>${escapeHtml(todo)}</li>`).join("")}</ul>
+    </div>`;
+}
+
+function leadRow(lead) {
+  const actions = [];
+  (lead.allowed_transitions || []).forEach((status) => {
+    if (status === "sale_confirmed") return;
+    const label = LEAD_STATUS_ES[status]?.label || status;
+    const tone = status === "rejected" || status === "cancelled" ? "danger" : "primary";
+    actions.push(
+      `<button class="btn small ${tone === "danger" ? "danger" : ""}" data-transition="${status}" data-ref="${escapeHtml(lead.ref_code)}">${escapeHtml(label)}</button>`
+    );
+  });
+  if (!["sale_confirmed", "rejected", "cancelled"].includes(lead.status)) {
+    actions.push(`<button class="btn small primary" data-sale="${escapeHtml(lead.ref_code)}">Confirmar venta</button>`);
+  }
+
+  return `<article class="card" data-lead="${escapeHtml(lead.ref_code)}">
+    <div class="spread">
+      <div>
+        <strong class="mono">${escapeHtml(lead.ref_code)}</strong>
+        <div class="tiny muted">${escapeHtml(fmtDateTime(lead.submitted_at))}</div>
+      </div>
+      ${statusBadge(LEAD_STATUS_ES, lead.status)}
+    </div>
+    <dl class="kv" style="margin-top:10px">
+      <dt>Empresa</dt><dd>${escapeHtml(lead.company?.display_name || "—")}</dd>
+      <dt>Sucursal</dt><dd>${escapeHtml(lead.branch?.name_es || "—")}</dd>
+      <dt>Cliente</dt><dd>${escapeHtml(lead.customer_name || "sin nombre")} ${lead.customer_phone ? `· <span class="mono">${escapeHtml(lead.customer_phone)}</span>` : ""}</dd>
+      ${lead.offer ? `<dt>Oferta</dt><dd>${escapeHtml(lead.offer.title_es)}</dd>` : ""}
+      ${lead.requested_at ? `<dt>Cuándo</dt><dd>${escapeHtml(lead.requested_at)}</dd>` : ""}
+      <dt>Mensaje</dt><dd>${escapeHtml(lead.message || lead.prefilled_message || "—")}</dd>
+      ${lead.attribution ? `<dt>Atribución</dt><dd>${escapeHtml(lead.attribution.channel)} · ${escapeHtml(lead.attribution.method)} · confianza ${escapeHtml(lead.attribution.confidence)}</dd>` : ""}
+      ${lead.confirmed_amount_display ? `<dt>Resultado confirmado</dt><dd><strong>${escapeHtml(lead.confirmed_amount_display)}</strong>${lead.proof_ref ? ` · comprobante ${escapeHtml(lead.proof_ref)}` : ""}</dd>` : ""}
+    </dl>
+    ${lead.partner_note ? `<p class="tiny muted" style="margin-top:8px">Nota: ${escapeHtml(lead.partner_note)}</p>` : ""}
+    <div class="btn-row" style="margin-top:12px">${actions.join("") || '<span class="muted tiny">Sin transiciones disponibles.</span>'}</div>
+    <div class="lead-detail"></div>
+  </article>`;
+}
+
+async function renderLeads() {
+  el.leads.innerHTML = '<div class="card"><div class="skeleton"></div></div>';
+  const params = new URLSearchParams({ limit: "50" });
+  if (leadFilter) params.set("status", leadFilter);
+  const data = await get(`/api/partner/leads?${params.toString()}`, { auth: "partner" });
+
+  const filters = Object.entries(data.counts_by_status || {})
+    .map(([status, count]) => `<button class="chip" data-filter="${escapeHtml(status)}" aria-pressed="${leadFilter === status}">${escapeHtml(LEAD_STATUS_ES[status]?.label || status)} <span class="count">${count}</span></button>`)
+    .join("");
+
+  el.leads.innerHTML = `
+    <div class="chips" style="padding-bottom:10px">
+      <button class="chip" data-filter="" aria-pressed="${leadFilter === ""}">Todas</button>
+      ${filters}
+    </div>
+    ${(data.leads || []).map(leadRow).join("") || '<div class="notice warn">No hay solicitudes con este filtro.</div>'}`;
+}
+
+async function renderSettlements() {
+  el.settlements.innerHTML = '<div class="card"><div class="skeleton"></div></div>';
+  const data = await get("/api/partner/settlements?limit=100", { auth: "partner" });
+  const rows = (data.settlements || [])
+    .map(
+      (settlement) => `<tr>
+        <td class="mono tiny">${escapeHtml(settlement.lead_ref || "—")}</td>
+        <td>${escapeHtml(settlement.company?.display_name || "—")}</td>
+        <td class="num">${escapeHtml(settlement.basis_amount_display)}</td>
+        <td class="num">${settlement.rule ? `${settlement.rule.rate_percent}%` : "—"}</td>
+        <td class="num"><strong>${escapeHtml(settlement.commission_display)}</strong></td>
+        <td class="num">${escapeHtml(settlement.contribution_margin_display)}</td>
+        <td>${statusBadge(SETTLEMENT_STATUS_ES, settlement.status)}</td>
+        <td class="tiny muted">${escapeHtml(settlement.status_reason_es || "")}</td>
+      </tr>`
+    )
+    .join("");
+
+  el.settlements.innerHTML = `<div class="card">
+    <h2>Liquidaciones</h2>
+    <p class="muted small">
+      Base = venta del comercio (GMV). Comisión = ingreso de PRTDS. Sin contrato activo la
+      comisión es cero, aunque la venta esté confirmada.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Solicitud</th><th>Empresa</th><th class="num">Base (GMV)</th><th class="num">Tasa</th>
+        <th class="num">Comisión</th><th class="num">Margen</th><th>Estado</th><th>Motivo</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="8" class="muted">Sin liquidaciones registradas.</td></tr>'}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function openSaleForm(ref) {
+  const container = document.querySelector(`[data-lead="${CSS.escape(ref)}"] .lead-detail`);
+  if (!container) return;
+  container.innerHTML = `
+    <form class="card" data-sale-form="${escapeHtml(ref)}" style="margin-top:12px;background:#fafbfe">
+      <h3>Confirmar resultado</h3>
+      <p class="muted tiny">
+        Cargá el importe realmente cobrado por el comercio y una referencia de comprobante.
+        PRTDS calculará su comisión según el contrato; el importe cargado nunca se cuenta como ingreso propio.
+      </p>
+      <div class="field-row split">
+        <div class="field">
+          <label for="amount-${escapeHtml(ref)}">Importe (G.)</label>
+          <input id="amount-${escapeHtml(ref)}" name="amount" type="number" min="0" step="1" required placeholder="180000" />
+        </div>
+        <div class="field">
+          <label for="proof-${escapeHtml(ref)}">Comprobante</label>
+          <input id="proof-${escapeHtml(ref)}" name="proof" type="text" maxlength="120" placeholder="FACT-0001" />
+        </div>
+      </div>
+      <div class="field">
+        <label class="checkbox"><input type="checkbox" name="repeat" /> Es una recompra del mismo cliente</label>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary small" type="submit">Confirmar</button>
+        <button class="btn small ghost" type="button" data-cancel>Cancelar</button>
+      </div>
+      <div class="sale-error"></div>
+    </form>`;
+}
+
+async function refreshAll() {
+  try {
+    await renderDashboard();
+    await renderLeads();
+    await renderSettlements();
+  } catch (error) {
+    el.dashboard.innerHTML = `<div class="notice danger">${escapeHtml(error.message)}</div>`;
+  }
+}
+
+async function enter() {
+  el.gateError.innerHTML = "";
+  try {
+    me = await get("/api/partner/me", { auth: "partner" });
+    el.gate.classList.add("hidden");
+    el.panel.classList.remove("hidden");
+    el.title.textContent = me.company ? me.company.display_name : "Operaciones PRTDS";
+    el.subtitle.innerHTML = `${escapeHtml(me.full_name)} · ${escapeHtml(me.role)} · alcance ${escapeHtml(me.scope === "single_company" ? "una empresa" : "todas las empresas")}`;
+    await refreshAll();
+  } catch (error) {
+    tokens.partner = "";
+    el.gateError.innerHTML = `<div class="notice danger">${escapeHtml(error.message)}</div>`;
+  }
+}
+
+el.gateForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  tokens.partner = el.token.value.trim();
+  if (!tokens.partner) return;
+  enter();
+});
+
+document.getElementById("logout").addEventListener("click", () => {
+  tokens.partner = "";
+  me = null;
+  el.panel.classList.add("hidden");
+  el.gate.classList.remove("hidden");
+});
+
+document.getElementById("refresh").addEventListener("click", refreshAll);
+
+el.tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    el.tabs.forEach((other) => other.setAttribute("aria-selected", String(other === tab)));
+    ["dashboard", "leads", "settlements"].forEach((name) => {
+      el[name].classList.toggle("hidden", name !== tab.dataset.tab);
+    });
+  });
+});
+
+el.leads.addEventListener("click", async (event) => {
+  const filter = event.target.closest("[data-filter]");
+  if (filter) {
+    leadFilter = filter.dataset.filter;
+    await renderLeads();
+    return;
+  }
+  if (event.target.closest("[data-cancel]")) {
+    event.target.closest("form").remove();
+    return;
+  }
+  const sale = event.target.closest("[data-sale]");
+  if (sale) {
+    openSaleForm(sale.dataset.sale);
+    return;
+  }
+  const transition = event.target.closest("[data-transition]");
+  if (transition) {
+    transition.disabled = true;
+    const note = window.prompt("Nota para el registro (opcional):", "") || null;
+    try {
+      await post(
+        `/api/partner/leads/${encodeURIComponent(transition.dataset.ref)}/decision`,
+        { status: transition.dataset.transition, note },
+        { auth: "partner" }
+      );
+      await renderLeads();
+      await renderDashboard();
+    } catch (error) {
+      window.alert(error.message);
+      transition.disabled = false;
+    }
+  }
+});
+
+el.leads.addEventListener("submit", async (event) => {
+  const form = event.target.closest("[data-sale-form]");
+  if (!form) return;
+  event.preventDefault();
+  const errorBox = form.querySelector(".sale-error");
+  const payload = {
+    amount_pyg: Number(form.amount.value || 0),
+    proof_ref: form.proof.value.trim() || null,
+    is_repeat: form.repeat.checked,
+  };
+  try {
+    const result = await post(
+      `/api/partner/leads/${encodeURIComponent(form.dataset.saleForm)}/sale`,
+      payload,
+      { auth: "partner" }
+    );
+    const settlement = result.settlement || {};
+    window.alert(
+      `Resultado confirmado.\n\nVenta del comercio (GMV): ${settlement.basis_amount_display}\n` +
+        `Comisión PRTDS: ${settlement.commission_display}\n` +
+        `Margen de contribución: ${settlement.contribution_margin_display}\n` +
+        `Estado: ${settlement.status}\n\n${settlement.status_reason_es || ""}`
+    );
+    await refreshAll();
+  } catch (error) {
+    errorBox.innerHTML = `<div class="notice danger">${escapeHtml(error.message)}</div>`;
+  }
+});
+
+if (tokens.partner) {
+  el.token.value = tokens.partner;
+  enter();
+}
+
+{ badge, fmtPyg };
+
+})();
+</script>
+</body>
+</html>

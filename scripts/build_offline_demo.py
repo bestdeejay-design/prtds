@@ -42,14 +42,59 @@ JS_DIR = FRONTEND / "assets" / "js"
 #: re-declares pathParam/queryParam *after* api.js but *before* the page code).
 SHARED = ["api.js", "format.js", "tracking.js"]
 
+#: file → module, route it pretends to be on, and the API prefixes it needs.
+#: Filtering keeps every page small: the full dump is ~200 KB, a page needs a
+#: fraction of it. Correctness is re-checked by executing the pages in a DOM.
 PAGES = {
-    "index.html": {"module": "search.js", "path": "/", "title": "Búsqueda"},
-    "empresa.html": {"module": "company.js", "path": "/empresa/nails-mburucuya", "title": "Ficha"},
-    "solicitud.html": {"module": "lead.js", "path": "/solicitud/PRTDS-2026-000001", "title": "Solicitud"},
-    "socio.html": {"module": "partner.js", "path": "/socio", "title": "Socios"},
-    "admin.html": {"module": "admin.js", "path": "/admin", "title": "Admin"},
-    "salud.html": {"module": "status.js", "path": "/salud", "title": "Estado"},
+    "index.html": {
+        "module": "search.js",
+        "path": "/",
+        "title": "Búsqueda",
+        "needs": ["/api/search", "/api/categories", "/api/facets", "/api/meta/status", "/api/whatsapp-link", "/api/call-link"],
+    },
+    "empresa.html": {
+        "module": "company.js",
+        "path": "/empresa/nails-mburucuya",
+        "title": "Ficha",
+        "needs": ["/api/companies/", "/api/whatsapp-link", "/api/call-link", "/api/leads"],
+    },
+    "solicitud.html": {
+        "module": "lead.js",
+        "path": "/solicitud/PRTDS-2026-000001",
+        "title": "Solicitud",
+        "needs": ["/api/leads/"],
+    },
+    "socio.html": {
+        "module": "partner.js",
+        "path": "/socio",
+        "title": "Socios",
+        "needs": ["/api/partner/"],
+    },
+    "admin.html": {
+        "module": "admin.js",
+        "path": "/admin",
+        "title": "Admin",
+        "needs": ["/api/admin/"],
+    },
+    "salud.html": {
+        "module": "status.js",
+        "path": "/salud",
+        "title": "Estado",
+        "needs": ["/api/meta/"],
+    },
 }
+
+
+def subset(snapshot: dict[str, Any], needs: list[str]) -> dict[str, Any]:
+    """Only the recorded responses this page can ask for."""
+    selected = {}
+    for key, value in snapshot.items():
+        path = key.split(" ", 1)[1].split("?", 1)[0]
+        if any(path.startswith(prefix) for prefix in needs):
+            selected[key] = value
+    if not selected:
+        raise SystemExit(f"фильтр не оставил данных для {needs}")
+    return selected
 
 PARTNER_TOKEN = "prtds-socio-nails"
 ADMIN_TOKEN = "prtds-demo-admin-token"
@@ -266,8 +311,9 @@ def build(base: str, out_dir: Path) -> Path:
     out_dir.mkdir(parents=True)
 
     css = (FRONTEND / "assets" / "css" / "app.css").read_text(encoding="utf-8")
-    snapshot_json = json.dumps(snapshot, ensure_ascii=False, separators=(",", ":"))
-    (out_dir / "snapshot.json").write_text(snapshot_json, encoding="utf-8")
+    (out_dir / "snapshot.json").write_text(
+        json.dumps(snapshot, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+    )
 
     banner_css = """
 /* ---- aviso de demostración sin conexión ---- */
@@ -289,6 +335,9 @@ def build(base: str, out_dir: Path) -> Path:
     for name, meta in PAGES.items():
         source_html = (FRONTEND / _source_name(name)).read_text(encoding="utf-8")
         js = inline_js(SHARED + [meta["module"]], meta["path"])
+        snapshot_json = json.dumps(
+            subset(snapshot, meta["needs"]), ensure_ascii=False, separators=(",", ":")
+        )
 
         html = source_html
         # styles: external file → inline, plus the demo banner styles
@@ -360,12 +409,18 @@ def build(base: str, out_dir: Path) -> Path:
 """
     (out_dir / "README.md").write_text(readme, encoding="utf-8")
 
-    archive = out_dir.parent / "prtds-offline-demo.zip"
+    # the archive must live OUTSIDE out_dir: packing a directory into a file
+    # inside itself grows without limit (it consumed the whole disk once).
+    archive = ROOT / "dist" / "prtds-offline-demo.zip"
+    archive.parent.mkdir(parents=True, exist_ok=True)
     if archive.exists():
         archive.unlink()
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as handle:
         for file in sorted(out_dir.rglob("*")):
-            handle.write(file, file.relative_to(out_dir.parent))
+            if file.is_file() and file != archive:
+                handle.write(file, file.relative_to(out_dir))
+    if archive.stat().st_size > 20 * 1024 * 1024:
+        raise SystemExit(f"архив подозрительно большой: {archive.stat().st_size} байт")
     return archive
 
 
@@ -384,7 +439,7 @@ def _source_name(name: str) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:8000")
-    parser.add_argument("--out", default=str(ROOT / "dist" / "offline"))
+    parser.add_argument("--out", default=str(ROOT / "docs" / "demo"))
     args = parser.parse_args()
 
     archive = build(args.base_url, Path(args.out))

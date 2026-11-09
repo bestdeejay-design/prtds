@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Administración · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <style>
+/* PRTDS — mobile-first stylesheet (vanilla CSS, no build step).
+   Concept §02/§13.3: the card must work on a narrow screen and load fast on
+   mobile internet, with clear actions: WhatsApp, call, route, site, offer. */
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --ink: #14161d;
+  --ink-soft: #5b6070;
+  --line: #e3e6ef;
+  --brand: #2f3aa8;
+  --brand-soft: #eceefc;
+  --accent: #d97706;
+  --whatsapp: #1faa53;
+  --danger: #b4232a;
+  --danger-soft: #fdecec;
+  --ok: #147a4b;
+  --ok-soft: #e7f6ee;
+  --warn: #92600a;
+  --warn-soft: #fdf3e0;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(20, 22, 29, 0.06), 0 6px 20px rgba(20, 22, 29, 0.05);
+  --max: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 { line-height: 1.2; margin: 0 0 .5rem; }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; }
+h3 { font-size: 1rem; }
+
+p { margin: 0 0 .75rem; }
+
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85em; }
+
+/* ---------- layout ---------- */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 14px; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner { display: flex; align-items: center; gap: 12px; padding: 10px 14px; max-width: var(--max); margin: 0 auto; }
+.brand { display: flex; flex-direction: column; line-height: 1.1; }
+.brand strong { font-size: 1.05rem; letter-spacing: .02em; }
+.brand span { font-size: .68rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; }
+.topnav { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.topnav a {
+  font-size: .8rem; padding: 6px 10px; border-radius: 999px;
+  color: var(--ink-soft); border: 1px solid transparent;
+}
+.topnav a:hover { background: var(--brand-soft); color: var(--brand); text-decoration: none; }
+
+main { padding: 16px 0 56px; }
+
+.grid { display: grid; gap: 14px; }
+.grid.two { grid-template-columns: 1fr; }
+@media (min-width: 860px) {
+  .grid.two { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+}
+
+/* ---------- cards & surfaces ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.card + .card { margin-top: 12px; }
+.card h2 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.muted { color: var(--ink-soft); font-size: .88rem; }
+.small { font-size: .8rem; }
+.tiny { font-size: .74rem; }
+.right { text-align: right; }
+.nowrap { white-space: nowrap; }
+
+.notice {
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: .84rem;
+  border: 1px solid var(--line);
+  background: var(--brand-soft);
+  color: #26307d;
+}
+.notice.warn { background: var(--warn-soft); border-color: #f0dcb2; color: var(--warn); }
+.notice.danger { background: var(--danger-soft); border-color: #f3c9cb; color: var(--danger); }
+.notice.ok { background: var(--ok-soft); border-color: #bfe6cf; color: var(--ok); }
+
+/* ---------- badges ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .7rem; font-weight: 600; letter-spacing: .02em;
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--brand-soft); color: var(--brand);
+  border: 1px solid #d9ddf7;
+  text-transform: uppercase;
+}
+.badge.ad { background: #fff4e0; color: #8a5200; border-color: #f6dcae; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); border-color: #bfe6cf; }
+.badge.warn { background: var(--warn-soft); color: var(--warn); border-color: #f0dcb2; }
+.badge.danger { background: var(--danger-soft); color: var(--danger); border-color: #f3c9cb; }
+.badge.neutral { background: #f0f1f6; color: var(--ink-soft); border-color: var(--line); }
+
+/* ---------- forms ---------- */
+label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: 4px; }
+input[type="text"], input[type="search"], input[type="tel"], input[type="number"],
+input[type="password"], select, textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font: inherit;
+  color: inherit;
+}
+textarea { min-height: 88px; resize: vertical; }
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--brand); outline-offset: 1px; border-color: var(--brand);
+}
+.field { margin-bottom: 12px; }
+.field-row { display: grid; gap: 10px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .field-row.split { grid-template-columns: 1fr 1fr; } }
+
+.checkbox { display: flex; gap: 9px; align-items: flex-start; font-weight: 400; font-size: .84rem; }
+.checkbox input { width: 18px; height: 18px; margin-top: 2px; flex: none; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 11px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line); background: #fff; color: var(--ink);
+  font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer;
+  min-height: 44px; /* touch target */
+}
+.btn:hover { border-color: #c9cee0; text-decoration: none; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn.primary:hover { background: #262f8c; }
+.btn.whatsapp { background: var(--whatsapp); border-color: var(--whatsapp); color: #fff; }
+.btn.whatsapp:hover { background: #1a9447; }
+.btn.ghost { background: transparent; }
+.btn.danger { background: #fff; border-color: #eec4c6; color: var(--danger); }
+.btn.small { padding: 7px 10px; font-size: .8rem; min-height: 36px; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-row .btn { flex: 1 1 auto; }
+
+/* ---------- search ---------- */
+.hero { padding: 18px 0 6px; }
+.hero h1 { font-size: 1.6rem; margin-bottom: 4px; }
+.hero .tagline { color: var(--ink-soft); font-size: .92rem; margin-bottom: 14px; }
+
+.searchbar { display: flex; gap: 8px; }
+.searchbar input { flex: 1; }
+.searchbar .btn { flex: none; }
+
+.chips { display: flex; gap: 7px; overflow-x: auto; padding: 12px 0 4px; scrollbar-width: thin; }
+.chip {
+  flex: none; padding: 7px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+  font-size: .82rem; cursor: pointer; white-space: nowrap;
+}
+.chip[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+.chip .count { opacity: .7; font-size: .72rem; margin-left: 4px; }
+
+.filters { display: grid; gap: 10px; grid-template-columns: 1fr; margin-top: 10px; }
+@media (min-width: 700px) { .filters { grid-template-columns: repeat(4, 1fr); } }
+
+.result {
+  display: block; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 13px; box-shadow: var(--shadow);
+  color: inherit;
+}
+.result:hover { border-color: #c9cee0; text-decoration: none; }
+.result + .result { margin-top: 10px; }
+.result-head { display: flex; align-items: flex-start; gap: 10px; }
+.result-head h3 { margin: 0; font-size: 1.02rem; }
+.result-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 6px; color: var(--ink-soft); font-size: .82rem; }
+.result-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+/* ---------- offers / price ---------- */
+.offer { border-top: 1px solid var(--line); padding: 12px 0; }
+.offer:first-of-type { border-top: 0; }
+.offer-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.price { font-weight: 700; font-size: 1.02rem; white-space: nowrap; }
+.price s { color: var(--ink-soft); font-weight: 400; font-size: .84rem; margin-right: 6px; }
+.breakdown { margin: 6px 0 0; padding: 0; list-style: none; font-size: .8rem; color: var(--ink-soft); }
+.breakdown li { display: flex; justify-content: space-between; gap: 10px; }
+.conditional { color: var(--warn); }
+
+/* ---------- tables ---------- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .74rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); background: #fafbfe; }
+tbody tr:hover { background: #fafbfe; }
+td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- lists ---------- */
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 6px 12px; font-size: .86rem; }
+.kv dt { color: var(--ink-soft); }
+.kv dd { margin: 0; }
+
+ul.clean { margin: 0; padding-left: 18px; }
+ul.clean li { margin-bottom: 6px; }
+
+/* ---------- timeline ---------- */
+.timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line); }
+.timeline li { position: relative; padding: 0 0 14px 12px; }
+.timeline li::before {
+  content: ""; position: absolute; left: -25px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--line);
+}
+.timeline li.done::before { background: var(--ok); border-color: var(--ok); }
+.timeline li.current::before { background: var(--brand); border-color: var(--brand); }
+.timeline .when { color: var(--ink-soft); font-size: .76rem; }
+
+/* ---------- tabs ---------- */
+.tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 14px; overflow-x: auto; }
+.tabs button {
+  border: 0; background: transparent; padding: 10px 12px; font: inherit; font-size: .88rem;
+  color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.tabs button[aria-selected="true"] { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
+
+/* ---------- metrics ---------- */
+.metrics { display: grid; gap: 10px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 700px) { .metrics { grid-template-columns: repeat(4, 1fr); } }
+.metric { background: #fafbfe; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px; }
+.metric .value { font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.metric .label { font-size: .74rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .04em; }
+.metric .hint { font-size: .72rem; color: var(--ink-soft); margin-top: 3px; }
+
+/* ---------- footer ---------- */
+.footer { border-top: 1px solid var(--line); padding: 18px 0 30px; color: var(--ink-soft); font-size: .8rem; }
+.footer .wrap { display: grid; gap: 8px; }
+
+/* ---------- utilities ---------- */
+.hidden { display: none !important; }
+.stack > * + * { margin-top: 10px; }
+.spread { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
+.skeleton { background: linear-gradient(90deg, #eef0f6 25%, #f7f8fc 50%, #eef0f6 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 8px; height: 14px; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.error { color: var(--danger); font-size: .84rem; }
+
+
+/* ---- aviso de demostración sin conexión ---- */
+.offline-banner{position:sticky;top:0;z-index:60;background:#fff4d6;border-bottom:1px solid #e0b64a;
+  color:#5a4300;font:13px/1.45 system-ui,sans-serif;padding:8px 14px;text-align:center}
+.offline-banner strong{font-weight:700}
+.offline-banner a{color:#5a4300}
+
+</style>
+</head>
+<body>
+<div class="offline-banner"><strong>Demostración sin conexión.</strong> Интерфейс настоящий, данные записаны с работающего API и не сохраняются. Переходы:<a href="index.html" style="margin-left:10px">Búsqueda</a><a href="empresa.html" style="margin-left:10px">Ficha</a><a href="solicitud.html" style="margin-left:10px">Solicitud</a><a href="socio.html" style="margin-left:10px">Socios</a><a href="admin.html" style="margin-left:10px">Admin</a><a href="salud.html" style="margin-left:10px">Estado</a></div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html"><strong>PRTDS</strong><span>Para todos. Para todo.</span></a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="index.html">Buscar</a>
+        <a href="socio.html">Socios</a>
+        <a href="salud.html">Estado</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="gate">
+      <h2>Administración del catálogo</h2>
+      <p class="muted small">
+        Taxonomía, pipeline de publicación, contratos y mantenimiento del índice de búsqueda.
+      </p>
+      <form id="gate-form" class="field-row split">
+        <div class="field">
+          <label for="token">Token de administración</label>
+          <input id="token" type="password" placeholder="prtds-admin-…" autocomplete="current-password" />
+        </div>
+        <div class="field" style="align-self:end"><button class="btn primary" type="submit">Entrar</button></div>
+      </form>
+      <div id="gate-error" style="margin-top:10px"></div>
+      <div class="notice tiny" style="margin-top:6px">
+        Entorno de demostración: token <span class="mono">prtds-demo-admin-token</span>.
+        En producción: identidad real, roles separados y auditoría; secretos fuera del repositorio.
+      </div>
+    </section>
+
+    <div id="panel" class="hidden stack">
+      <div class="spread" style="margin:18px 0 4px">
+        <h1 style="margin:0">Administración</h1>
+        <div class="btn-row">
+          <button class="btn small" id="refresh">Actualizar</button>
+          <button class="btn small ghost" id="logout">Salir</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <h2>Panel §15 — lo que no se puede confundir</h2>
+        <div id="stats" class="metrics"></div>
+        <div id="stats-notes" class="stack" style="margin-top:12px"></div>
+      </section>
+
+      <section class="card">
+        <h2>Categorías <span class="badge neutral">la taxonomía es dato, no código</span></h2>
+        <p class="muted small">
+          El catálogo es universal: se crea una categoría y sus sinónimos de búsqueda sin despliegue.
+        </p>
+        <form id="category-form" class="stack">
+          <div class="field-row split">
+            <div class="field"><label for="cat-slug">Slug</label><input id="cat-slug" type="text" pattern="[a-z0-9-]+" placeholder="viveros" required /></div>
+            <div class="field"><label for="cat-name">Nombre (es)</label><input id="cat-name" type="text" placeholder="Viveros y jardinería" required /></div>
+          </div>
+          <div class="field-row split">
+            <div class="field"><label for="cat-parent">Categoría padre (slug)</label><input id="cat-parent" type="text" placeholder="hogar (opcional)" /></div>
+            <div class="field"><label for="cat-intent">Acción principal</label>
+              <select id="cat-intent">
+                <option value="whatsapp">WhatsApp</option>
+                <option value="call">Llamada</option>
+                <option value="booking">Reserva / turno</option>
+                <option value="request" selected>Solicitud</option>
+                <option value="purchase">Compra</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label for="cat-syn">Sinónimos de búsqueda (separados por coma)</label>
+            <input id="cat-syn" type="text" placeholder="plantas, jardin, vivero" /></div>
+          <div class="field"><label for="cat-desc">Descripción (es)</label><input id="cat-desc" type="text" maxlength="1000" /></div>
+          <div class="btn-row"><button class="btn primary" type="submit">Crear categoría</button></div>
+          <div id="category-message"></div>
+        </form>
+        <div id="categories" style="margin-top:14px"></div>
+      </section>
+
+      <section class="card">
+        <h2>Pipeline de publicación</h2>
+        <p class="muted small">
+          staging → validación → moderación → publicación. Una fila del registro maestro no es una ficha pública.
+        </p>
+        <form id="publication-form" class="field-row split">
+          <div class="field"><label for="pub-slug">Empresa (slug)</label><input id="pub-slug" type="text" placeholder="bodega-mboriahu-staging" required /></div>
+          <div class="field"><label for="pub-status">Nuevo estado</label>
+            <select id="pub-status">
+              <option value="staging">staging</option>
+              <option value="validated">validated</option>
+              <option value="moderated">moderated</option>
+              <option value="published">published</option>
+              <option value="archived">archived</option>
+              <option value="draft">draft</option>
+            </select>
+          </div>
+          <div class="field" style="align-self:end"><button class="btn primary" type="submit">Aplicar</button></div>
+        </form>
+        <div id="publication-message"></div>
+      </section>
+
+      <section class="card">
+        <h2>Mantenimiento</h2>
+        <div class="btn-row">
+          <button class="btn" id="reindex">Reconstruir índice de búsqueda</button>
+          <button class="btn danger" id="reseed">Reiniciar datos de demostración</button>
+        </div>
+        <div id="maintenance-message" style="margin-top:10px"></div>
+      </section>
+
+      <section class="card">
+        <h2>Liquidaciones y eventos</h2>
+        <div class="table-wrap" id="settlements"></div>
+        <h3 style="margin-top:16px">Últimos eventos del ledger</h3>
+        <div class="table-wrap" id="events"></div>
+      </section>
+    </div>
+  </main>
+<script>
+const SNAPSHOT = {"GET /api/admin/stats":{"status":200,"body":{"catalog":{"legal_entities_in_registry":26,"company_records_total":23,"published_cards":21,"by_status":{"draft":1,"published":21,"staging":1},"warning_es":"Personas jurídicas en el registro ≠ fichas publicadas y operativas."},"funnel":{"leads_total":5,"events_total":130},"commerce":{"settlements_total":5,"active_contracts":5},"economics":{"company_id":null,"since":null,"until":null,"currency":"PYG","gmv_pyg":900000,"gmv_display":"G. 900.000","prtds_revenue_pyg":63000,"prtds_revenue_display":"G. 63.000","contribution_margin_pyg":43000,"contribution_margin_display":"G. 43.000","flagged_negative_margin_pyg":0,"flagged_negative_margin_display":"G. 0","flagged_commission_pyg":0,"avg_margin_per_operation_pyg":8600,"settlements_by_status":{"pending":5},"counters":{"leads_total":5,"confirmed_sales":5,"repeat_purchases":0,"new_customers_with_phone":4},"acquisition":{"spend_pyg":0,"spend_display":"G. 0","cost_per_lead_pyg":null,"cost_per_confirmed_sale_pyg":null},"alerts":[{"code":"negative_contribution_margin","count":0,"message_es":"Operaciones con margen de contribución no positivo: requieren renegociación antes de escalar."},{"code":"no_contract_basis","count":0,"message_es":"Ventas confirmadas sin contrato: ingreso cero. Oportunidad comercial, no un cobro pendiente."}],"warning_es":"GMV del comercio ≠ ingreso de PRTDS."}}},"GET /api/admin/categories":{"status":200,"body":{"categories":[{"id":"cat_1a1bd20700a7371bcf964","slug":"gastronomia","name_es":"Gastronomía","name_ru":"Гастрономия","description_es":null,"icon":"food","default_intent":"whatsapp","is_active":true,"sort_order":10,"published_companies":7,"published_companies_own":0,"children":[{"id":"cat_1a1bd20700cf291cf6ea5","slug":"restaurantes","name_es":"Restaurantes","name_ru":"Рестораны","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":11,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20700c06eaab0ad8","slug":"cafeterias","name_es":"Cafeterías","name_ru":"Кофейни","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":12,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20700c8689f5f309","slug":"delivery-comida","name_es":"Delivery de comida","name_ru":"Доставка еды","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":13,"published_companies":3,"published_companies_own":3,"children":[]},{"id":"cat_1a1bd20700d1e61a8d280","slug":"bares","name_es":"Bares y cervecerías","name_ru":"Бары","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":14,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd20700d9c85ba5faa","slug":"supermercados","name_es":"Supermercados y almacenes","name_ru":"Супермаркеты и магазины","description_es":null,"icon":"cart","default_intent":"whatsapp","is_active":true,"sort_order":20,"published_companies":4,"published_companies_own":0,"children":[{"id":"cat_1a1bd20700e9bfe2f3698","slug":"supermercados-cadena","name_es":"Supermercados","name_ru":"Супермаркеты","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":21,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20700e59bd7dd77c","slug":"almacenes","name_es":"Almacenes de barrio","name_ru":"Продуктовые лавки","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":22,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20700ec7ebc1a90f","slug":"bebidas","name_es":"Bebidas y licorerías","name_ru":"Напитки","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":23,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd20700f10582e9740","slug":"belleza","name_es":"Belleza y cuidado personal","name_ru":"Красота и уход","description_es":null,"icon":"sparkles","default_intent":"booking","is_active":true,"sort_order":30,"published_companies":6,"published_companies_own":0,"children":[{"id":"cat_1a1bd20700fcd00208b16","slug":"peluquerias","name_es":"Peluquerías","name_ru":"Парикмахерские","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":31,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20700f4afd3404ff","slug":"manicura","name_es":"Manicura y uñas","name_ru":"Маникюр","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":32,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20700f2a29357b8b","slug":"barberias","name_es":"Barberías","name_ru":"Барбершопы","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":33,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20701003a174c3ba","slug":"spa","name_es":"Spa y masajes","name_ru":"Спа и массаж","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":34,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207010ff247b0184","slug":"vehiculos","name_es":"Vehículos","name_ru":"Транспорт","description_es":null,"icon":"car","default_intent":"request","is_active":true,"sort_order":40,"published_companies":4,"published_companies_own":0,"children":[{"id":"cat_1a1bd207010b3f0280b47","slug":"alquiler-vehiculos","name_es":"Alquiler de vehículos","name_ru":"Аренда авто","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":41,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd20701197db4b69cd","slug":"taller-mecanico","name_es":"Talleres mecánicos","name_ru":"Автосервис","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":42,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207011dc620ceb81","slug":"repuestos","name_es":"Repuestos y accesorios","name_ru":"Запчасти","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":43,"published_companies":0,"published_companies_own":0,"children":[]},{"id":"cat_1a1bd207011ae514e65a9","slug":"lavadero","name_es":"Lavaderos","name_ru":"Автомойки","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":44,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd2070111789b7e532","slug":"tecnologia","name_es":"Tecnología y electrodomésticos","name_ru":"Техника и электроника","description_es":null,"icon":"device","default_intent":"whatsapp","is_active":true,"sort_order":50,"published_companies":5,"published_companies_own":0,"children":[{"id":"cat_1a1bd207012545b958596","slug":"celulares","name_es":"Celulares y accesorios","name_ru":"Смартфоны","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":51,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd2070123eaafcc6de","slug":"informatica","name_es":"Informática","name_ru":"Компьютеры","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":52,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207012bbe776ce49","slug":"electrodomesticos","name_es":"Electrodomésticos","name_ru":"Бытовая техника","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":53,"published_companies":1,"published_companies_own":1,"children":[]}]},{"id":"cat_1a1bd207013b9a8ab7820","slug":"salud","name_es":"Salud","name_ru":"Здоровье","description_es":null,"icon":"health","default_intent":"call","is_active":true,"sort_order":60,"published_companies":4,"published_companies_own":0,"children":[{"id":"cat_1a1bd20701301836edcd3","slug":"farmacias","name_es":"Farmacias","name_ru":"Аптеки","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":61,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207013349cedcdf3","slug":"clinicas","name_es":"Clínicas y consultorios","name_ru":"Клиники","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":62,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207013805b46f783","slug":"odontologia","name_es":"Odontología","name_ru":"Стоматология","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":63,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207014ea471d00f8","slug":"hogar","name_es":"Hogar y construcción","name_ru":"Дом и строительство","description_es":null,"icon":"home","default_intent":"whatsapp","is_active":true,"sort_order":70,"published_companies":2,"published_companies_own":0,"children":[{"id":"cat_1a1bd20701474a318f96f","slug":"ferreteria","name_es":"Ferreterías","name_ru":"Хозтовары","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":71,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207014fd5869001f","slug":"muebles","name_es":"Muebles y decoración","name_ru":"Мебель","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":72,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207014c37462bac4","slug":"educacion","name_es":"Educación","name_ru":"Образование","description_es":null,"icon":"book","default_intent":"request","is_active":true,"sort_order":80,"published_companies":2,"published_companies_own":0,"children":[{"id":"cat_1a1bd2070154fa6eb682e","slug":"idiomas","name_es":"Idiomas","name_ru":"Языки","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":81,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207015647c1c93bc","slug":"apoyo-escolar","name_es":"Apoyo escolar","name_ru":"Репетиторы","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":82,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207015f5414e3230","slug":"servicios","name_es":"Servicios profesionales","name_ru":"Услуги","description_es":null,"icon":"briefcase","default_intent":"request","is_active":true,"sort_order":90,"published_companies":4,"published_companies_own":0,"children":[{"id":"cat_1a1bd2070153654a2a2d5","slug":"contadores","name_es":"Contadores y trámites","name_ru":"Бухгалтерия","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":91,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd2070169a5c7c94d6","slug":"mudanzas","name_es":"Mudanzas y fletes","name_ru":"Переезды","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":92,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd2070160697f71037","slug":"abogados","name_es":"Abogados","name_ru":"Юристы","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":93,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207016d96adac671","slug":"eventos","name_es":"Eventos y agenda","name_ru":"События и афиша","description_es":null,"icon":"ticket","default_intent":"request","is_active":true,"sort_order":100,"published_companies":2,"published_companies_own":0,"children":[{"id":"cat_1a1bd20701730506ad92c","slug":"shows","name_es":"Shows y música en vivo","name_ru":"Концерты","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":101,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd2070172cfdf4d239","slug":"teatro","name_es":"Teatro","name_ru":"Театр","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":102,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207017306122d0af","slug":"turismo","name_es":"Turismo y alojamiento","name_ru":"Туризм и проживание","description_es":null,"icon":"bed","default_intent":"booking","is_active":true,"sort_order":110,"published_companies":2,"published_companies_own":0,"children":[{"id":"cat_1a1bd2070179f5a3278f2","slug":"hoteles","name_es":"Hoteles","name_ru":"Отели","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":111,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207018e45dd2918b","slug":"excursiones","name_es":"Excursiones","name_ru":"Экскурсии","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":112,"published_companies":0,"published_companies_own":0,"children":[]}]},{"id":"cat_1a1bd207018beb3064745","slug":"mascotas","name_es":"Mascotas","name_ru":"Животные","description_es":null,"icon":"paw","default_intent":"booking","is_active":true,"sort_order":120,"published_companies":3,"published_companies_own":0,"children":[{"id":"cat_1a1bd207018aa418a8080","slug":"veterinarias","name_es":"Veterinarias","name_ru":"Ветклиники","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":121,"published_companies":2,"published_companies_own":2,"children":[]},{"id":"cat_1a1bd207018b703fe3d6c","slug":"pet-shops","name_es":"Pet shops","name_ru":"Зоомагазины","description_es":null,"icon":null,"default_intent":"whatsapp","is_active":true,"sort_order":122,"published_companies":1,"published_companies_own":1,"children":[]}]}]}},"GET /api/admin/settlements?limit=50":{"status":200,"body":{"total":5,"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-09T09:01:57.762412+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000005","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-DEMO-01","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd7e3d090b22bf5c36","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T23:28:49.421861+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000004","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-DEMO-01","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd2a23f03ab438d597","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T21:56:57.969305+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000003","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"SMOKE-0001","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd29ca0703c88ba4f1","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T21:56:34.952722+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000002","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"SMOKE-0001","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."},{"id":"stl_1a1bd25a99b746c0f8057","status":"pending","status_reason_es":"Pendiente de conciliación con el socio.","created_at":"2026-11-08T21:52:04.512109+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"lead_ref":"PRTDS-2026-000001","contract_number":"CTR-2026-001","billing_model":"rev_share","rule":{"name":"Belleza — 7% venta confirmada","rate_percent":7.0,"fixed_amount_display":"G. 0"},"basis_kind":"sale_confirmed","basis_amount_pyg":180000,"basis_amount_display":"G. 180.000","rate_bps":700,"commission_amount_pyg":12600,"commission_display":"G. 12.600","direct_costs_pyg":4000,"contribution_margin_pyg":8600,"contribution_margin_display":"G. 8.600","cap_applied":false,"period_key":"2026-11","proof_ref":"FACT-0042","note_es":"El importe base es la venta del comercio (GMV); el ingreso de PRTDS es solo la comisión."}]}},"GET /api/admin/funnel/events?limit=30":{"status":200,"body":{"total":30,"events":[{"id":"ev_1a1bf92ef943f0eb09dcc","event_type":"call_click","occurred_at":"2026-11-09T09:10:40.276378","company_id":"cmp_1a1bd20703d310684719a","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"ref":"LL-2611-C9BDD3","channel":"phone"}},{"id":"ev_1a1bf92ef9122e8df5c0e","event_type":"whatsapp_click","occurred_at":"2026-11-09T09:10:40.273374","company_id":"cmp_1a1bd20703d310684719a","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"ref":"WA-2611-3601C9","channel":"whatsapp"}},{"id":"ev_1a1bf92ef8e9f414881ed","event_type":"card_open","occurred_at":"2026-11-09T09:10:40.270038","company_id":"cmp_1a1bd2070440b32008631","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":null},{"id":"ev_1a1bf92ef8514fb2f5ca2","event_type":"card_open","occurred_at":"2026-11-09T09:10:40.261752","company_id":"cmp_1a1bd20701cae1810cf4a","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":null},{"id":"ev_1a1bf92ef7c44998395b6","event_type":"card_open","occurred_at":"2026-11-09T09:10:40.252258","company_id":"cmp_1a1bd207030c943398452","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":null},{"id":"ev_1a1bf92ef72328ba9550b","event_type":"card_open","occurred_at":"2026-11-09T09:10:40.242343","company_id":"cmp_1a1bd20704cd710d88dc8","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":null},{"id":"ev_1a1bf92ef69916924a2a0","event_type":"card_open","occurred_at":"2026-11-09T09:10:40.233017","company_id":"cmp_1a1bd20703d310684719a","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":null},{"id":"ev_1a1bf92ef592e9e12c64c","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.216873","company_id":"cmp_1a1bd20702cdb65cde1ed","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":"sushi","sort":"relevance"}},{"id":"ev_1a1bf92ef51889ab7e670","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.209611","company_id":"cmp_1a1bd2070440b32008631","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":"alquiler de autos","sort":"relevance"}},{"id":"ev_1a1bf92ef42e43214cbf8","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.194303","company_id":"cmp_1a1bd207030c943398452","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":"yerba mate","sort":"relevance"}},{"id":"ev_1a1bf92ef39fd1d3f4386","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.185675","company_id":"cmp_1a1bd20703d310684719a","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":"manicura","sort":"relevance"}},{"id":"ev_1a1bf92eeb6ec72b06256","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.054346","company_id":"cmp_1a1bd20704cd710d88dc8","lead_id":null,"source":"sponsored","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb64c9d25326e","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.053827","company_id":"cmp_1a1bd2070682e5c07196d","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb5c9c97aaa8d","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.053246","company_id":"cmp_1a1bd20705f717a7cb73f","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb424e1134520","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.052721","company_id":"cmp_1a1bd207051d82d7c8e49","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb46e7be72c47","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.052235","company_id":"cmp_1a1bd20706a5351c258b7","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb3ceba2064b8","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.051726","company_id":"cmp_1a1bd20705bc652fa766b","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb360fcc3c73a","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.051211","company_id":"cmp_1a1bd207054102aaaa70d","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb23fc495b707","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.050694","company_id":"cmp_1a1bd2070654d1a05940d","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb2fef2c1edb7","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.050133","company_id":"cmp_1a1bd2070582b8426dbc8","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb14ade933861","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.049616","company_id":"cmp_1a1bd2070283bdb213ee2","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb15f2ab0cd43","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.049079","company_id":"cmp_1a1bd20704112a4f1548b","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeb0bda1dbbe5c","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.048443","company_id":"cmp_1a1bd207036994f414c9f","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf92eeafd6185659e6","event_type":"search_result","occurred_at":"2026-11-09T09:10:40.047635","company_id":"cmp_1a1bd20706214ca234645","lead_id":null,"source":"search","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"q":null,"sort":"relevance"}},{"id":"ev_1a1bf8af68276a183b3d1","event_type":"settlement_created","occurred_at":"2026-11-09T09:01:57.762565","company_id":"cmp_1a1bd20703d310684719a","lead_id":"ld_1a1bf8af6742b0ba63ad7","source":"platform","campaign_id":null,"actor_kind":"system","amount_pyg":12600,"disputed":false,"evidence":{"settlement_id":"stl_1a1bf8af68133277db306","status":"pending"}},{"id":"ev_1a1bf8af680338e335b6b","event_type":"sale_confirmed","occurred_at":"2026-11-09T09:01:57.760138","company_id":"cmp_1a1bd20703d310684719a","lead_id":"ld_1a1bf8af6742b0ba63ad7","source":"partner_cabinet","campaign_id":null,"actor_kind":"partner","amount_pyg":180000,"disputed":false,"evidence":{"proof_ref":"FACT-DEMO-01","note":null,"ref":"PRTDS-2026-000005"}},{"id":"ev_1a1bf8af67b32eba95be3","event_type":"lead_accepted","occurred_at":"2026-11-09T09:01:57.755386","company_id":"cmp_1a1bd20703d310684719a","lead_id":"ld_1a1bf8af6742b0ba63ad7","source":"partner_cabinet","campaign_id":null,"actor_kind":"partner","amount_pyg":null,"disputed":false,"evidence":{"ref":"PRTDS-2026-000005","note":null}},{"id":"ev_1a1bf8af67538820f6bf7","event_type":"lead_submitted","occurred_at":"2026-11-09T09:01:57.748710","company_id":"cmp_1a1bd20703d310684719a","lead_id":"ld_1a1bf8af6742b0ba63ad7","source":"offline_demo","campaign_id":null,"actor_kind":"user","amount_pyg":null,"disputed":false,"evidence":{"ref":"PRTDS-2026-000005","intent":"booking"}},{"id":"ev_1a1bf8af66f99a5ac252a","event_type":"call_click","occurred_at":"2026-11-09T09:01:57.743720","company_id":"cmp_1a1bd20703d310684719a","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"ref":"LL-2611-59FEBF","channel":"phone"}},{"id":"ev_1a1bf8af66c8719726ddd","event_type":"whatsapp_click","occurred_at":"2026-11-09T09:01:57.739856","company_id":"cmp_1a1bd20703d310684719a","lead_id":null,"source":"card","campaign_id":null,"actor_kind":"anonymous","amount_pyg":null,"disputed":false,"evidence":{"ref":"WA-2611-5C2D9B","channel":"whatsapp"}}]}},"POST /api/admin/reindex":{"status":200,"body":{"reindexed_companies":23,"note_es":"Índice de búsqueda reconstruido. En producción este trabajo lo hace tsvector/GIN de PostgreSQL; aquí se mantiene una columna plegada portable."}}};
+(async () => {
+/* ---- api.js ---- */
+/* API client.
+ *
+ * Only relative URLs are used, so the same code runs behind the sandbox preview
+ * proxy, behind a Cloudflare Worker or behind Render — the browser never talks
+ * to localhost or to another origin (concept §13.3, sandbox preview rules).
+ */
+
+const SESSION_KEY = "prtds.session_ref";
+const ACTOR_KEY = "prtds.actor_ref";
+const PARTNER_TOKEN_KEY = "prtds.partner_token";
+const ADMIN_TOKEN_KEY = "prtds.admin_token";
+
+function randomRef(prefix) {
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  return prefix + Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/** Pseudonymous per-visit reference. Never derived from personal data. */
+function sessionRef() {
+  let value = sessionStorage.getItem(SESSION_KEY);
+  if (!value) {
+    value = randomRef("s_");
+    sessionStorage.setItem(SESSION_KEY, value);
+  }
+  return value;
+}
+
+function actorRef() {
+  return sessionStorage.getItem(ACTOR_KEY);
+}
+
+function setActorRef(value) {
+  if (value) sessionStorage.setItem(ACTOR_KEY, value);
+  else sessionStorage.removeItem(ACTOR_KEY);
+}
+
+const tokens = {
+  get partner() {
+    return sessionStorage.getItem(PARTNER_TOKEN_KEY) || "";
+  },
+  set partner(value) {
+    value ? sessionStorage.setItem(PARTNER_TOKEN_KEY, value) : sessionStorage.removeItem(PARTNER_TOKEN_KEY);
+  },
+  get admin() {
+    return sessionStorage.getItem(ADMIN_TOKEN_KEY) || "";
+  },
+  set admin(value) {
+    value ? sessionStorage.setItem(ADMIN_TOKEN_KEY, value) : sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  },
+};
+
+class ApiError extends Error {
+  constructor(status, detail, payload) {
+    super(typeof detail === "string" ? detail : "Error de red");
+    this.status = status;
+    this.detail = detail;
+    this.payload = payload;
+  }
+}
+
+async function parse(response) {
+  const text = await response.text();
+  let payload = null;
+  try {
+    payload = text ? JSON.parse(text) : null;
+  } catch {
+    payload = { detail: text.slice(0, 300) };
+  }
+  if (!response.ok) {
+    const detail =
+      (payload && (payload.detail || payload.message)) || `HTTP ${response.status}`;
+    throw new ApiError(response.status, detail, payload);
+  }
+  return payload;
+}
+
+async function api(path, { method = "GET", body, auth, headers = {} } = {}) {
+  const finalHeaders = {
+    "X-PRTDS-Session": sessionRef(),
+    ...headers,
+  };
+  if (actorRef()) finalHeaders["X-PRTDS-Actor"] = actorRef();
+  if (auth === "partner" && tokens.partner) finalHeaders["X-Partner-Token"] = tokens.partner;
+  if (auth === "admin" && tokens.admin) finalHeaders["X-Admin-Token"] = tokens.admin;
+  if (body !== undefined) finalHeaders["Content-Type"] = "application/json";
+
+  const response = await fetch(path, {
+    method,
+    headers: finalHeaders,
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  return parse(response);
+}
+
+const get = (path, options) => api(path, { ...options, method: "GET" });
+const post = (path, body, options) => api(path, { ...options, method: "POST", body });
+const patch = (path, body, options) => api(path, { ...options, method: "PATCH", body });
+
+/** Reads the slug from /empresa/{slug}. */
+function pathParam(index = 1) {
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  return decodeURIComponent(parts[index] || "");
+}
+
+function queryParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+
+/* ---- format.js ---- */
+/* Presentation helpers: Spanish (Paraguay), guaraníes without decimals,
+ * local timezone America/Asuncion (concept §02). */
+
+const TZ = "America/Asuncion";
+
+function fmtDateTime(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return new Intl.DateTimeFormat("es-PY", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: TZ,
+  }).format(date);
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return new Intl.DateTimeFormat("es-PY", { dateStyle: "medium", timeZone: TZ }).format(date);
+}
+
+/** PYG has no fractional units: 1250000 -> "G. 1.250.000". */
+function fmtPyg(amount) {
+  if (amount === null || amount === undefined) return "—";
+  const negative = amount < 0;
+  const digits = Math.abs(Number(amount)).toLocaleString("es-PY", { maximumFractionDigits: 0 });
+  return `${negative ? "-" : ""}G. ${digits.replaceAll(",", ".")}`;
+}
+
+const LEAD_STATUS_ES = {
+  submitted: { label: "Entregada", tone: "neutral", hint: "El comercio aún no respondió." },
+  accepted: { label: "Aceptada", tone: "ok", hint: "El comercio confirmó la solicitud." },
+  rejected: { label: "Rechazada", tone: "danger", hint: "El comercio no puede atenderla." },
+  booked: { label: "Turno confirmado", tone: "ok", hint: "Hay día y hora confirmados." },
+  visit_done: { label: "Servicio realizado", tone: "ok", hint: "El comercio marcó la visita como realizada." },
+  sale_confirmed: { label: "Venta confirmada", tone: "ok", hint: "Resultado confirmado con evidencia." },
+  cancelled: { label: "Cancelada", tone: "warn", hint: "Cancelada por el cliente o el comercio." },
+  expired: { label: "Vencida", tone: "warn", hint: "Sin respuesta dentro del plazo acordado." },
+};
+
+const SETTLEMENT_STATUS_ES = {
+  pending: { label: "Pendiente de conciliación", tone: "warn" },
+  approved: { label: "Aprobada", tone: "ok" },
+  flagged_negative_cm: { label: "Margen no positivo", tone: "danger" },
+  no_contract_basis: { label: "Sin contrato (ingreso 0)", tone: "neutral" },
+  disputed: { label: "En disputa", tone: "danger" },
+  void: { label: "Anulada", tone: "neutral" },
+  paid: { label: "Pagada", tone: "ok" },
+};
+
+const VERIFICATION_ES = {
+  unverified: { label: "Sin verificar", tone: "warn" },
+  source_only: { label: "Solo fuente registrada", tone: "neutral" },
+  partner_confirmed: { label: "Confirmado por el comercio", tone: "ok" },
+  field_verified: { label: "Verificado en campo", tone: "ok" },
+};
+
+const PUBLICATION_ES = {
+  draft: "Borrador",
+  staging: "Staging",
+  validated: "Validado",
+  moderated: "Moderado",
+  published: "Publicado",
+  archived: "Archivado",
+};
+
+function badge(text, tone = "neutral") {
+  return `<span class="badge ${tone}">${escapeHtml(text)}</span>`;
+}
+
+function statusBadge(map, key) {
+  const entry = map[key] || { label: key, tone: "neutral" };
+  return badge(entry.label, entry.tone);
+}
+
+function escapeHtml(value) {
+  if (value === null || value === undefined) return "";
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+/** Today's weekday key in local time ("mon", "tue", …) for opening hours. */
+function todayKey() {
+  const parts = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: TZ }).format(new Date());
+  return parts.toLowerCase();
+}
+
+function hoursToday(openingHours) {
+  const key = todayKey();
+  const slots = (openingHours || {})[key];
+  if (!slots || !slots.length) return "Cerrado hoy";
+  return slots.map(([open, close]) => `${open}–${close}`).join(", ");
+}
+
+function relativeAge(iso) {
+  if (!iso) return null;
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return null;
+  const hours = Math.round((Date.now() - then) / 3_600_000);
+  if (hours < 1) return "hace minutos";
+  if (hours < 48) return `hace ${hours} h`;
+  const days = Math.round(hours / 24);
+  return `hace ${days} días`;
+}
+
+
+/* ---- tracking.js ---- */
+/* Funnel instrumentation.
+ *
+ * The client only reports *attempts and impressions*. The server decides what an
+ * event proves, de-duplicates it and refuses commercial facts through this
+ * channel (concept §07). Nothing here may be read as a sale.
+ */
+
+
+
+function bucketKey(type, slug, extra = "") {
+  const now = new Date();
+  const bucket = `${now.getFullYear()}${now.getMonth()}${now.getDate()}${Math.floor(now.getHours() / 1)}`;
+  return `c_${sessionRef()}_${type}_${slug}_${extra}_${bucket}`;
+}
+
+/** Fire-and-forget: instrumentation must never block the user path. */
+function track(type, { companySlug, branchId, offerId, source, campaignId, amountPyg } = {}) {
+  const payload = {
+    event_type: type,
+    company_slug: companySlug || null,
+    branch_id: branchId || null,
+    offer_id: offerId || null,
+    source: source || null,
+    campaign_id: campaignId || null,
+    amount_pyg: amountPyg ?? null,
+    idempotency_key: bucketKey(type, companySlug || "", offerId || branchId || ""),
+  };
+  return post("/api/events", payload).catch((error) => {
+    console.warn("evento no registrado:", type, error.message);
+    return null;
+  });
+}
+
+/** UTM / QR parameters carried through the session so attribution has a source. */
+function utmFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  const utm = {};
+  ["source", "medium", "campaign", "term", "content"].forEach((key) => {
+    const value = params.get(`utm_${key}`);
+    if (value) utm[key] = value;
+  });
+  const campaign = params.get("campaign") || params.get("ref");
+  return { utm: Object.keys(utm).length ? utm : null, campaignId: campaign || null };
+}
+
+
+/* ---- offline shim (solo en esta сборка) ---- */
+(function () {
+  const memory = {};
+  const safeStorage = {
+    getItem: (key) => (key in memory ? memory[key] : null),
+    setItem: (key, value) => { memory[key] = String(value); },
+    removeItem: (key) => { delete memory[key]; },
+  };
+  try { window.sessionStorage.getItem("probe"); } catch (error) { window.sessionStorage = safeStorage; }
+  try { window.localStorage.getItem("probe"); } catch (error) { window.localStorage = safeStorage; }
+})();
+
+/* file:// no permite reescribir la URL: se ignora en vez de romper la página */
+history.replaceState = function noop() {};
+history.pushState = function noop() {};
+
+/* la página se comporta como si estuviera en esta ruta del sitio real */
+const OFFLINE_PATH = "/admin";
+function pathParam(index = 1) {
+  const parts = OFFLINE_PATH.split("/").filter(Boolean);
+  return decodeURIComponent(parts[index] || "");
+}
+function queryParam(name) {
+  return new URLSearchParams("").get(name);
+}
+
+/* la red se sustituye por respuestas grabadas del API real */
+window.__PRTDS_OFFLINE__ = true;
+const OFFLINE_NOTES = [];
+window.fetch = async function offlineFetch(input, init = {}) {
+  const method = (init.method || "GET").toUpperCase();
+  const url = typeof input === "string" ? input : input.url;
+  const [path, query = ""] = url.split("?");
+  const search = query ? "?" + query : "";
+  const candidates = [
+    `${method} ${path}${search}`,
+    `${method} ${path}`,
+  ];
+  if (method === "GET" && path === "/api/search") {
+    candidates.push("GET /api/search?limit=12");
+    candidates.push("GET /api/search?q=manicura&limit=12");
+  }
+  if (method === "GET" && path === "/api/partner/leads") candidates.push("GET /api/partner/leads?limit=50");
+  if (method === "GET" && path.startsWith("/api/leads/")) candidates.push("GET /api/leads/PRTDS-2026-000001");
+  if (method === "GET" && path.startsWith("/api/companies/")) candidates.push("GET /api/companies/nails-mburucuya");
+  if (method === "POST" && path.endsWith("/decision")) {
+    candidates.push(Object.keys(SNAPSHOT).find((key) => key.endsWith("/decision")) || "");
+  }
+  if (method === "POST" && path.endsWith("/sale")) {
+    candidates.push(Object.keys(SNAPSHOT).find((key) => key.endsWith("/sale")) || "");
+  }
+  if (method === "POST" && path.startsWith("/api/admin/")) candidates.push("POST /api/admin/reindex");
+
+  for (const key of candidates) {
+    const entry = SNAPSHOT[key];
+    if (!entry) continue;
+    OFFLINE_NOTES.push(key);
+    return new Response(JSON.stringify(entry.body), {
+      status: entry.status,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  OFFLINE_NOTES.push(`${method} ${path} → sin datos grabados`);
+  return new Response(
+    JSON.stringify({ detail: "Demostración sin conexión: esta respuesta no fue grabada." }),
+    { status: 404, headers: { "Content-Type": "application/json" } }
+  );
+};
+
+/* ---- admin.js ---- */
+/* Admin console: taxonomy, publication pipeline, maintenance and audit tables. */
+
+
+
+
+const el = {
+  gate: document.getElementById("gate"),
+  gateForm: document.getElementById("gate-form"),
+  gateError: document.getElementById("gate-error"),
+  token: document.getElementById("token"),
+  panel: document.getElementById("panel"),
+  stats: document.getElementById("stats"),
+  statsNotes: document.getElementById("stats-notes"),
+  categories: document.getElementById("categories"),
+  categoryForm: document.getElementById("category-form"),
+  categoryMessage: document.getElementById("category-message"),
+  publicationForm: document.getElementById("publication-form"),
+  publicationMessage: document.getElementById("publication-message"),
+  settlements: document.getElementById("settlements"),
+  events: document.getElementById("events"),
+  maintenanceMessage: document.getElementById("maintenance-message"),
+};
+
+function metric(label, value, hint = "") {
+  return `<div class="metric"><div class="label">${escapeHtml(label)}</div>
+    <div class="value">${escapeHtml(value)}</div>
+    ${hint ? `<div class="hint">${escapeHtml(hint)}</div>` : ""}</div>`;
+}
+
+function renderStats(data) {
+  const catalog = data.catalog || {};
+  const econ = data.economics || {};
+  el.stats.innerHTML = [
+    metric("Fichas publicadas", catalog.published_cards ?? 0, "Lo que ve una persona"),
+    metric("Personas jurídicas", catalog.legal_entities_in_registry ?? 0, "Registro maestro; NO son fichas"),
+    metric("Registros de empresa", catalog.company_records_total ?? 0, "Incluye staging y borradores"),
+    metric("Contratos activos", data.commerce?.active_contracts ?? 0, "Única base de cobro"),
+    metric("Solicitudes", data.funnel?.leads_total ?? 0, "Entregadas con consentimiento"),
+    metric("Eventos del ledger", data.funnel?.events_total ?? 0, "Append-only, con idempotencia"),
+    metric("Ingreso PRTDS", econ.prtds_revenue_display || fmtPyg(0), "Comisión, no GMV"),
+    metric("GMV confirmado", econ.gmv_display || fmtPyg(0), "Ventas de los comercios"),
+  ].join("");
+
+  const byStatus = Object.entries(catalog.by_status || {})
+    .map(([status, count]) => `${badge(status, status === "published" ? "ok" : "neutral")} ${count}`)
+    .join(" ");
+
+  el.statsNotes.innerHTML = `
+    <div class="notice tiny">${escapeHtml(catalog.warning_es || "")}</div>
+    <p class="small" style="margin:8px 0 0">Fichas por estado: ${byStatus || "—"}</p>
+    ${(econ.alerts || [])
+      .filter((alert) => alert.count > 0)
+      .map((alert) => `<div class="notice warn tiny"><strong>${escapeHtml(alert.code)}</strong> · ${alert.count}: ${escapeHtml(alert.message_es)}</div>`)
+      .join("")}`;
+}
+
+function categoryRows(items, depth = 0) {
+  return items
+    .map((category) => {
+      const children = category.children?.length ? categoryRows(category.children, depth + 1) : "";
+      return `<tr>
+        <td style="padding-left:${10 + depth * 18}px">
+          ${depth ? "└ " : ""}<strong>${escapeHtml(category.name_es)}</strong>
+          <span class="mono tiny muted">${escapeHtml(category.slug)}</span>
+        </td>
+        <td class="num">${category.published_companies ?? 0}</td>
+        <td>${escapeHtml(category.default_intent)}</td>
+        <td class="tiny muted">${category.is_active ? "activa" : "inactiva"}</td>
+        <td><button class="btn small ghost" data-toggle="${escapeHtml(category.slug)}" data-active="${category.is_active}">
+          ${category.is_active ? "Desactivar" : "Activar"}</button></td>
+      </tr>${children}`;
+    })
+    .join("");
+}
+
+async function renderCategories() {
+  const data = await get("/api/admin/categories", { auth: "admin" });
+  el.categories.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th>Categoría</th><th class="num">Fichas</th><th>Acción principal</th><th>Estado</th><th></th></tr></thead>
+    <tbody>${categoryRows(data.categories || [])}</tbody></table></div>`;
+}
+
+async function renderCommerce() {
+  const [settlements, events] = await Promise.all([
+    get("/api/admin/settlements?limit=50", { auth: "admin" }),
+    get("/api/admin/funnel/events?limit=30", { auth: "admin" }),
+  ]);
+
+  el.settlements.innerHTML = `<table>
+    <thead><tr><th>Solicitud</th><th>Base (GMV)</th><th class="num">Comisión</th><th class="num">Margen</th><th>Estado</th><th>Motivo</th></tr></thead>
+    <tbody>${
+      (settlements.settlements || [])
+        .map(
+          (row) => `<tr>
+            <td class="mono tiny">${escapeHtml(row.lead_ref || "—")}</td>
+            <td>${escapeHtml(row.basis_amount_display)}</td>
+            <td class="num">${escapeHtml(row.commission_display)}</td>
+            <td class="num">${escapeHtml(row.contribution_margin_display)}</td>
+            <td>${statusBadge(SETTLEMENT_STATUS_ES, row.status)}</td>
+            <td class="tiny muted">${escapeHtml(row.status_reason_es || "")}</td>
+          </tr>`
+        )
+        .join("") || '<tr><td colspan="6" class="muted">Sin liquidaciones.</td></tr>'
+    }</tbody></table>`;
+
+  el.events.innerHTML = `<table>
+    <thead><tr><th>Cuándo</th><th>Evento</th><th>Origen</th><th class="num">Importe</th><th>Prueba</th></tr></thead>
+    <tbody>${
+      (events.events || [])
+        .map(
+          (row) => `<tr>
+            <td class="tiny nowrap">${escapeHtml(fmtDateTime(row.occurred_at))}</td>
+            <td><span class="mono tiny">${escapeHtml(row.event_type)}</span></td>
+            <td class="tiny">${escapeHtml(row.source || "—")}</td>
+            <td class="num tiny">${row.amount_pyg ? escapeHtml(fmtPyg(row.amount_pyg)) : "—"}</td>
+            <td class="tiny muted">${escapeHtml(row.actor_kind)}${row.disputed ? " · en disputa" : ""}</td>
+          </tr>`
+        )
+        .join("") || '<tr><td colspan="5" class="muted">Sin eventos.</td></tr>'
+    }</tbody></table>`;
+}
+
+async function refreshAll() {
+  try {
+    const stats = await get("/api/admin/stats", { auth: "admin" });
+    renderStats(stats);
+    await renderCategories();
+    await renderCommerce();
+  } catch (error) {
+    el.statsNotes.innerHTML = `<div class="notice danger">${escapeHtml(error.message)}</div>`;
+  }
+}
+
+function flash(target, message, tone = "ok") {
+  target.innerHTML = `<div class="notice ${tone}">${escapeHtml(message)}</div>`;
+  window.setTimeout(() => (target.innerHTML = ""), 8000);
+}
+
+el.gateForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  tokens.admin = el.token.value.trim();
+  el.gateError.innerHTML = "";
+  try {
+    await get("/api/admin/stats", { auth: "admin" });
+    el.gate.classList.add("hidden");
+    el.panel.classList.remove("hidden");
+    await refreshAll();
+  } catch (error) {
+    tokens.admin = "";
+    el.gateError.innerHTML = `<div class="notice danger">${escapeHtml(error.message)}</div>`;
+  }
+});
+
+document.getElementById("logout").addEventListener("click", () => {
+  tokens.admin = "";
+  el.panel.classList.add("hidden");
+  el.gate.classList.remove("hidden");
+});
+
+document.getElementById("refresh").addEventListener("click", refreshAll);
+
+el.categoryForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const synonyms = document.getElementById("cat-syn").value
+    .split(",")
+    .map((word) => word.trim())
+    .filter(Boolean);
+  const payload = {
+    slug: document.getElementById("cat-slug").value.trim(),
+    name_es: document.getElementById("cat-name").value.trim(),
+    parent_slug: document.getElementById("cat-parent").value.trim() || null,
+    default_intent: document.getElementById("cat-intent").value,
+    description_es: document.getElementById("cat-desc").value.trim() || null,
+    synonyms_es: synonyms.length ? synonyms : null,
+  };
+  try {
+    const created = await post("/api/admin/categories", payload, { auth: "admin" });
+    if (synonyms.length) await patch(`/api/admin/categories/${encodeURIComponent(created.slug)}`, { synonyms_es: synonyms }, { auth: "admin" });
+    flash(el.categoryMessage, `Categoría creada: ${created.name_es} (${created.slug})`);
+    el.categoryForm.reset();
+    await renderCategories();
+  } catch (error) {
+    flash(el.categoryMessage, error.message, "danger");
+  }
+});
+
+el.categories.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-toggle]");
+  if (!button) return;
+  button.disabled = true;
+  try {
+    await patch(
+      `/api/admin/categories/${encodeURIComponent(button.dataset.toggle)}`,
+      { is_active: button.dataset.active !== "true" },
+      { auth: "admin" }
+    );
+    await renderCategories();
+  } catch (error) {
+    flash(el.categoryMessage, error.message, "danger");
+    button.disabled = false;
+  }
+});
+
+el.publicationForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const slug = document.getElementById("pub-slug").value.trim();
+  const status = document.getElementById("pub-status").value;
+  try {
+    const result = await post(
+      `/api/admin/companies/${encodeURIComponent(slug)}/publication`,
+      { status, reason: "cambio desde consola de administración" },
+      { auth: "admin" }
+    );
+    flash(
+      el.publicationMessage,
+      `${result.slug}: ${result.previous_status} → ${result.status}. ${result.note_es}`
+    );
+    await refreshAll();
+  } catch (error) {
+    flash(el.publicationMessage, error.message, "danger");
+  }
+});
+
+document.getElementById("reindex").addEventListener("click", async (event) => {
+  event.target.disabled = true;
+  try {
+    const result = await post("/api/admin/reindex", {}, { auth: "admin" });
+    flash(el.maintenanceMessage, `${result.reindexed_companies} fichas reindexadas. ${result.note_es}`);
+  } catch (error) {
+    flash(el.maintenanceMessage, error.message, "danger");
+  } finally {
+    event.target.disabled = false;
+  }
+});
+
+document.getElementById("reseed").addEventListener("click", async (event) => {
+  if (!window.confirm("Se reconstruyen los datos de demostración. ¿Continuar?")) return;
+  event.target.disabled = true;
+  try {
+    const result = await post("/api/admin/reseed", {}, { auth: "admin" });
+    flash(el.maintenanceMessage, `Datos reiniciados: ${result.companies} empresas, ${result.published_companies} publicadas.`);
+    await refreshAll();
+  } catch (error) {
+    flash(el.maintenanceMessage, error.message, "danger");
+  } finally {
+    event.target.disabled = false;
+  }
+});
+
+if (tokens.admin) {
+  el.token.value = tokens.admin;
+  get("/api/admin/stats", { auth: "admin" })
+    .then(() => {
+      el.gate.classList.add("hidden");
+      el.panel.classList.remove("hidden");
+      refreshAll();
+    })
+    .catch(() => (tokens.admin = ""));
+}
+
+})();
+</script>
+</body>
+</html>
