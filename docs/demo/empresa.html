@@ -270,6 +270,18 @@ ul.clean li { margin-bottom: 6px; }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .error { color: var(--danger); font-size: .84rem; }
 
+/* --- переключатель языка интерфейса (i18n.js) ------------------------- */
+.lang-switch{display:flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap}
+.lang-switch button{border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;
+  font:600 12px/1 system-ui,sans-serif;padding:5px 8px;border-radius:8px;cursor:pointer}
+.lang-switch button.on{background:#fff;color:#2f3aa8;border-color:#fff}
+.lang-switch .lang-hint{display:none}
+.lang-switch:hover .lang-hint,.lang-switch:focus-within .lang-hint{
+  display:block;position:absolute;top:52px;right:12px;max-width:min(92vw,360px);
+  background:#fff;color:#333;border:1px solid #ddd;border-radius:10px;padding:8px 10px;
+  font:400 12px/1.45 system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.14);z-index:70}
+@media (max-width:520px){.lang-switch{margin-left:0}}
+
 
 /* ---- aviso de demostración sin conexión ---- */
 .offline-banner{position:sticky;top:0;z-index:60;background:#fff4d6;border-bottom:1px solid #e0b64a;
@@ -278,9 +290,10 @@ ul.clean li { margin-bottom: 6px; }
 .offline-banner a{color:#5a4300}
 
 </style>
+  <script type="module" src="/assets/js/company.js"></script>
 </head>
 <body>
-<div class="offline-banner"><strong>Demostración sin conexión.</strong> Интерфейс настоящий, данные записаны с работающего API и не сохраняются. Переходы:<a href="index.html" style="margin-left:10px">Búsqueda</a><a href="empresa.html" style="margin-left:10px">Ficha</a><a href="solicitud.html" style="margin-left:10px">Solicitud</a><a href="socio.html" style="margin-left:10px">Socios</a><a href="admin.html" style="margin-left:10px">Admin</a><a href="salud.html" style="margin-left:10px">Estado</a></div>
+<div class="offline-banner"><strong>Demostración sin conexión.</strong> <span>La interfaz es real; las respuestas del API fueron grabadas y nada se guarda.</span> <span>Páginas:</span><a href="index.html" style="margin-left:10px">Búsqueda</a><a href="empresa.html" style="margin-left:10px">Ficha</a><a href="solicitud.html" style="margin-left:10px">Solicitud</a><a href="socio.html" style="margin-left:10px">Socios</a><a href="admin.html" style="margin-left:10px">Admin</a><a href="salud.html" style="margin-left:10px">Estado</a></div>
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="index.html">
@@ -316,7 +329,7 @@ ul.clean li { margin-bottom: 6px; }
     </div>
   </footer>
 <script>
-const SNAPSHOT = {"GET /api/companies/nails-mburucuya":{"status":200,"body":{"id":"cmp_1a1bd20703d310684719a","slug":"nails-mburucuya","display_name":"Nails Mburucuyá","short_description_es":"Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.","description_es":"Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.","brand":{"id":"brd_1a1bd20703dfdcbdb5a8a","name":"Nails Mburucuyá","slug":"nails-mburucuyá","logo_url":null},"legal_entity":{"id":"le_1a1bd20703d086a1b87f6","name":"Mburucuyá Beauty E.I.R.L.","ruc":"80011007-7","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"manicura","name_es":"Manicura y uñas","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes","address_text":"Las Mercedes, Asunción","barrio":"Las Mercedes","city":"Asunción","district":"Asunción","latitude":-25.2911,"longitude":-57.6173,"map_url":"https://www.openstreetmap.org/?mlat=-25.2911&mlon=-57.6173#map=17/-25.2911/-57.6173","channels":{"whatsapp":"+595982555601","phone":"+595982555601","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20703e993978739c","channel":"whatsapp","value":"+595982555601","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20703e5619cf7607","channel":"phone","value":"+595982555601","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"tue":[["09:00","19:00"]],"wed":[["09:00","19:00"]],"thu":[["09:00","19:00"]],"fri":[["09:00","19:00"]],"sat":[["09:00","19:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd20703f7fdac43f8a","title_es":"Manicura clásica","description_es":null,"sku":"NM-MAN-CLA","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":70000,"base_price_display":"G. 70.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":70000,"effective_total_display":"G. 70.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 70.000","base_price_display":"G. 70.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070402ddc8fb183","title_es":"Pedicura spa","description_es":null,"sku":"NM-PED-SPA","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":95000,"base_price_display":"G. 95.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":95000,"effective_total_display":"G. 95.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 95.000","base_price_display":"G. 95.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20703fed610aace2","title_es":"Uñas esculpidas (set completo)","description_es":null,"sku":"NM-ESC-SET","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":180000,"base_price_display":"G. 180.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":180000,"effective_total_display":"G. 180.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 180.000","base_price_display":"G. 180.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":3,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/tecnomovil-guarani":{"status":200,"body":{"id":"cmp_1a1bd20704cd710d88dc8","slug":"tecnomovil-guarani","display_name":"TecnoMóvil Guaraní","short_description_es":"Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.","description_es":"Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.","brand":{"id":"brd_1a1bd20704ca19f46b5c5","name":"TecnoMóvil Guaraní","slug":"tecnomóvil-guaraní","logo_url":null},"legal_entity":{"id":"le_1a1bd20704cbb97f6530a","name":"TecnoMóvil Guaraní S.A.","ruc":"80011011-1","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"celulares","name_es":"Celulares y accesorios","default_intent":"whatsapp"},{"slug":"electrodomesticos","name_es":"Electrodomésticos","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20704d9970a52f9c","name_es":"Local Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.2977,"longitude":-57.6371,"map_url":"https://www.openstreetmap.org/?mlat=-25.2977&mlon=-57.6371#map=17/-25.2977/-57.6371","channels":{"whatsapp":"+595215551001","phone":"+595215551001","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20704d5e5bbc3289","channel":"whatsapp","value":"+595215551001","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20704dba1921ccc4","channel":"phone","value":"+595215551001","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Asunción","delivery_fee_display":"G. 25.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20704ec2a62e9302","name_es":"Local San Lorenzo","address_text":"San Lorenzo, San Lorenzo","barrio":"San Lorenzo","city":"San Lorenzo","district":"San Lorenzo","latitude":-25.3289,"longitude":-57.5339,"map_url":"https://www.openstreetmap.org/?mlat=-25.3289&mlon=-57.5339#map=17/-25.3289/-57.5339","channels":{"whatsapp":"+595215551002","phone":"+595215551002","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20704e98ec32a16f","channel":"whatsapp","value":"+595215551002","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20704e05122a65f3","channel":"phone","value":"+595215551002","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd20704ffc635ad883","title_es":"Auriculares bluetooth","description_es":null,"sku":"TG-AUR-BT","barcode":null,"unit":"unidad","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":240000,"base_price_display":"G. 240.000","seller_discount":0,"confirmed_benefits":24000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":216000,"effective_total_display":"G. 216.000","potential_cashback":32400,"potential_cashback_display":"G. 32.400","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 216.000","base_price_display":"G. 240.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070504d9912b948","title_es":"Funda + vidrio templado","description_es":null,"sku":"TG-KIT-FV","barcode":null,"unit":"kit","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":65000,"base_price_display":"G. 65.000","seller_discount":0,"confirmed_benefits":6500,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":58500,"effective_total_display":"G. 58.500","potential_cashback":8775,"potential_cashback_display":"G. 8.775","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 58.500","base_price_display":"G. 65.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20704f217a753e9d","title_es":"Smartphone gama media 128 GB","description_es":null,"sku":"TG-SM-128","barcode":null,"unit":"unidad","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":1650000,"base_price_display":"G. 1.650.000","seller_discount":50000,"confirmed_benefits":150000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":1450000,"effective_total_display":"G. 1.450.000","potential_cashback":200000,"potential_cashback_display":"G. 200.000","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 1.450.000","base_price_display":"G. 1.650.000","attributes":{"warranty_months":12,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207050b422d3714d","title_es":"Smart TV 43\" 4K","description_es":null,"sku":"TG-TV-43","barcode":null,"unit":"unidad","currency":"PYG","availability_status":"on_request","price":{"currency":"PYG","base_price":2850000,"base_price_display":"G. 2.850.000","seller_discount":0,"confirmed_benefits":150000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":2700000,"effective_total_display":"G. 2.700.000","potential_cashback":200000,"potential_cashback_display":"G. 200.000","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 2.700.000","base_price_display":"G. 2.850.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":true,"promotion_label_es":"Publicidad","data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":4,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/supermercado-kaaguy":{"status":200,"body":{"id":"cmp_1a1bd207030c943398452","slug":"supermercado-kaaguy","display_name":"Supermercado Ka'aguy","short_description_es":"Cadena de supermercados: almacén, carnicería, verdulería y limpieza.","description_es":"Cadena de supermercados: almacén, carnicería, verdulería y limpieza.","brand":{"id":"brd_1a1bd2070301fc4a47540","name":"Ka'aguy","slug":"ka'aguy","logo_url":null},"legal_entity":{"id":"le_1a1bd20702f5157b13f0c","name":"Distribuidora Ka'aguy S.A.","ruc":"80011004-4","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"supermercados-cadena","name_es":"Supermercados","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20703036d2368b3a","name_es":"Ka'aguy Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.3006,"longitude":-57.6398,"map_url":"https://www.openstreetmap.org/?mlat=-25.3006&mlon=-57.6398#map=17/-25.3006/-57.6398","channels":{"whatsapp":"+595215550401","phone":"+595215550401","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd2070316ece2e266a","channel":"whatsapp","value":"+595215550401","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"},{"id":"ct_1a1bd2070315e602411da","channel":"phone","value":"+595215550401","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"}],"opening_hours":{"mon":[["07:00","22:00"]],"tue":[["07:00","22:00"]],"wed":[["07:00","22:00"]],"thu":[["07:00","22:00"]],"fri":[["07:00","22:00"]],"sat":[["07:00","22:00"]],"sun":[["07:00","22:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Centro y alrededores","delivery_fee_display":"G. 35.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20703130341acb6c","name_es":"Ka'aguy Sajonia","address_text":"Sajonia, Asunción","barrio":"Sajonia","city":"Asunción","district":"Asunción","latitude":-25.3022,"longitude":-57.661,"map_url":"https://www.openstreetmap.org/?mlat=-25.3022&mlon=-57.661#map=17/-25.3022/-57.661","channels":{"whatsapp":"+595215550402","phone":"+595215550402","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd2070325ae30dcd6e","channel":"whatsapp","value":"+595215550402","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"},{"id":"ct_1a1bd207032a07c00ed8c","channel":"phone","value":"+595215550402","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"}],"opening_hours":{"mon":[["07:00","22:00"]],"tue":[["07:00","22:00"]],"wed":[["07:00","22:00"]],"thu":[["07:00","22:00"]],"fri":[["07:00","22:00"]],"sat":[["07:00","22:00"]],"sun":[["07:00","22:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Sajonia, Tacumbú","delivery_fee_display":"G. 35.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20703297a4af5e31","name_es":"Ka'aguy Trinidad","address_text":"Santísima Trinidad, Asunción","barrio":"Santísima Trinidad","city":"Asunción","district":"Asunción","latitude":-25.2686,"longitude":-57.6279,"map_url":"https://www.openstreetmap.org/?mlat=-25.2686&mlon=-57.6279#map=17/-25.2686/-57.6279","channels":{"whatsapp":"+595215550403","phone":"+595215550403","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd2070328eae603127","channel":"whatsapp","value":"+595215550403","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"},{"id":"ct_1a1bd20703369d175f6d5","channel":"phone","value":"+595215550403","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"}],"opening_hours":{"mon":[["07:00","22:00"]],"tue":[["07:00","22:00"]],"wed":[["07:00","22:00"]],"thu":[["07:00","22:00"]],"fri":[["07:00","22:00"]],"sat":[["07:00","22:00"]],"sun":[["07:00","22:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd207034d058285975","title_es":"Aceite de girasol 900 ml","description_es":null,"sku":"KA-ACE-900","barcode":null,"unit":"botella","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":12500,"base_price_display":"G. 12.500","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":10500,"effective_total_display":"G. 10.500","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 10.500","base_price_display":"G. 12.500","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070350dbe2b48da","title_es":"Detergente en polvo 800 g","description_es":null,"sku":"KA-DET-800","barcode":null,"unit":"caja","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":18900,"base_price_display":"G. 18.900","seller_discount":1900,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":15000,"effective_total_display":"G. 15.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 15.000","base_price_display":"G. 18.900","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207035b77ba4efaf","title_es":"Gaseosa cola 2 L","description_es":null,"sku":"KA-GAS-2L","barcode":null,"unit":"botella","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":9800,"base_price_display":"G. 9.800","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":7800,"effective_total_display":"G. 7.800","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 7.800","base_price_display":"G. 9.800","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20703457b6f4f34a","title_es":"Pan francés (por kg)","description_es":null,"sku":"KA-PAN-KG","barcode":null,"unit":"kg","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":14000,"base_price_display":"G. 14.000","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":12000,"effective_total_display":"G. 12.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 12.000","base_price_display":"G. 14.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20703444b0bacf28","title_es":"Pollo entero (por kg)","description_es":null,"sku":"KA-POL-KG","barcode":null,"unit":"kg","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":24000,"base_price_display":"G. 24.000","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":22000,"effective_total_display":"G. 22.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 22.000","base_price_display":"G. 24.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207033424fbf6db4","title_es":"Yerba mate tradicional 1 kg","description_es":null,"sku":"KA-YER-1000","barcode":"7841000000017","unit":"paquete","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":32000,"base_price_display":"G. 32.000","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":30000,"effective_total_display":"G. 30.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 30.000","base_price_display":"G. 32.000","attributes":{"barcode":"7841000000017","brand_demo":"Yerba Ita","demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"field_verified","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":6,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/parrilla-yvoty":{"status":200,"body":{"id":"cmp_1a1bd20701cae1810cf4a","slug":"parrilla-yvoty","display_name":"Parrilla Yvoty","short_description_es":"Parrilla familiar: cortes a la parrilla, menú del día y guarniciones.","description_es":"Restaurante de barrio con atención de martes a domingo. Acepta reservas para grupos.","brand":{"id":"brd_1a1bd20701b0044aafdbf","name":"Parrilla Yvoty","slug":"parrilla-yvoty","logo_url":null},"legal_entity":{"id":"le_1a1bd20701bfd72f6a851","name":"Parrilla Yvoty S.A.","ruc":"80011001-1","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"restaurantes","name_es":"Restaurantes","default_intent":"whatsapp"},{"slug":"delivery-comida","name_es":"Delivery de comida","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20701ebf1236ea36","name_es":"Casa central — Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.2966,"longitude":-57.6351,"map_url":"https://www.openstreetmap.org/?mlat=-25.2966&mlon=-57.6351#map=17/-25.2966/-57.6351","channels":{"whatsapp":"+595215550101","phone":"+595215550101","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd207020e102fd8cac","channel":"whatsapp","value":"+595215550101","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20702002c417c132","channel":"phone","value":"+595215550101","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"tue":[["11:30","15:00"],["19:00","23:30"]],"wed":[["11:30","15:00"],["19:00","23:30"]],"thu":[["11:30","15:00"],["19:00","23:30"]],"fri":[["11:30","15:00"],["19:00","23:30"]],"sat":[["11:30","15:00"],["19:00","23:30"]],"sun":[["11:30","15:00"],["19:00","23:30"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Centro, La Encarnación","delivery_fee_display":"G. 25.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd207021c055d01fae","name_es":"Sucursal Villa Morra","address_text":"Villa Morra, Asunción","barrio":"Villa Morra","city":"Asunción","district":"Asunción","latitude":-25.2954,"longitude":-57.5914,"map_url":"https://www.openstreetmap.org/?mlat=-25.2954&mlon=-57.5914#map=17/-25.2954/-57.5914","channels":{"whatsapp":"+595215550102","phone":"+595215550102","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20702227e2b10b2f","channel":"whatsapp","value":"+595215550102","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd207022a464c343d4","channel":"phone","value":"+595215550102","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"tue":[["11:30","15:00"],["19:00","23:30"]],"wed":[["11:30","15:00"],["19:00","23:30"]],"thu":[["11:30","15:00"],["19:00","23:30"]],"fri":[["11:30","15:00"],["19:00","23:30"]],"sat":[["11:30","15:00"],["19:00","23:30"]],"sun":[["11:30","15:00"],["19:00","23:30"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Villa Morra, Recoleta","delivery_fee_display":"G. 30.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd20702588a0578493","title_es":"Bife ancho 400 g","description_es":null,"sku":"YV-BIF-400","barcode":null,"unit":"plato","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":95000,"base_price_display":"G. 95.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":95000,"effective_total_display":"G. 95.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 95.000","base_price_display":"G. 95.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070265a7ebb8f71","title_es":"Chipa guasú casera","description_es":null,"sku":"YV-CHI-GUA","barcode":null,"unit":"porción","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":18000,"base_price_display":"G. 18.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":18000,"effective_total_display":"G. 18.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 18.000","base_price_display":"G. 18.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207026b9660acf4a","title_es":"Menú del día (almuerzo)","description_es":null,"sku":"YV-MEN-DIA","barcode":null,"unit":"menú","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":42000,"base_price_display":"G. 42.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":42000,"effective_total_display":"G. 42.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 42.000","base_price_display":"G. 42.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207025adbcb4f44a","title_es":"Parrillada para 2 personas","description_es":"Corte mixto, guarnición y salsa de la casa.","sku":"YV-PAR-2","barcode":null,"unit":"porción","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":185000,"base_price_display":"G. 185.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":185000,"effective_total_display":"G. 185.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 185.000","base_price_display":"G. 185.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":4,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/rentcar-terere":{"status":200,"body":{"id":"cmp_1a1bd2070440b32008631","slug":"rentcar-terere","display_name":"RentCar Tereré","short_description_es":"Alquiler de autos económicos, SUV y vans con entrega en Asunción.","description_es":"Alquiler de autos económicos, SUV y vans con entrega en Asunción.","brand":{"id":"brd_1a1bd20704470ed58bc52","name":"RentCar Tereré","slug":"rentcar-tereré","logo_url":null},"legal_entity":{"id":"le_1a1bd207044b4fcec5f87","name":"Tereré Movilidad S.A.","ruc":"80011009-9","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"alquiler-vehiculos","name_es":"Alquiler de vehículos","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20704594a7e4e8ed","name_es":"Oficina Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.2999,"longitude":-57.6319,"map_url":"https://www.openstreetmap.org/?mlat=-25.2999&mlon=-57.6319#map=17/-25.2999/-57.6319","channels":{"whatsapp":"+595215550801","phone":"+595215550801","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd207045be4869fabc","channel":"whatsapp","value":"+595215550801","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd207045bc87f4f30e","channel":"phone","value":"+595215550801","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Asunción y Gran Asunción","delivery_fee_display":"G. 60.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20704699f1fea5f9","name_es":"Punto Luque","address_text":"Luque, Luque","barrio":"Luque","city":"Luque","district":"Luque","latitude":-25.2708,"longitude":-57.4906,"map_url":"https://www.openstreetmap.org/?mlat=-25.2708&mlon=-57.4906#map=17/-25.2708/-57.4906","channels":{"whatsapp":"+595215550802","phone":"+595215550802","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd207046c5be1d81d8","channel":"whatsapp","value":"+595215550802","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd207046d18f62a08a","channel":"phone","value":"+595215550802","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd207047f0ae9baeec","title_es":"Auto económico — por día","description_es":null,"sku":"RT-ECO-DIA","barcode":null,"unit":"día","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":350000,"base_price_display":"G. 350.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":350000,"effective_total_display":"G. 350.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 350.000","base_price_display":"G. 350.000","attributes":{"transmission":"manual","seats":5,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070478e48886d23","title_es":"SUV — fin de semana (2 días)","description_es":null,"sku":"RT-SUV-2D","barcode":null,"unit":"2 días","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":900000,"base_price_display":"G. 900.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":900000,"effective_total_display":"G. 900.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 900.000","base_price_display":"G. 900.000","attributes":{"transmission":"automática","seats":5,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207048fd2a0c99c5","title_es":"Van familiar — por día","description_es":null,"sku":"RT-VAN-DIA","barcode":null,"unit":"día","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":650000,"base_price_display":"G. 650.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":650000,"effective_total_display":"G. 650.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 650.000","base_price_display":"G. 650.000","attributes":{"seats":8,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20704862c48cfd84","title_es":"Entrega y retiro en el aeropuerto","description_es":null,"sku":"RT-AIR-ENT","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"on_request","price":{"currency":"PYG","base_price":120000,"base_price_display":"G. 120.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":120000,"effective_total_display":"G. 120.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 120.000","base_price_display":"G. 120.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":4,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"POST /api/whatsapp-link":{"status":200,"body":{"url":"https://wa.me/595982555601?text=Hola%20Nails%20Mburucuy%C3%A1%2C%20vi%20su%20ficha%20en%20PRTDS.%20Consulta%20sobre%20sus%20productos/servicios%20en%20Estudio%20Las%20Mercedes.%20Ref%3A%20WA-2611-3601C9.","reference":"WA-2611-3601C9","message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Ref: WA-2611-3601C9.","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes","barrio":"Las Mercedes"},"offer":null,"event_id":"ev_1a1bf92ef9122e8df5c0e","deduplicated":false,"disclaimer_es":"Este clic registra un intento de contacto. No es una venta confirmada y no genera comisión por sí solo."}},"POST /api/call-link":{"status":200,"body":{"url":"tel:595982555601","phone":"+595982555601","reference":"LL-2611-C9BDD3","event_id":"ev_1a1bf92ef943f0eb09dcc","disclaimer_es":"Registro de intento de llamada; no confirma una conversación atendida."}},"POST /api/leads":{"status":201,"body":{"id":"ld_1a1bf8af6742b0ba63ad7","ref_code":"PRTDS-2026-000005","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-09T09:01:57.748196+00:00","decided_at":"2026-11-09T09:01:57.762546+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000005.","params":{"session_ref":"offline-demo-builder"},"attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-09T09:01:57.760138+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"created":false,"next_steps_es":"El comercio revisa la solicitud y confirma o rechaza. PRTDS no cobra comisión por este envío: solo un resultado confirmado con contrato genera ingreso."}},"GET /api/leads/PRTDS-2026-000005":{"status":200,"body":{"id":"ld_1a1bf8af6742b0ba63ad7","ref_code":"PRTDS-2026-000005","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-09T09:01:57.748196+00:00","decided_at":"2026-11-09T09:01:57.762546+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000005.","attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-09T09:01:57.760138+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}]}},"GET /api/leads/PRTDS-2026-000001":{"status":200,"body":{"id":"ld_1a1bd25a9650f7b133590","ref_code":"PRTDS-2026-000001","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-08T21:52:04.453380+00:00","decided_at":"2026-11-08T21:52:04.512537+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero turno para uñas esculpidas","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero turno para uñas esculpidas Ref: PRTDS-2026-000001.","attribution":{"channel":"card","campaign_id":"ig-demo","method":"utm","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-08T21:52:04.502796+00:00","proof_ref":"FACT-0042","partner_note":"Turno confirmado viernes 17:00","rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bd25a99b746c0f8057","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}]}},"POST /api/leads#sin-consentimiento":{"status":403,"body":{"detail":"se requiere consentimiento explícito para transferir el contacto al vendedor"}},"GET /api/companies/bodega-mboriahu-staging":{"status":404,"body":{"detail":"Ficha no publicada. Una fila en el registro maestro no es una ficha pública."}}};
+const SNAPSHOT = {"GET /api/companies/nails-mburucuya":{"status":200,"body":{"id":"cmp_1a1bd20703d310684719a","slug":"nails-mburucuya","display_name":"Nails Mburucuyá","short_description_es":"Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.","description_es":"Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.","brand":{"id":"brd_1a1bd20703dfdcbdb5a8a","name":"Nails Mburucuyá","slug":"nails-mburucuyá","logo_url":null},"legal_entity":{"id":"le_1a1bd20703d086a1b87f6","name":"Mburucuyá Beauty E.I.R.L.","ruc":"80011007-7","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"manicura","name_es":"Manicura y uñas","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes","address_text":"Las Mercedes, Asunción","barrio":"Las Mercedes","city":"Asunción","district":"Asunción","latitude":-25.2911,"longitude":-57.6173,"map_url":"https://www.openstreetmap.org/?mlat=-25.2911&mlon=-57.6173#map=17/-25.2911/-57.6173","channels":{"whatsapp":"+595982555601","phone":"+595982555601","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20703e993978739c","channel":"whatsapp","value":"+595982555601","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20703e5619cf7607","channel":"phone","value":"+595982555601","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"tue":[["09:00","19:00"]],"wed":[["09:00","19:00"]],"thu":[["09:00","19:00"]],"fri":[["09:00","19:00"]],"sat":[["09:00","19:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd20703f7fdac43f8a","title_es":"Manicura clásica","description_es":null,"sku":"NM-MAN-CLA","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":70000,"base_price_display":"G. 70.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":70000,"effective_total_display":"G. 70.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 70.000","base_price_display":"G. 70.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070402ddc8fb183","title_es":"Pedicura spa","description_es":null,"sku":"NM-PED-SPA","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":95000,"base_price_display":"G. 95.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":95000,"effective_total_display":"G. 95.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 95.000","base_price_display":"G. 95.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20703fed610aace2","title_es":"Uñas esculpidas (set completo)","description_es":null,"sku":"NM-ESC-SET","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":180000,"base_price_display":"G. 180.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":180000,"effective_total_display":"G. 180.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 180.000","base_price_display":"G. 180.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":3,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/tecnomovil-guarani":{"status":200,"body":{"id":"cmp_1a1bd20704cd710d88dc8","slug":"tecnomovil-guarani","display_name":"TecnoMóvil Guaraní","short_description_es":"Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.","description_es":"Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.","brand":{"id":"brd_1a1bd20704ca19f46b5c5","name":"TecnoMóvil Guaraní","slug":"tecnomóvil-guaraní","logo_url":null},"legal_entity":{"id":"le_1a1bd20704cbb97f6530a","name":"TecnoMóvil Guaraní S.A.","ruc":"80011011-1","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"celulares","name_es":"Celulares y accesorios","default_intent":"whatsapp"},{"slug":"electrodomesticos","name_es":"Electrodomésticos","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20704d9970a52f9c","name_es":"Local Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.2977,"longitude":-57.6371,"map_url":"https://www.openstreetmap.org/?mlat=-25.2977&mlon=-57.6371#map=17/-25.2977/-57.6371","channels":{"whatsapp":"+595215551001","phone":"+595215551001","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20704d5e5bbc3289","channel":"whatsapp","value":"+595215551001","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20704dba1921ccc4","channel":"phone","value":"+595215551001","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Asunción","delivery_fee_display":"G. 25.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20704ec2a62e9302","name_es":"Local San Lorenzo","address_text":"San Lorenzo, San Lorenzo","barrio":"San Lorenzo","city":"San Lorenzo","district":"San Lorenzo","latitude":-25.3289,"longitude":-57.5339,"map_url":"https://www.openstreetmap.org/?mlat=-25.3289&mlon=-57.5339#map=17/-25.3289/-57.5339","channels":{"whatsapp":"+595215551002","phone":"+595215551002","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20704e98ec32a16f","channel":"whatsapp","value":"+595215551002","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20704e05122a65f3","channel":"phone","value":"+595215551002","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd20704ffc635ad883","title_es":"Auriculares bluetooth","description_es":null,"sku":"TG-AUR-BT","barcode":null,"unit":"unidad","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":240000,"base_price_display":"G. 240.000","seller_discount":0,"confirmed_benefits":24000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":216000,"effective_total_display":"G. 216.000","potential_cashback":32400,"potential_cashback_display":"G. 32.400","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 216.000","base_price_display":"G. 240.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070504d9912b948","title_es":"Funda + vidrio templado","description_es":null,"sku":"TG-KIT-FV","barcode":null,"unit":"kit","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":65000,"base_price_display":"G. 65.000","seller_discount":0,"confirmed_benefits":6500,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":58500,"effective_total_display":"G. 58.500","potential_cashback":8775,"potential_cashback_display":"G. 8.775","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 58.500","base_price_display":"G. 65.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20704f217a753e9d","title_es":"Smartphone gama media 128 GB","description_es":null,"sku":"TG-SM-128","barcode":null,"unit":"unidad","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":1650000,"base_price_display":"G. 1.650.000","seller_discount":50000,"confirmed_benefits":150000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":1450000,"effective_total_display":"G. 1.450.000","potential_cashback":200000,"potential_cashback_display":"G. 200.000","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 1.450.000","base_price_display":"G. 1.650.000","attributes":{"warranty_months":12,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207050b422d3714d","title_es":"Smart TV 43\" 4K","description_es":null,"sku":"TG-TV-43","barcode":null,"unit":"unidad","currency":"PYG","availability_status":"on_request","price":{"currency":"PYG","base_price":2850000,"base_price_display":"G. 2.850.000","seller_discount":0,"confirmed_benefits":150000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":2700000,"effective_total_display":"G. 2.700.000","potential_cashback":200000,"potential_cashback_display":"G. 200.000","potential_cashback_conditional":true,"rule_provenance":["TECNO-PROMO-10:seller:aplicado","BANCO-DEMO-VIE-15:bank:condicional"]},"price_display":"G. 2.700.000","base_price_display":"G. 2.850.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":true,"promotion_label_es":"Publicidad","data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":4,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/supermercado-kaaguy":{"status":200,"body":{"id":"cmp_1a1bd207030c943398452","slug":"supermercado-kaaguy","display_name":"Supermercado Ka'aguy","short_description_es":"Cadena de supermercados: almacén, carnicería, verdulería y limpieza.","description_es":"Cadena de supermercados: almacén, carnicería, verdulería y limpieza.","brand":{"id":"brd_1a1bd2070301fc4a47540","name":"Ka'aguy","slug":"ka'aguy","logo_url":null},"legal_entity":{"id":"le_1a1bd20702f5157b13f0c","name":"Distribuidora Ka'aguy S.A.","ruc":"80011004-4","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"supermercados-cadena","name_es":"Supermercados","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20703036d2368b3a","name_es":"Ka'aguy Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.3006,"longitude":-57.6398,"map_url":"https://www.openstreetmap.org/?mlat=-25.3006&mlon=-57.6398#map=17/-25.3006/-57.6398","channels":{"whatsapp":"+595215550401","phone":"+595215550401","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd2070316ece2e266a","channel":"whatsapp","value":"+595215550401","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"},{"id":"ct_1a1bd2070315e602411da","channel":"phone","value":"+595215550401","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"}],"opening_hours":{"mon":[["07:00","22:00"]],"tue":[["07:00","22:00"]],"wed":[["07:00","22:00"]],"thu":[["07:00","22:00"]],"fri":[["07:00","22:00"]],"sat":[["07:00","22:00"]],"sun":[["07:00","22:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Centro y alrededores","delivery_fee_display":"G. 35.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20703130341acb6c","name_es":"Ka'aguy Sajonia","address_text":"Sajonia, Asunción","barrio":"Sajonia","city":"Asunción","district":"Asunción","latitude":-25.3022,"longitude":-57.661,"map_url":"https://www.openstreetmap.org/?mlat=-25.3022&mlon=-57.661#map=17/-25.3022/-57.661","channels":{"whatsapp":"+595215550402","phone":"+595215550402","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd2070325ae30dcd6e","channel":"whatsapp","value":"+595215550402","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"},{"id":"ct_1a1bd207032a07c00ed8c","channel":"phone","value":"+595215550402","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"}],"opening_hours":{"mon":[["07:00","22:00"]],"tue":[["07:00","22:00"]],"wed":[["07:00","22:00"]],"thu":[["07:00","22:00"]],"fri":[["07:00","22:00"]],"sat":[["07:00","22:00"]],"sun":[["07:00","22:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Sajonia, Tacumbú","delivery_fee_display":"G. 35.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20703297a4af5e31","name_es":"Ka'aguy Trinidad","address_text":"Santísima Trinidad, Asunción","barrio":"Santísima Trinidad","city":"Asunción","district":"Asunción","latitude":-25.2686,"longitude":-57.6279,"map_url":"https://www.openstreetmap.org/?mlat=-25.2686&mlon=-57.6279#map=17/-25.2686/-57.6279","channels":{"whatsapp":"+595215550403","phone":"+595215550403","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd2070328eae603127","channel":"whatsapp","value":"+595215550403","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"},{"id":"ct_1a1bd20703369d175f6d5","channel":"phone","value":"+595215550403","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified"}],"opening_hours":{"mon":[["07:00","22:00"]],"tue":[["07:00","22:00"]],"wed":[["07:00","22:00"]],"thu":[["07:00","22:00"]],"fri":[["07:00","22:00"]],"sat":[["07:00","22:00"]],"sun":[["07:00","22:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"field_verified","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd207034d058285975","title_es":"Aceite de girasol 900 ml","description_es":null,"sku":"KA-ACE-900","barcode":null,"unit":"botella","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":12500,"base_price_display":"G. 12.500","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":10500,"effective_total_display":"G. 10.500","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 10.500","base_price_display":"G. 12.500","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070350dbe2b48da","title_es":"Detergente en polvo 800 g","description_es":null,"sku":"KA-DET-800","barcode":null,"unit":"caja","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":18900,"base_price_display":"G. 18.900","seller_discount":1900,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":15000,"effective_total_display":"G. 15.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 15.000","base_price_display":"G. 18.900","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207035b77ba4efaf","title_es":"Gaseosa cola 2 L","description_es":null,"sku":"KA-GAS-2L","barcode":null,"unit":"botella","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":9800,"base_price_display":"G. 9.800","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":7800,"effective_total_display":"G. 7.800","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 7.800","base_price_display":"G. 9.800","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20703457b6f4f34a","title_es":"Pan francés (por kg)","description_es":null,"sku":"KA-PAN-KG","barcode":null,"unit":"kg","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":14000,"base_price_display":"G. 14.000","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":12000,"effective_total_display":"G. 12.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 12.000","base_price_display":"G. 14.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20703444b0bacf28","title_es":"Pollo entero (por kg)","description_es":null,"sku":"KA-POL-KG","barcode":null,"unit":"kg","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":24000,"base_price_display":"G. 24.000","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":22000,"effective_total_display":"G. 22.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 22.000","base_price_display":"G. 24.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207033424fbf6db4","title_es":"Yerba mate tradicional 1 kg","description_es":null,"sku":"KA-YER-1000","barcode":"7841000000017","unit":"paquete","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":32000,"base_price_display":"G. 32.000","seller_discount":0,"confirmed_benefits":2000,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":30000,"effective_total_display":"G. 30.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":["MARCA-YERBA-2000:manufacturer:aplicado"]},"price_display":"G. 30.000","base_price_display":"G. 32.000","attributes":{"barcode":"7841000000017","brand_demo":"Yerba Ita","demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"field_verified","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"field_verified","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":6,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/parrilla-yvoty":{"status":200,"body":{"id":"cmp_1a1bd20701cae1810cf4a","slug":"parrilla-yvoty","display_name":"Parrilla Yvoty","short_description_es":"Parrilla familiar: cortes a la parrilla, menú del día y guarniciones.","description_es":"Restaurante de barrio con atención de martes a domingo. Acepta reservas para grupos.","brand":{"id":"brd_1a1bd20701b0044aafdbf","name":"Parrilla Yvoty","slug":"parrilla-yvoty","logo_url":null},"legal_entity":{"id":"le_1a1bd20701bfd72f6a851","name":"Parrilla Yvoty S.A.","ruc":"80011001-1","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"restaurantes","name_es":"Restaurantes","default_intent":"whatsapp"},{"slug":"delivery-comida","name_es":"Delivery de comida","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20701ebf1236ea36","name_es":"Casa central — Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.2966,"longitude":-57.6351,"map_url":"https://www.openstreetmap.org/?mlat=-25.2966&mlon=-57.6351#map=17/-25.2966/-57.6351","channels":{"whatsapp":"+595215550101","phone":"+595215550101","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd207020e102fd8cac","channel":"whatsapp","value":"+595215550101","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd20702002c417c132","channel":"phone","value":"+595215550101","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"tue":[["11:30","15:00"],["19:00","23:30"]],"wed":[["11:30","15:00"],["19:00","23:30"]],"thu":[["11:30","15:00"],["19:00","23:30"]],"fri":[["11:30","15:00"],["19:00","23:30"]],"sat":[["11:30","15:00"],["19:00","23:30"]],"sun":[["11:30","15:00"],["19:00","23:30"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Centro, La Encarnación","delivery_fee_display":"G. 25.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd207021c055d01fae","name_es":"Sucursal Villa Morra","address_text":"Villa Morra, Asunción","barrio":"Villa Morra","city":"Asunción","district":"Asunción","latitude":-25.2954,"longitude":-57.5914,"map_url":"https://www.openstreetmap.org/?mlat=-25.2954&mlon=-57.5914#map=17/-25.2954/-57.5914","channels":{"whatsapp":"+595215550102","phone":"+595215550102","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd20702227e2b10b2f","channel":"whatsapp","value":"+595215550102","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd207022a464c343d4","channel":"phone","value":"+595215550102","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"tue":[["11:30","15:00"],["19:00","23:30"]],"wed":[["11:30","15:00"],["19:00","23:30"]],"thu":[["11:30","15:00"],["19:00","23:30"]],"fri":[["11:30","15:00"],["19:00","23:30"]],"sat":[["11:30","15:00"],["19:00","23:30"]],"sun":[["11:30","15:00"],["19:00","23:30"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Villa Morra, Recoleta","delivery_fee_display":"G. 30.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd20702588a0578493","title_es":"Bife ancho 400 g","description_es":null,"sku":"YV-BIF-400","barcode":null,"unit":"plato","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":95000,"base_price_display":"G. 95.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":95000,"effective_total_display":"G. 95.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 95.000","base_price_display":"G. 95.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070265a7ebb8f71","title_es":"Chipa guasú casera","description_es":null,"sku":"YV-CHI-GUA","barcode":null,"unit":"porción","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":18000,"base_price_display":"G. 18.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":18000,"effective_total_display":"G. 18.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 18.000","base_price_display":"G. 18.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207026b9660acf4a","title_es":"Menú del día (almuerzo)","description_es":null,"sku":"YV-MEN-DIA","barcode":null,"unit":"menú","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":42000,"base_price_display":"G. 42.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":42000,"effective_total_display":"G. 42.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 42.000","base_price_display":"G. 42.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207025adbcb4f44a","title_es":"Parrillada para 2 personas","description_es":"Corte mixto, guarnición y salsa de la casa.","sku":"YV-PAR-2","barcode":null,"unit":"porción","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":185000,"base_price_display":"G. 185.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":185000,"effective_total_display":"G. 185.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 185.000","base_price_display":"G. 185.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":4,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"GET /api/companies/rentcar-terere":{"status":200,"body":{"id":"cmp_1a1bd2070440b32008631","slug":"rentcar-terere","display_name":"RentCar Tereré","short_description_es":"Alquiler de autos económicos, SUV y vans con entrega en Asunción.","description_es":"Alquiler de autos económicos, SUV y vans con entrega en Asunción.","brand":{"id":"brd_1a1bd20704470ed58bc52","name":"RentCar Tereré","slug":"rentcar-tereré","logo_url":null},"legal_entity":{"id":"le_1a1bd207044b4fcec5f87","name":"Tereré Movilidad S.A.","ruc":"80011009-9","note_es":"Persona jurídica del registro maestro; no es la ficha pública."},"categories":[{"slug":"alquiler-vehiculos","name_es":"Alquiler de vehículos","default_intent":"whatsapp"}],"primary_intent":"whatsapp","branches":[{"id":"br_1a1bd20704594a7e4e8ed","name_es":"Oficina Centro","address_text":"Centro, Asunción","barrio":"Centro","city":"Asunción","district":"Asunción","latitude":-25.2999,"longitude":-57.6319,"map_url":"https://www.openstreetmap.org/?mlat=-25.2999&mlon=-57.6319#map=17/-25.2999/-57.6319","channels":{"whatsapp":"+595215550801","phone":"+595215550801","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd207045be4869fabc","channel":"whatsapp","value":"+595215550801","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd207045bc87f4f30e","channel":"phone","value":"+595215550801","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":true,"delivery_zone_es":"Asunción y Gran Asunción","delivery_fee_display":"G. 60.000","freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}},{"id":"br_1a1bd20704699f1fea5f9","name_es":"Punto Luque","address_text":"Luque, Luque","barrio":"Luque","city":"Luque","district":"Luque","latitude":-25.2708,"longitude":-57.4906,"map_url":"https://www.openstreetmap.org/?mlat=-25.2708&mlon=-57.4906#map=17/-25.2708/-57.4906","channels":{"whatsapp":"+595215550802","phone":"+595215550802","email":null,"website":null,"instagram":null},"contacts":[{"id":"ct_1a1bd207046c5be1d81d8","channel":"whatsapp","value":"+595215550802","label_es":"WhatsApp del local","is_primary":true,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"},{"id":"ct_1a1bd207046d18f62a08a","channel":"phone","value":"+595215550802","label_es":"Teléfono fijo","is_primary":false,"verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed"}],"opening_hours":{"mon":[["08:00","12:00"],["15:00","20:00"]],"tue":[["08:00","12:00"],["15:00","20:00"]],"wed":[["08:00","12:00"],["15:00","20:00"]],"thu":[["08:00","12:00"],["15:00","20:00"]],"fri":[["08:00","12:00"],["15:00","20:00"]],"sat":[["08:00","13:00"]]},"pickup_available":true,"delivery_available":false,"delivery_zone_es":null,"delivery_fee_display":null,"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","verified_at":"2026-11-08T15:46:22.088922+00:00","verification_level":"partner_confirmed","is_stale":false,"source":"OpenStreetMap contributors"}}],"offers":[{"id":"off_1a1bd207047f0ae9baeec","title_es":"Auto económico — por día","description_es":null,"sku":"RT-ECO-DIA","barcode":null,"unit":"día","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":350000,"base_price_display":"G. 350.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":350000,"effective_total_display":"G. 350.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 350.000","base_price_display":"G. 350.000","attributes":{"transmission":"manual","seats":5,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd2070478e48886d23","title_es":"SUV — fin de semana (2 días)","description_es":null,"sku":"RT-SUV-2D","barcode":null,"unit":"2 días","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":900000,"base_price_display":"G. 900.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":900000,"effective_total_display":"G. 900.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 900.000","base_price_display":"G. 900.000","attributes":{"transmission":"automática","seats":5,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd207048fd2a0c99c5","title_es":"Van familiar — por día","description_es":null,"sku":"RT-VAN-DIA","barcode":null,"unit":"día","currency":"PYG","availability_status":"in_stock","price":{"currency":"PYG","base_price":650000,"base_price_display":"G. 650.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":650000,"effective_total_display":"G. 650.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 650.000","base_price_display":"G. 650.000","attributes":{"seats":8,"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}},{"id":"off_1a1bd20704862c48cfd84","title_es":"Entrega y retiro en el aeropuerto","description_es":null,"sku":"RT-AIR-ENT","barcode":null,"unit":"servicio","currency":"PYG","availability_status":"on_request","price":{"currency":"PYG","base_price":120000,"base_price_display":"G. 120.000","seller_discount":0,"confirmed_benefits":0,"delivery_fee":0,"pickup_fee":0,"charges":0,"effective_total":120000,"effective_total_display":"G. 120.000","potential_cashback":0,"potential_cashback_display":"G. 0","potential_cashback_conditional":true,"rule_provenance":[]},"price_display":"G. 120.000","base_price_display":"G. 120.000","attributes":{"demo":true},"freshness":{"observed_at":"2026-11-08T15:46:22.088922+00:00","valid_until":"2026-12-08T15:46:22.088922+00:00","is_stale":false,"verification_level":"partner_confirmed","source":"Aportado por el comercio (demo)"}}],"publication_status":"published","published_at":"2026-11-05T21:46:22.088922+00:00","verification_level":"partner_confirmed","quality":{"contacts_verified":true,"hours_declared":true,"duplicates":0,"demo":true},"is_promoted":false,"promotion_label_es":null,"data_freshness":{"last_observed_at":"2026-11-08T15:46:22.088922+00:00","stale_offers":0,"offers_total":4,"source_note_es":"Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor."},"actions_es":{"whatsapp":"WhatsApp","call":"Llamar","route":"Cómo llegar","website":"Sitio web","request":"Enviar solicitud"},"tracking":{"card_open_recorded":true}}},"POST /api/whatsapp-link":{"status":200,"body":{"url":"https://wa.me/595982555601?text=Hola%20Nails%20Mburucuy%C3%A1%2C%20vi%20su%20ficha%20en%20PRTDS.%20Consulta%20sobre%20sus%20productos/servicios%20en%20Estudio%20Las%20Mercedes.%20Ref%3A%20WA-2611-1DF819.","reference":"WA-2611-1DF819","message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Ref: WA-2611-1DF819.","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes","barrio":"Las Mercedes"},"offer":null,"event_id":"ev_1a1bfc8db34690b4d6313","deduplicated":false,"disclaimer_es":"Este clic registra un intento de contacto. No es una venta confirmada y no genera comisión por sí solo."}},"POST /api/call-link":{"status":200,"body":{"url":"tel:595982555601","phone":"+595982555601","reference":"LL-2611-AF1A5D","event_id":"ev_1a1bfc8db38c380d2e439","disclaimer_es":"Registro de intento de llamada; no confirma una conversación atendida."}},"POST /api/leads":{"status":201,"body":{"id":"ld_1a1bf8af6742b0ba63ad7","ref_code":"PRTDS-2026-000005","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-09T09:01:57.748196+00:00","decided_at":"2026-11-09T09:01:57.762546+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000005.","params":{"session_ref":"offline-demo-builder"},"attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-09T09:01:57.760138+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}],"created":false,"next_steps_es":"El comercio revisa la solicitud y confirma o rechaza. PRTDS no cobra comisión por este envío: solo un resultado confirmado con contrato genera ingreso."}},"GET /api/leads/PRTDS-2026-000005":{"status":200,"body":{"id":"ld_1a1bf8af6742b0ba63ad7","ref_code":"PRTDS-2026-000005","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-09T09:01:57.748196+00:00","decided_at":"2026-11-09T09:01:57.762546+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero un turno para uñas esculpidas el viernes","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero un turno para uñas esculpidas el viernes Ref: PRTDS-2026-000005.","attribution":{"channel":"card","campaign_id":null,"method":"manual_reconciliation","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-09T09:01:57.760138+00:00","proof_ref":"FACT-DEMO-01","partner_note":null,"rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bf8af68133277db306","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}]}},"GET /api/leads/PRTDS-2026-000001":{"status":200,"body":{"id":"ld_1a1bd25a9650f7b133590","ref_code":"PRTDS-2026-000001","status":"sale_confirmed","intent":"booking","submitted_at":"2026-11-08T21:52:04.453380+00:00","decided_at":"2026-11-08T21:52:04.512537+00:00","company":{"slug":"nails-mburucuya","display_name":"Nails Mburucuyá"},"branch":{"id":"br_1a1bd20703e33e435dc58","name_es":"Estudio Las Mercedes"},"offer":null,"requested_at":"viernes 17:00","message":"Quiero turno para uñas esculpidas","prefilled_message":"Hola Nails Mburucuyá, vi su ficha en PRTDS. Consulta sobre sus productos/servicios en Estudio Las Mercedes. Fecha/horario deseado: viernes 17:00. Quiero turno para uñas esculpidas Ref: PRTDS-2026-000001.","attribution":{"channel":"card","campaign_id":"ig-demo","method":"utm","confidence":"high","window_days":7,"disputed":false},"confirmed_amount_pyg":180000,"confirmed_amount_display":"G. 180.000","confirmed_at":"2026-11-08T21:52:04.502796+00:00","proof_ref":"FACT-0042","partner_note":"Turno confirmado viernes 17:00","rejection_reason_es":null,"allowed_transitions":[],"settlements":[{"id":"stl_1a1bd25a99b746c0f8057","status":"pending","basis_amount_display":"G. 180.000","commission_display":"G. 12.600","contribution_margin_display":"G. 8.600"}]}},"POST /api/leads#sin-consentimiento":{"status":403,"body":{"detail":"se requiere consentimiento explícito para transferir el contacto al vendedor"}},"GET /api/companies/bodega-mboriahu-staging":{"status":404,"body":{"detail":"Ficha no publicada. Una fila en el registro maestro no es una ficha pública."}}};
 (async () => {
 /* ---- api.js ---- */
 /* API client.
@@ -589,6 +602,1221 @@ function utmFromLocation() {
 }
 
 
+/* ---- i18n-dict.js ---- */
+/* Словарь переводов интерфейса. Сгенерирован scripts/build_i18n_dict.py —
+ * не править вручную: изменения вносятся в источник переводов и пересобираются.
+ *
+ * Ключ — испанский оригинал строки, как она отрисована в DOM. Такой подход
+ * позволяет переводить уже работающий интерфейс без переписывания шаблонов
+ * и измерять покрытие (scripts/check_i18n_coverage.js).
+ *
+ * Не переводятся: названия компаний, брендов, баррио, адреса, телефоны, SKU,
+ * номера обращений и коды событий — это данные продавцов и идентификаторы.
+ */
+
+const RU = {
+  "(verificado hace 18 h)": "(подтверждено 18 ч назад)",
+  "(verificado hace 8 h)": "(подтверждено 8 ч назад)",
+  ". En producción la entrada será con identidad real y roles separados.": ". В продакшне вход будет по настоящей идентификации и с разделением ролей.",
+  ". En producción: identidad real, roles separados y auditoría; secretos fuera del repositorio.": ". В продакшне: настоящая идентификация, разделённые роли и аудит; секреты вне репозитория.",
+  "/ servicio": "/ услуга",
+  "2 sucursales": "2 филиала",
+  "Abogados": "Юристы",
+  "Acción principal": "Основное действие",
+  "Aceite de girasol 900 ml": "Подсолнечное масло 900 мл",
+  "Aceptación / confirmación por parte del vendedor.": "Принятие или подтверждение продавцом.",
+  "Aceptada": "Принята",
+  "Aceptadas": "Принятые",
+  "Aceptadas / entregadas": "Принято / передано",
+  "Actualizada hace 4 días": "Обновлено 4 дня назад",
+  "Actualizar": "Обновить",
+  "Admin": "Админка",
+  "Administración": "Администрирование",
+  "Administración del catálogo": "Управление каталогом",
+  "Administración · PRTDS": "Администрирование · PRTDS",
+  "Agenda Yvoty Shows": "Афиша Yvoty Shows",
+  "Alertas de economía": "Экономические предупреждения",
+  "Almacenes de barrio": "Продуктовые лавки",
+  "Almacén de barrio: fideos, aceite, limpieza y fiambres al corte.": "Районный магазин: макароны, масло, бытовая химия и нарезка.",
+  "Alquiler de autos económicos, SUV y vans con entrega en Asunción.": "Аренда эконом-авто, внедорожников и минивэнов с подачей в Асунсьоне.",
+  "Alquiler de vehículos": "Аренда авто",
+  "Análisis jurídico de bonos, cashback y productos financieros.": "Юридический анализ бонусов, кэшбэка и финансовых продуктов.",
+  "Aplicar": "Применить",
+  "Apoyo escolar": "Репетиторы",
+  "Append-only, con idempotencia": "Только добавление, с идемпотентностью",
+  "Asesoría contable, inscripción de RUC e IVA para pymes.": "Бухгалтерские консультации, регистрация RUC и НДС для малого бизнеса.",
+  "Asesoría mensual para pyme": "Ежемесячное сопровождение малого бизнеса",
+  "Atribución": "Атрибуция",
+  "Auditoría read-only de producción (Neon, Render, Cloudflare).": "Read-only аудит продакшна (Neon, Render, Cloudflare).",
+  "Auriculares bluetooth": "Bluetooth-наушники",
+  "Auto económico — por día": "Эконом-авто — в сутки",
+  "Autorizo a PRTDS a compartir estos datos con": "Я разрешаю PRTDS передать эти данные компании",
+  "Barberías": "Барбершопы",
+  "Bares y cervecerías": "Бары",
+  "Barrio / ciudad": "Район / город",
+  "Base (GMV)": "База (GMV)",
+  "Base = venta del comercio (GMV). Comisión = ingreso de PRTDS. Sin contrato activo la comisión es cero, aunque la venta esté confirmada.": "База — продажа магазина (GMV). Комиссия — доход PRTDS. Без действующего договора комиссия равна нулю, даже если продажа подтверждена.",
+  "Bebidas y licorerías": "Напитки",
+  "Belleza y cuidado personal": "Красота и уход",
+  "Bife ancho 400 g": "Бифе анчо 400 г",
+  "Buscador de empresas, productos y servicios en Asunción y Gran Asunción. Contactá por WhatsApp, llamá o enviá una solicitud en un paso.": "Поиск компаний, товаров и услуг в Асунсьоне и Большом Асунсьоне. Свяжитесь через WhatsApp, позвоните или отправьте заявку в один шаг.",
+  "Buscar": "Искать",
+  "Buscar otra cosa": "Искать другое",
+  "Búsqueda": "Поиск",
+  "Cadena de supermercados: almacén, carnicería, verdulería y limpieza.": "Сеть супермаркетов: продукты, мясной отдел, овощи и бытовая химия.",
+  "Cafeterías": "Кофейни",
+  "Café de especialidad, medialunas y tortilla paraguaya.": "Спешелти-кофе, медиауны и парагвайская тортилья.",
+  "Canales verificados": "Проверенные каналы",
+  "Cancelación documentada (cliente o vendedor).": "Задокументированная отмена (клиентом или продавцом).",
+  "Cantidad": "Количество",
+  "Cargando…": "Загрузка…",
+  "Cargar el importe y el comprobante de las ventas efectivamente realizadas.": "Внесите сумму и чек по фактически состоявшимся продажам.",
+  "Categoría": "Категория",
+  "Categoría padre (slug)": "Родительская категория (slug)",
+  "Categorías": "Категории",
+  "Catálogo y dinero": "Каталог и деньги",
+  "Causalidad de una campaña sin verificación.": "Причинность кампании без проверки.",
+  "Celulares y accesorios": "Смартфоны",
+  "Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.": "Смартфоны, аксессуары и сервисное обслуживание. Цены в гуарани, местная гарантия.",
+  "Cerrar": "Закрыть",
+  "Chequeo básico + laboratorio": "Базовый чекап + лаборатория",
+  "Chipa guasú casera": "Домашняя чипа гуасу",
+  "Cliente": "Клиент",
+  "Clínicas y consultorios": "Клиники",
+  "Comisión": "Комиссия",
+  "Comisión − costos variables": "Комиссия − переменные затраты",
+  "Comisión, no GMV": "Комиссия, а не оборот",
+  "Compra": "Покупка",
+  "Compra repetida dentro de los consentimientos otorgados.": "Повторная покупка в рамках выданных согласий.",
+  "Con consentimiento": "С согласием",
+  "Con delivery": "С доставкой",
+  "Con evidencia": "С доказательством",
+  "Con evidencia cargada": "С загруженным доказательством",
+  "Confirmada:": "Подтверждена:",
+  "Confirmadas por el comercio": "Подтверждено продавцом",
+  "Confirmado por el comercio": "Подтверждено продавцом",
+  "Confirmar o rechazar las solicitudes nuevas del día.": "Подтвердите или отклоните новые заявки за день.",
+  "Confirmar un resultado que no ocurrió distorsiona la atribución y las liquidaciones. Una impresión o un clic de WhatsApp no es un cliente traído.": "Подтверждение несостоявшегося результата искажает атрибуцию и расчёты. Показ или клик по WhatsApp — это не приведённый клиент.",
+  "Consulta clínica": "Приём врача",
+  "Consulta del smoke test": "Запрос из smoke-теста",
+  "Consultar por WhatsApp": "Спросить в WhatsApp",
+  "Consultas clínicas, chequeos y laboratorio básico.": "Приём врачей, чекапы и базовая лаборатория.",
+  "Consultas, vacunas, baño y corte; alimentos y accesorios para mascotas.": "Приём, прививки, стрижка и купание; корма и аксессуары для питомцев.",
+  "Consultá el estado de una solicitud": "Проверьте статус заявки",
+  "Contadores y trámites": "Бухгалтерия",
+  "Contratos activos": "Действующие договоры",
+  "Contá qué necesitás: producto, cantidad, detalles": "Опишите, что нужно: товар, количество, детали",
+  "Corte masculino, barba y afeitado clásico.": "Мужские стрижки, борода и классическое бритьё.",
+  "Corte mixto, guarnición y salsa de la casa.": "Смешанный отруб, гарнир и фирменный соус.",
+  "Corte, coloración y tratamientos. Atención con turno.": "Стрижки, окрашивание и уход. Приём по записи.",
+  "Crear categoría": "Создать категорию",
+  "Crecimiento de tráfico ≠ modelo de negocio viable.": "Рост трафика ≠ жизнеспособная бизнес-модель.",
+  "Cualquiera": "Любой",
+  "Cursos de inglés y guaraní, presenciales y en línea.": "Курсы английского и гуарани, очно и онлайн.",
+  "Cuándo": "Когда",
+  "Cuándo lo necesitás: viernes 17:00": "Когда нужно: пятница 17:00",
+  "Cálculo de comisión registrado en el ledger.": "Расчёт комиссии записан в реестр.",
+  "Cómo contactar": "Как связаться",
+  "Cómo llegar": "Как добраться",
+  "Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor.": "Данные предоставлены зарегистрированными источниками; наличие и цены требуют подтверждения продавца.",
+  "Datos observados hace 18 h · fuente: OpenStreetMap contributors": "Данные получены 18 ч назад · источник: OpenStreetMap contributors",
+  "Delivery de comida": "Доставка еды",
+  "Demostración sin conexión.": "Демонстрация без подключения.",
+  "Dentro de los consentimientos": "В рамках согласий",
+  "Derecho automático a comisión sin contrato.": "Автоматическое право на комиссию без договора.",
+  "Desactivar": "Деактивировать",
+  "Descripción (es)": "Описание (исп.)",
+  "Desde": "От",
+  "Detergente en polvo 800 g": "Стиральный порошок 800 г",
+  "Diccionario único del recorrido; lo usan la UI, el panel del comercio y cualquier reporte.": "Единый словарь пути: его используют интерфейс, кабинет партнёра и любые отчёты.",
+  "Dinero efectivamente cobrado por PRTDS.": "Деньги, фактически полученные PRTDS.",
+  "Dinero recibido por el vendedor.": "Деньги, полученные продавцом.",
+  "Disponible": "В наличии",
+  "Documento interno en forma de página. No es una promesa de ingresos ni una confirmación de que todos los servicios descritos estén en producción.": "Внутренний документ в виде страницы. Это не обещание выручки и не подтверждение, что все описанные сервисы запущены в продакшн.",
+  "Educación": "Образование",
+  "Ej.: alquiler de autos, manicura, yerba mate, farmacia 24 horas": "Например: аренда авто, маникюр, йерба мате, аптека 24 часа",
+  "Ej.: viernes 18:00, o lo antes posible": "Например: пятница 18:00 или как можно скорее",
+  "El catálogo es universal: se crea una categoría y sus sinónimos de búsqueda sin despliegue.": "Каталог универсален: категория и её поисковые синонимы создаются без деплоя.",
+  "El comercio aún no respondió.": "Продавец ещё не ответил.",
+  "El comercio confirmó la solicitud.": "Продавец подтвердил заявку.",
+  "El comercio marcó la visita como realizada.": "Продавец отметил визит как состоявшийся.",
+  "El comercio recibe tu mensaje y te responde. PRTDS no cobra por enviar una solicitud y no guarda tu teléfono más allá de lo necesario para este contacto.": "Продавец получает ваше сообщение и отвечает. PRTDS не берёт денег за отправку заявки и не хранит ваш телефон дольше, чем нужно для этого обращения.",
+  "El importe cobrado.": "Взысканная сумма.",
+  "Electrodomésticos": "Бытовая техника",
+  "Empresa": "Компания",
+  "Empresa (slug)": "Компания (slug)",
+  "Empresas publicadas": "Опубликованные компании",
+  "Empresas, productos y servicios de Asunción y Gran Asunción. Buscá, compará y contactá en un paso: WhatsApp, llamada o solicitud.": "Компании, товары и услуги Асунсьона и Большого Асунсьона. Ищите, сравнивайте и связывайтесь в один шаг: WhatsApp, звонок или заявка.",
+  "Encargada Nails Mburucuyá · manager · alcance una empresa": "Ответственная Nails Mburucuyá · manager · доступ к одной компании",
+  "Encontrá lo que necesitás": "Найдите то, что вам нужно",
+  "Entorno de demostración: el token de operaciones": "Демонстрационное окружение: операционный токен",
+  "Entorno de demostración: token": "Демонстрационное окружение: токен",
+  "Entrar": "Войти",
+  "Entrega y retiro en el aeropuerto": "Подача и возврат в аэропорту",
+  "Entregada": "Передана",
+  "Entregadas con consentimiento": "Переданы с согласием",
+  "Entregadas con consentimiento explícito antes de compartir el contacto.": "Переданы с явным согласием до передачи контакта.",
+  "Entregadas, aún sin respuesta": "Переданы, ещё без ответа",
+  "Enviar solicitud": "Отправить заявку",
+  "Enviar una solicitud": "Отправить заявку",
+  "Error": "Ошибка",
+  "Esta página existe para que nadie confunda «hay código y datos» con «hay un servicio terminado». Muestra qué existe en este entorno, qué falta verificar y qué significa cada evento del recorrido.": "Эта страница нужна, чтобы никто не путал «есть код и данные» с «есть готовый сервис». Она показывает, что существует в этом окружении, что ещё надо проверить и что означает каждое событие пути.",
+  "Estado": "Статус",
+  "Estado de la ficha": "Статус карточки",
+  "Estado de la plataforma": "Состояние платформы",
+  "Estado de la plataforma · PRTDS": "Состояние платформы · PRTDS",
+  "Estado de mi solicitud · PRTDS": "Статус моей заявки · PRTDS",
+  "Estado honesto de la plataforma": "Честное состояние платформы",
+  "Etapa": "Этап",
+  "Evento": "Событие",
+  "Eventos del ledger": "События реестра",
+  "Eventos registrados": "Зарегистрированные события",
+  "Eventos y agenda": "События и афиша",
+  "Excursiones": "Экскурсии",
+  "Farmacia de turno con delivery y medicamentos de venta libre.": "Дежурная аптека с доставкой и безрецептурными препаратами.",
+  "Farmacias": "Аптеки",
+  "Ferreterías": "Хозтовары",
+  "Ficha": "Карточка",
+  "Fichas": "Карточки",
+  "Fichas por estado:": "Карточки по статусам:",
+  "Fichas publicadas": "Опубликованные карточки",
+  "Fichas publicadas en este entorno:": "Карточек опубликовано в этом окружении:",
+  "Fideos secos 500 g": "Макароны 500 г",
+  "Funda + vidrio templado": "Чехол + защитное стекло",
+  "GMV confirmado": "Подтверждённый оборот",
+  "GMV de comercios": "Оборот магазинов",
+  "GMV de la tienda ≠ ingreso de PRTDS; los puntos/bonos ≠ dinero en cuenta.": "Оборот магазина ≠ доход PRTDS; баллы и бонусы ≠ деньги на счёте.",
+  "GMV del comercio": "Оборот магазина",
+  "GMV del comercio ≠ ingreso de PRTDS.": "Оборот магазина ≠ доход PRTDS.",
+  "Gaseosa 2 L (segunda marca)": "Газировка 2 л (вторая марка)",
+  "Gaseosa cola 2 L": "Кола 2 л",
+  "Gastronomía": "Гастрономия",
+  "Genera comisión": "Даёт комиссию",
+  "Guardado": "Сохранено",
+  "Hay día y hora confirmados.": "Есть подтверждённые дата и время.",
+  "Herramientas, pintura, eléctricos y materiales de construcción.": "Инструменты, краски, электрика и стройматериалы.",
+  "Hogar y construcción": "Дом и строительство",
+  "Horarios": "Часы работы",
+  "Hotel céntrico: habitaciones dobles, desayuno buffet y sala de reuniones.": "Отель в центре: двухместные номера, завтрак-буфет и переговорная.",
+  "Hoteles": "Отели",
+  "Hoy: 00:00–23:59": "Сегодня: круглосуточно",
+  "Hoy: Cerrado hoy": "Сегодня: закрыто",
+  "Identidad real de usuarios y socios (no tokens de demostración).": "Настоящая идентификация пользователей и партнёров (не демо-токены).",
+  "Idioma": "Язык",
+  "Idiomas": "Языки",
+  "Importe": "Сумма",
+  "Impresión de una tarjeta en un listado.": "Показ карточки в списке.",
+  "Impresión, clic o WhatsApp abierto NO equivalen a un cliente traído ni a una venta confirmada. Solo el contrato define qué se paga.": "Показ, клик или открытый WhatsApp НЕ означают приведённого клиента и не означают подтверждённую продажу. Что оплачивается — определяет только договор.",
+  "Impresión/clic/WhatsApp abierto ≠ cliente traído, y mucho menos venta confirmada.": "Показ/клик/открытый WhatsApp ≠ приведённый клиент и тем более ≠ подтверждённая продажа.",
+  "Incluye staging y borradores": "Включая staging и черновики",
+  "Informática": "Компьютеры",
+  "Ingreso PRTDS": "Доход PRTDS",
+  "Ingresá con el token de tu cuenta de socio. Aquí confirmás o rechazás las solicitudes y cargás los resultados realmente ocurridos: esa conciliación es la base de cualquier liquidación.": "Войдите с токеном вашей партнёрской учётной записи. Здесь вы подтверждаете или отклоняете заявки и вносите реально случившиеся результаты: эта сверка — основание любого расчёта.",
+  "Ingresá la referencia que te dimos al enviar la solicitud o al abrir WhatsApp (por ejemplo": "Введите номер обращения, который мы дали при отправке заявки или при открытии WhatsApp (например",
+  "Inscripción RUC (trámite completo)": "Регистрация RUC (полная процедура)",
+  "Integración POS/feed con cadenas grandes.": "POS/feed-интеграция с крупными сетями.",
+  "Intención de llegar al local.": "Намерение прийти в точку.",
+  "Intento de iniciar contacto por WhatsApp.": "Попытка начать общение в WhatsApp.",
+  "Intento de iniciar contacto por llamada.": "Попытка начать общение по телефону.",
+  "Interés en la empresa (ficha abierta).": "Интерес к компании (открыта карточка).",
+  "Interés real, lead o venta.": "Реальный интерес, лид или продажа.",
+  "Jamón cocido (por kg)": "Варёная ветчина (за кг)",
+  "La interfaz es real; las respuestas del API fueron grabadas y nada se guarda.": "Интерфейс настоящий; ответы API записаны заранее и никуда не сохраняются.",
+  "Lavaderos": "Автомойки",
+  "Liquidaciones": "Расчёты комиссии",
+  "Liquidaciones y eventos": "Расчёты и события",
+  "Llamada": "Звонок",
+  "Llamada efectivamente atendida.": "Звонок действительно принят.",
+  "Llamar": "Позвонить",
+  "Lo que no se puede confundir": "Что нельзя путать",
+  "Lo que ve una persona": "Что видит человек",
+  "Los datos del catálogo local son ficticios y sirven para validar el recorrido; no son ofertas reales ni socios contratados.": "Данные локального каталога вымышлены и служат для проверки пути; это не реальные предложения и не подписанные партнёры.",
+  "Manicura clásica": "Классический маникюр",
+  "Manicura y uñas": "Маникюр",
+  "Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.": "Маникюр, педикюр и наращивание ногтей. Запись через WhatsApp.",
+  "Mantenimiento": "Обслуживание",
+  "Marca: Nails Mburucuyá": "Бренд: Nails Mburucuyá",
+  "Margen": "Маржа",
+  "Margen de contribución": "Маржинальный вклад",
+  "Mascotas": "Животные",
+  "Mecánica ligera, cambio de aceite, frenos y alineación.": "Лёгкий ремонт, замена масла, тормоза и развал-схождение.",
+  "Mensaje": "Сообщение",
+  "Mensaje recibido o conversación sostenida.": "Сообщение получено или диалог состоялся.",
+  "Menú del día (almuerzo)": "Обеденное меню дня",
+  "Migración, modelo o test en verde ≠ servicio de producción listo para vender.": "Миграция, модель или зелёный тест ≠ готовый к продажам продакшн-сервис.",
+  "Mis solicitudes": "Мои заявки",
+  "Mostrado en los resultados de búsqueda.": "Показ в результатах поиска.",
+  "Motivo": "Причина",
+  "Mudanzas de departamentos, oficinas y fletes dentro del Gran Asunción.": "Переезды квартир и офисов, грузоперевозки по Большому Асунсьону.",
+  "Mudanzas y fletes": "Переезды",
+  "Muebles y decoración": "Мебель",
+  "No": "Нет",
+  "No es ingreso de PRTDS": "Это не доход PRTDS",
+  "No se pudo cargar la búsqueda:": "Не удалось загрузить поиск:",
+  "No se pudo cargar:": "Не удалось загрузить:",
+  "Nombre": "Название",
+  "Nombre (es)": "Название (исп.)",
+  "Nombre A–Z": "Название А–Я",
+  "Nota: Turno confirmado viernes 17:00": "Примечание: запись подтверждена, пятница 17:00",
+  "Nota: smoke": "Примечание: smoke",
+  "Notebooks, impresoras, insumos y soporte para oficinas.": "Ноутбуки, принтеры, расходники и поддержка офисов.",
+  "Nuevo estado": "Новый статус",
+  "Odontología": "Стоматология",
+  "Ofertas activas": "Активные предложения",
+  "Ofertas con datos vencidos": "Предложения с просроченными данными",
+  "Orden": "Порядок",
+  "Orden por relevancia, verificación de datos y actualidad. La publicidad se muestra por separado y siempre etiquetada.": "Порядок — по релевантности, подтверждённости данных и свежести. Реклама показывается отдельно и всегда помечена.",
+  "Organizador de eventos: shows en vivo, festivales y teatro.": "Организатор событий: живые выступления, фестивали и театр.",
+  "Origen": "Источник",
+  "PRTDS conecta a la persona con la empresa. El pago se hace directamente al comercio; la plataforma no es vendedora de productos de terceros.": "PRTDS связывает человека с компанией. Оплата идёт напрямую продавцу; платформа не является продавцом чужих товаров.",
+  "PRTDS no lee tu conversación de WhatsApp y no guarda el contenido del chat.": "PRTDS не читает вашу переписку в WhatsApp и не хранит содержимое чата.",
+  "PRTDS no vende productos de terceros: el pago se hace directamente al comercio. La plataforma cobra únicamente a socios con contrato y por resultados confirmados.": "PRTDS не продаёт чужие товары: оплата идёт напрямую магазину. Платформа берёт деньги только с партнёров по договору и только за подтверждённые результаты.",
+  "PRTDS · Para todos. Para todo.": "PRTDS · Для всех. Для всего.",
+  "PRTDS — Buscá empresas, productos y servicios en Paraguay": "PRTDS — поиск компаний, товаров и услуг в Парагвае",
+  "Pago realizado.": "Оплата произведена.",
+  "Pan francés (por kg)": "Французский хлеб (за кг)",
+  "Panel": "Панель",
+  "Panel de socios · PRTDS": "Панель партнёров · PRTDS",
+  "Panel del comercio": "Кабинет компании",
+  "Panel §15 — lo que no se puede confundir": "Панель §15 — что нельзя путать",
+  "Para todos. Para todo.": "Для всех. Для всего.",
+  "Parrilla familiar: cortes a la parrilla, menú del día y guarniciones.": "Семейный гриль-ресторан: мясо на углях, обеденное меню и гарниры.",
+  "Parrillada para 2 personas": "Гриль-сэт на двоих",
+  "Pedicura spa": "Спа-педикюр",
+  "Peluquerías": "Парикмахерские",
+  "Pendiente de conciliación": "Ожидает сверки",
+  "Pendiente de conciliación con el socio.": "Ожидает сверки с партнёром.",
+  "Pendiente de verificación": "Ожидает проверки",
+  "Persona jurídica: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. Persona jurídica del registro maestro; no es la ficha pública.": "Юридическое лицо: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. Запись из мастер-реестра; это не публичная карточка.",
+  "Personas jurídicas": "Юридические лица",
+  "Personas jurídicas en el registro ≠ fichas publicadas y operativas.": "Юридические лица в реестре ≠ опубликованные и работающие карточки.",
+  "Personas jurídicas en el registro:": "Юридических лиц в реестре:",
+  "Personas jurídicas en la base ≠ empresas publicadas y operativas.": "Юридические лица в базе ≠ опубликованные и работающие компании.",
+  "Pet shops": "Зоомагазины",
+  "Pipeline de publicación": "Конвейер публикации",
+  "Pollo entero (por kg)": "Курица целиком (за кг)",
+  "Por tu privacidad, esta página no muestra datos de contacto ni información comercial interna. Solo el estado de tu solicitud.": "В целях конфиденциальности эта страница не показывает контактные данные и внутреннюю коммерческую информацию. Только статус вашей заявки.",
+  "Posiciones contratadas. No equivalen a la mejor oferta objetiva.": "Оплаченные позиции. Они не означают лучшее объективное предложение.",
+  "Precio más bajo": "Сначала дешёвые",
+  "Precio máximo (G.)": "Максимальная цена (G.)",
+  "Productos y servicios": "Товары и услуги",
+  "Proveedores verificados de tipo de cambio y clima.": "Проверенные поставщики курсов валют и погоды.",
+  "Prueba": "Проверить",
+  "Publicada": "Опубликована",
+  "Publicadas recientemente": "Недавно опубликованные",
+  "Publicidad": "Реклама",
+  "Página 1 de 2": "Страница 1 из 2",
+  "Páginas:": "Страницы:",
+  "Que la persona esté interesada o haya comprado.": "Что человек заинтересовался или купил.",
+  "Que la solicitud no existiera o no fuera atendida.": "Что заявки не существовало или её не обслужили.",
+  "Que la solicitud no existiera.": "Что заявки не существовало.",
+  "Quiero turno para uñas esculpidas": "Хочу записаться на наращивание ногтей",
+  "Quiero un turno para uñas esculpidas el viernes": "Хочу записаться на наращивание ногтей в пятницу",
+  "Qué NO prueba": "Чего НЕ доказывает",
+  "Qué prueba": "Что доказывает",
+  "Qué prueba cada evento": "Что доказывает каждое событие",
+  "Qué significa cada paso": "Что означает каждый шаг",
+  "Rechazo documentado del vendedor.": "Задокументированный отказ продавца.",
+  "Recompras": "Повторные покупки",
+  "Reconstruir índice de búsqueda": "Перестроить поисковый индекс",
+  "Recorrido": "Путь заявки",
+  "Referencia": "Номер обращения",
+  "Registro maestro ≠ fichas": "Мастер-реестр ≠ карточки",
+  "Registro maestro; NO son fichas": "Мастер-реестр; это НЕ карточки",
+  "Registros de empresa": "Записи реестра",
+  "Reiniciar datos de demostración": "Сбросить демонстрационные данные",
+  "Relevancia": "По релевантности",
+  "Repuestos y accesorios": "Запчасти",
+  "Reserva / turno": "Бронь / запись",
+  "Respuesta de IA ≠ stock verificado, turno confirmado o descuento jurídicamente exacto.": "Ответ ИИ ≠ проверенный остаток, подтверждённая запись или юридически точная скидка.",
+  "Restaurante de barrio con atención de martes a domingo. Acepta reservas para grupos.": "Районный ресторан, работает со вторника по воскресенье. Принимает групповые брони.",
+  "Restaurantes": "Рестораны",
+  "Resultado confirmado": "Подтверждённый результат",
+  "Resultado confirmado con evidencia.": "Результат подтверждён доказательством.",
+  "Resultado confirmado con evidencia. Una solicitud entregada no es una venta: el comercio debe confirmar el resultado.": "Результат подтверждён доказательством. Переданная заявка — не продажа: продавец должен подтвердить результат.",
+  "Resultados": "Результаты",
+  "Retiro en local": "Самовывоз из точки",
+  "Retiro en local disponible": "Есть самовывоз",
+  "Retiro y delivery": "Самовывоз и доставка",
+  "Revisar las liquidaciones marcadas con margen no positivo.": "Проверить расчёты, помеченные как неположительная маржа.",
+  "SUV — fin de semana (2 días)": "Внедорожник — выходные (2 дня)",
+  "Salida hacia el sitio del vendedor.": "Переход на сайт продавца.",
+  "Salir": "Выйти",
+  "Salud": "Здоровье",
+  "Secciones": "Разделы",
+  "Servicio realizado": "Услуга оказана",
+  "Servicios profesionales": "Услуги",
+  "Shows y música en vivo": "Концерты",
+  "Siguiente →": "Дальше →",
+  "Sin alertas: todas las operaciones tienen margen positivo y contrato.": "Предупреждений нет: у всех операций положительная маржа и есть договор.",
+  "Sin consentimiento": "Без согласия",
+  "Sin datos": "Нет данных",
+  "Sin delivery propio": "Собственной доставки нет",
+  "Sin límite": "Без ограничения",
+  "Sin resultados para esta búsqueda. Probá con menos palabras, sin acentos u otro barrio.": "Ничего не найдено. Попробуйте меньше слов, без акцентов или другой район.",
+  "Sin transiciones disponibles.": "Доступных переходов нет.",
+  "Sinónimos de búsqueda (separados por coma)": "Поисковые синонимы (через запятую)",
+  "Slug": "Slug (идентификатор)",
+  "Smartphone gama media 128 GB": "Смартфон среднего класса 128 ГБ",
+  "Socios": "Партнёры",
+  "Solicitud": "Заявка",
+  "Solicitud aceptada, visita u pago.": "Заявка принята, визит или оплата.",
+  "Solicitud entregada a PRTDS.": "Заявка передана в PRTDS.",
+  "Solicitud entregada:": "Заявка передана:",
+  "Solicitudes": "Заявки",
+  "Solicitudes entregadas": "Заявки переданы",
+  "Solicitudes nuevas": "Новые заявки",
+  "Solo comisión contractual": "Только договорная комиссия",
+  "Solo fuente registrada": "Только зарегистрированный источник",
+  "Spa y masajes": "Спа и массаж",
+  "Sucursal": "Филиал",
+  "Sucursales": "Филиалы",
+  "Sucursales / ofertas": "Филиалы / предложения",
+  "Sugerencia: para buscar por precio usá el filtro «Precio máximo» y el orden «Precio más bajo».": "Подсказка: для поиска по цене используйте фильтр «Максимальная цена» и порядок «Сначала дешёвые».",
+  "Supermercados": "Супермаркеты",
+  "Supermercados y almacenes": "Супермаркеты и магазины",
+  "Sushi y comida japonesa con delivery propio en Asunción.": "Суши и японская кухня с собственной доставкой в Асунсьоне.",
+  "Sí": "Да",
+  "Talleres mecánicos": "Автосервис",
+  "Tareas sugeridas": "Рекомендуемые задачи",
+  "Tasa": "Ставка",
+  "Tasa de aceptación": "Доля принятых заявок",
+  "Taxonomía, pipeline de publicación, contratos y mantenimiento del índice de búsqueda.": "Таксономия, конвейер публикации, договоры и обслуживание поискового индекса.",
+  "Teatro": "Театр",
+  "Tecnología y electrodomésticos": "Техника и электроника",
+  "Teléfono / WhatsApp": "Телефон / WhatsApp",
+  "Todas": "Все",
+  "Todos": "Все",
+  "Token de administración": "Токен администратора",
+  "Token de socio": "Токен партнёра",
+  "Tu mensaje: «Quiero turno para uñas esculpidas»": "Ваше сообщение: «Хочу записаться на наращивание ногтей»",
+  "Tu nombre": "Ваше имя",
+  "Turismo y alojamiento": "Туризм и проживание",
+  "Turno confirmado": "Запись подтверждена",
+  "Turno/reserva confirmada por el proveedor.": "Запись подтверждена продавцом.",
+  "Un lead calificado.": "Квалифицированный лид.",
+  "Una compra en ese sitio.": "Покупка на этом сайте.",
+  "Una solicitud entregada no es una venta: el comercio debe confirmar el resultado.": "Переданная заявка — это не продажа: продавец должен подтвердить результат.",
+  "Una solicitud entregada no es una venta: el comercio debe confirmarla.": "Переданная заявка — это не продажа: продаец должен её подтвердить.",
+  "Una visita efectivamente realizada.": "Визит действительно состоялся.",
+  "Uñas esculpidas (set completo)": "Наращивание ногтей (полный набор)",
+  "Van familiar — por día": "Семейный минивэн — в сутки",
+  "Vehículos": "Транспорт",
+  "Venta con evidencia aportada por el vendedor.": "Продажа с доказательством от продавца.",
+  "Venta conciliada contra un comprobante.": "Продажа сверена с чеком.",
+  "Venta confirmada": "Продажа подтверждена",
+  "Ventas confirmadas": "Подтверждённые продажи",
+  "Ventas confirmadas; NO es ingreso de PRTDS": "Подтверждённые продажи; это НЕ доход PRTDS",
+  "Ventas de los comercios": "Продажи магазинов",
+  "Ver estado": "Проверить статус",
+  "Ver ficha": "Открыть карточку",
+  "Verificación": "Подтверждение",
+  "Verificado en campo": "Проверено на месте",
+  "Veterinarias": "Ветклиники",
+  "Visibles en la búsqueda": "Видны в поиске",
+  "Visita/servicio marcado como realizado por el proveedor.": "Визит или услуга отмечены продавцом как выполненные.",
+  "Viveros y jardinería": "Питомники растений и садоводство",
+  "Volver a la ficha": "Вернуться к карточке",
+  "WhatsApp / llamada:": "WhatsApp / звонок:",
+  "Yerba mate tradicional 1 kg": "Традиционная йерба мате 1 кг",
+  "card · manual_reconciliation · confianza high": "карточка · ручная сверка · уверенность high",
+  "card · utm · confianza high": "карточка · utm · уверенность high",
+  "corte-1: funnel de punta a punta": "срез 1: воронка от начала до конца",
+  "el comercio acepta o confirma el resultado; solo entonces puede existir una comisión contractual.": "продавец принимает или подтверждает результат; только тогда может возникнуть договорная комиссия.",
+  "el comercio la recibe con tu consentimiento.": "продавец получает её с вашего согласия.",
+  "ficha": "карточка",
+  "fichas": "карточек",
+  "hace 18 h": "18 ч назад",
+  "hogar (opcional)": "домашний (необязательно)",
+  "impresiones registradas": "показов записано",
+  "la taxonomía es dato, no código": "таксономия — это данные, а не код",
+  "no": "нет",
+  "no son fichas": "это не карточки",
+  "opcional": "необязательно",
+  "para que me contacte. Puedo revocar este consentimiento en cualquier momento.": "чтобы она связалась со мной. Я могу отозвать это согласие в любой момент.",
+  "plantas, jardin, vivero": "растения, сад, питомник",
+  "qué prueba cada uno": "что доказывает каждое",
+  "registramos el intento de contacto, no una venta.": "мы фиксируем попытку связаться, а не продажу.",
+  "requerido": "обязательно",
+  "staging → validación → moderación → publicación. Una fila del registro maestro no es una ficha pública.": "staging → валидация → модерация → публикация. Строка мастер-реестра не является публичной карточкой.",
+  "sí": "да",
+  "sí, con contrato": "да, с договором",
+  "ve todas las empresas; los tokens por comercio están en": "видит все компании; токены отдельных компаний находятся в",
+  "viernes 17:00": "пятница 17:00",
+  "· comprobante FACT-0042": "· чек FACT-0042",
+  "· comprobante FACT-DEMO-01": "· чек FACT-DEMO-01",
+  "· comprobante SMOKE-0001": "· чек SMOKE-0001",
+  "¿Cuándo lo necesitás?": "Когда вам это нужно?",
+  "Última observación": "Последнее наблюдение",
+  "Última observación de datos": "Последнее обновление данных",
+  "Últimos eventos del ledger": "Последние события реестра",
+  "Única base de cobro": "Единственное основание для расчёта",
+  "← Volver a la búsqueda": "← Вернуться к поиску",
+};
+
+const EN = {
+  "(verificado hace 18 h)": "(verified 18 h ago)",
+  "(verificado hace 8 h)": "(verified 8 h ago)",
+  ". En producción la entrada será con identidad real y roles separados.": ". In production, sign-in will use real identity and separate roles.",
+  ". En producción: identidad real, roles separados y auditoría; secretos fuera del repositorio.": ". In production: real identity, separate roles and audit; secrets kept out of the repository.",
+  "/ servicio": "/ service",
+  "2 sucursales": "2 branches",
+  "Abogados": "Lawyers",
+  "Acción principal": "Primary action",
+  "Aceite de girasol 900 ml": "Sunflower oil 900 ml",
+  "Aceptación / confirmación por parte del vendedor.": "Acceptance / confirmation by the seller.",
+  "Aceptada": "Accepted",
+  "Aceptadas": "Accepted",
+  "Aceptadas / entregadas": "Accepted / delivered",
+  "Actualizada hace 4 días": "Updated 4 days ago",
+  "Actualizar": "Refresh",
+  "Administración": "Administration",
+  "Administración del catálogo": "Catalog administration",
+  "Administración · PRTDS": "Administration · PRTDS",
+  "Agenda Yvoty Shows": "Yvoty Shows agenda",
+  "Alertas de economía": "Economics alerts",
+  "Almacenes de barrio": "Neighborhood grocery",
+  "Almacén de barrio: fideos, aceite, limpieza y fiambres al corte.": "Neighborhood grocery: pasta, oil, cleaning products and sliced deli.",
+  "Alquiler de autos económicos, SUV y vans con entrega en Asunción.": "Economy car, SUV and van rental with delivery in Asunción.",
+  "Alquiler de vehículos": "Car rental",
+  "Análisis jurídico de bonos, cashback y productos financieros.": "Legal analysis of bonuses, cashback and financial products.",
+  "Aplicar": "Apply",
+  "Apoyo escolar": "Tutoring",
+  "Append-only, con idempotencia": "Append-only, with idempotency",
+  "Asesoría contable, inscripción de RUC e IVA para pymes.": "Accounting advice, RUC and VAT registration for SMEs.",
+  "Asesoría mensual para pyme": "Monthly advisory for SMEs",
+  "Atribución": "Attribution",
+  "Auditoría read-only de producción (Neon, Render, Cloudflare).": "Read-only production audit (Neon, Render, Cloudflare).",
+  "Auriculares bluetooth": "Bluetooth headphones",
+  "Auto económico — por día": "Economy car — per day",
+  "Autorizo a PRTDS a compartir estos datos con": "I authorize PRTDS to share this data with",
+  "Barberías": "Barbershops",
+  "Bares y cervecerías": "Bars & breweries",
+  "Barrio / ciudad": "Neighborhood / city",
+  "Base = venta del comercio (GMV). Comisión = ingreso de PRTDS. Sin contrato activo la comisión es cero, aunque la venta esté confirmada.": "Base = the merchant's sale (GMV). Commission = PRTDS revenue. Without an active contract the commission is zero, even if the sale is confirmed.",
+  "Bebidas y licorerías": "Drinks & liquor",
+  "Belleza y cuidado personal": "Beauty & personal care",
+  "Bife ancho 400 g": "Ribeye 400 g",
+  "Buscador de empresas, productos y servicios en Asunción y Gran Asunción. Contactá por WhatsApp, llamá o enviá una solicitud en un paso.": "Search engine for companies, products and services in Asunción and Greater Asunción. Contact by WhatsApp, call or send a request in one step.",
+  "Buscar": "Search",
+  "Buscar otra cosa": "Search something else",
+  "Búsqueda": "Search",
+  "Cadena de supermercados: almacén, carnicería, verdulería y limpieza.": "Supermarket chain: grocery, butcher, produce and cleaning.",
+  "Cafeterías": "Cafés",
+  "Café de especialidad, medialunas y tortilla paraguaya.": "Specialty coffee, medialunas and Paraguayan tortilla.",
+  "Canales verificados": "Verified channels",
+  "Cancelación documentada (cliente o vendedor).": "Documented cancellation (customer or seller).",
+  "Cantidad": "Quantity",
+  "Cargando…": "Loading…",
+  "Cargar el importe y el comprobante de las ventas efectivamente realizadas.": "Enter the amount and receipt of sales that actually happened.",
+  "Categoría": "Category",
+  "Categoría padre (slug)": "Parent category (slug)",
+  "Categorías": "Categories",
+  "Catálogo y dinero": "Catalog and money",
+  "Causalidad de una campaña sin verificación.": "Campaign causality without verification.",
+  "Celulares y accesorios": "Phones & accessories",
+  "Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.": "Phones, accessories and technical service. Prices in guaraníes, local warranty.",
+  "Cerrar": "Close",
+  "Chequeo básico + laboratorio": "Basic check-up + lab",
+  "Chipa guasú casera": "Homemade chipa guasú",
+  "Cliente": "Customer",
+  "Clínicas y consultorios": "Clinics & practices",
+  "Comisión": "Commission",
+  "Comisión − costos variables": "Commission − variable costs",
+  "Comisión, no GMV": "Commission, not GMV",
+  "Compra": "Purchase",
+  "Compra repetida dentro de los consentimientos otorgados.": "Repeat purchase within granted consents.",
+  "Con consentimiento": "With consent",
+  "Con delivery": "With delivery",
+  "Con evidencia": "With evidence",
+  "Con evidencia cargada": "With evidence uploaded",
+  "Confirmada:": "Confirmed:",
+  "Confirmadas por el comercio": "Confirmed by the merchant",
+  "Confirmado por el comercio": "Confirmed by the merchant",
+  "Confirmar o rechazar las solicitudes nuevas del día.": "Confirm or reject the day's new requests.",
+  "Confirmar un resultado que no ocurrió distorsiona la atribución y las liquidaciones. Una impresión o un clic de WhatsApp no es un cliente traído.": "Confirming a result that did not happen distorts attribution and settlements. An impression or a WhatsApp click is not a customer brought in.",
+  "Consulta clínica": "Clinical consultation",
+  "Consulta del smoke test": "Smoke test query",
+  "Consultar por WhatsApp": "Ask on WhatsApp",
+  "Consultas clínicas, chequeos y laboratorio básico.": "Clinical consultations, check-ups and basic lab.",
+  "Consultas, vacunas, baño y corte; alimentos y accesorios para mascotas.": "Consultations, vaccines, grooming; pet food and accessories.",
+  "Consultá el estado de una solicitud": "Check the status of a request",
+  "Contadores y trámites": "Accounting & paperwork",
+  "Contratos activos": "Active contracts",
+  "Contá qué necesitás: producto, cantidad, detalles": "Tell what you need: product, quantity, details",
+  "Corte masculino, barba y afeitado clásico.": "Men's cuts, beard and classic shave.",
+  "Corte mixto, guarnición y salsa de la casa.": "Mixed cut, side dish and house sauce.",
+  "Corte, coloración y tratamientos. Atención con turno.": "Cuts, coloring and treatments. By appointment.",
+  "Crear categoría": "Create category",
+  "Crecimiento de tráfico ≠ modelo de negocio viable.": "Traffic growth ≠ a viable business model.",
+  "Cualquiera": "Any",
+  "Cursos de inglés y guaraní, presenciales y en línea.": "English and Guaraní courses, in person and online.",
+  "Cuándo": "When",
+  "Cuándo lo necesitás: viernes 17:00": "When needed: Friday 17:00",
+  "Cálculo de comisión registrado en el ledger.": "Commission calculation recorded in the ledger.",
+  "Cómo contactar": "How to contact",
+  "Cómo llegar": "Get directions",
+  "Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor.": "Data provided by registered sources; availability and prices require seller confirmation.",
+  "Datos observados hace 18 h · fuente: OpenStreetMap contributors": "Data observed 18 h ago · source: OpenStreetMap contributors",
+  "Delivery de comida": "Food delivery",
+  "Demostración sin conexión.": "Offline demonstration.",
+  "Dentro de los consentimientos": "Within consents",
+  "Derecho automático a comisión sin contrato.": "Automatic commission claim without a contract.",
+  "Desactivar": "Deactivate",
+  "Descripción (es)": "Description (es)",
+  "Desde": "From",
+  "Detergente en polvo 800 g": "Powder detergent 800 g",
+  "Diccionario único del recorrido; lo usan la UI, el panel del comercio y cualquier reporte.": "A single journey dictionary used by the UI, the merchant panel and every report.",
+  "Dinero efectivamente cobrado por PRTDS.": "Money actually collected by PRTDS.",
+  "Dinero recibido por el vendedor.": "Money received by the seller.",
+  "Disponible": "Available",
+  "Documento interno en forma de página. No es una promesa de ingresos ni una confirmación de que todos los servicios descritos estén en producción.": "An internal document in page form. It is not a revenue promise nor a confirmation that every described service is in production.",
+  "Educación": "Education",
+  "Ej.: alquiler de autos, manicura, yerba mate, farmacia 24 horas": "E.g.: car rental, manicure, yerba mate, 24-hour pharmacy",
+  "Ej.: viernes 18:00, o lo antes posible": "E.g.: Friday 18:00, or as soon as possible",
+  "El catálogo es universal: se crea una categoría y sus sinónimos de búsqueda sin despliegue.": "The catalog is universal: a category and its search synonyms are created without a deployment.",
+  "El comercio aún no respondió.": "The merchant has not replied yet.",
+  "El comercio confirmó la solicitud.": "The merchant confirmed the request.",
+  "El comercio marcó la visita como realizada.": "The merchant marked the visit as done.",
+  "El comercio recibe tu mensaje y te responde. PRTDS no cobra por enviar una solicitud y no guarda tu teléfono más allá de lo necesario para este contacto.": "The merchant receives your message and replies. PRTDS does not charge for sending a request and does not keep your phone number beyond what this contact requires.",
+  "El importe cobrado.": "The amount charged.",
+  "Electrodomésticos": "Home appliances",
+  "Empresa": "Company",
+  "Empresa (slug)": "Company (slug)",
+  "Empresas publicadas": "Published companies",
+  "Empresas, productos y servicios de Asunción y Gran Asunción. Buscá, compará y contactá en un paso: WhatsApp, llamada o solicitud.": "Companies, products and services of Asunción and Greater Asunción. Search, compare and get in touch in one step: WhatsApp, call or request.",
+  "Encargada Nails Mburucuyá · manager · alcance una empresa": "Manager of Nails Mburucuyá · manager · scope: one company",
+  "Encontrá lo que necesitás": "Find what you need",
+  "Entorno de demostración: el token de operaciones": "Demo environment: the operations token",
+  "Entorno de demostración: token": "Demo environment: token",
+  "Entrar": "Sign in",
+  "Entrega y retiro en el aeropuerto": "Airport delivery and pickup",
+  "Entregada": "Delivered",
+  "Entregadas con consentimiento": "Delivered with consent",
+  "Entregadas con consentimiento explícito antes de compartir el contacto.": "Delivered with explicit consent before the contact was shared.",
+  "Entregadas, aún sin respuesta": "Delivered, no reply yet",
+  "Enviar solicitud": "Send request",
+  "Enviar una solicitud": "Send a request",
+  "Esta página existe para que nadie confunda «hay código y datos» con «hay un servicio terminado». Muestra qué existe en este entorno, qué falta verificar y qué significa cada evento del recorrido.": "This page exists so nobody confuses “there is code and data” with “there is a finished service”. It shows what exists in this environment, what still needs verification and what each journey event means.",
+  "Estado": "Status",
+  "Estado de la ficha": "Listing status",
+  "Estado de la plataforma": "Platform status",
+  "Estado de la plataforma · PRTDS": "Platform status · PRTDS",
+  "Estado de mi solicitud · PRTDS": "Status of my request · PRTDS",
+  "Estado honesto de la plataforma": "Honest platform status",
+  "Etapa": "Stage",
+  "Evento": "Event",
+  "Eventos del ledger": "Ledger events",
+  "Eventos registrados": "Recorded events",
+  "Eventos y agenda": "Events & agenda",
+  "Excursiones": "Excursions",
+  "Farmacia de turno con delivery y medicamentos de venta libre.": "Duty pharmacy with delivery and over-the-counter medicines.",
+  "Farmacias": "Pharmacies",
+  "Ferreterías": "Hardware stores",
+  "Ficha": "Listing",
+  "Fichas": "Listings",
+  "Fichas por estado:": "Listings by status:",
+  "Fichas publicadas": "Published listings",
+  "Fichas publicadas en este entorno:": "Listings published in this environment:",
+  "Fideos secos 500 g": "Dry pasta 500 g",
+  "Funda + vidrio templado": "Case + tempered glass",
+  "GMV confirmado": "Confirmed GMV",
+  "GMV de comercios": "Merchant GMV",
+  "GMV de la tienda ≠ ingreso de PRTDS; los puntos/bonos ≠ dinero en cuenta.": "Store GMV ≠ PRTDS revenue; points/bonus ≠ money in the account.",
+  "GMV del comercio": "Merchant GMV",
+  "GMV del comercio ≠ ingreso de PRTDS.": "Merchant GMV ≠ PRTDS revenue.",
+  "Gaseosa 2 L (segunda marca)": "Soda 2 L (second brand)",
+  "Gaseosa cola 2 L": "Cola soda 2 L",
+  "Gastronomía": "Food & dining",
+  "Genera comisión": "Generates commission",
+  "Guardado": "Saved",
+  "Hay día y hora confirmados.": "Date and time are confirmed.",
+  "Herramientas, pintura, eléctricos y materiales de construcción.": "Tools, paint, electrical goods and construction materials.",
+  "Hogar y construcción": "Home & construction",
+  "Horarios": "Opening hours",
+  "Hotel céntrico: habitaciones dobles, desayuno buffet y sala de reuniones.": "Downtown hotel: double rooms, buffet breakfast and meeting room.",
+  "Hoteles": "Hotels",
+  "Hoy: 00:00–23:59": "Today: 00:00–23:59",
+  "Hoy: Cerrado hoy": "Today: closed",
+  "Identidad real de usuarios y socios (no tokens de demostración).": "Real user and partner identity (not demo tokens).",
+  "Idioma": "Language",
+  "Idiomas": "Languages",
+  "Importe": "Amount",
+  "Impresión de una tarjeta en un listado.": "A card impression in a listing.",
+  "Impresión, clic o WhatsApp abierto NO equivalen a un cliente traído ni a una venta confirmada. Solo el contrato define qué se paga.": "An impression, click or opened WhatsApp is NOT a customer brought in, nor a confirmed sale. Only the contract defines what is paid.",
+  "Impresión/clic/WhatsApp abierto ≠ cliente traído, y mucho menos venta confirmada.": "Impression/click/opened WhatsApp ≠ a customer brought in, let alone a confirmed sale.",
+  "Incluye staging y borradores": "Including staging and drafts",
+  "Informática": "Computers",
+  "Ingreso PRTDS": "PRTDS revenue",
+  "Ingresá con el token de tu cuenta de socio. Aquí confirmás o rechazás las solicitudes y cargás los resultados realmente ocurridos: esa conciliación es la base de cualquier liquidación.": "Sign in with your partner account token. Here you confirm or reject requests and record the results that actually happened: that reconciliation is the basis of any settlement.",
+  "Ingresá la referencia que te dimos al enviar la solicitud o al abrir WhatsApp (por ejemplo": "Enter the reference we gave you when sending the request or opening WhatsApp (for example",
+  "Inscripción RUC (trámite completo)": "RUC registration (full procedure)",
+  "Integración POS/feed con cadenas grandes.": "POS/feed integration with large chains.",
+  "Intención de llegar al local.": "Intent to reach the store.",
+  "Intento de iniciar contacto por WhatsApp.": "Attempt to start contact on WhatsApp.",
+  "Intento de iniciar contacto por llamada.": "Attempt to start contact by phone.",
+  "Interés en la empresa (ficha abierta).": "Interest in the company (listing opened).",
+  "Interés real, lead o venta.": "Real interest, lead or sale.",
+  "Jamón cocido (por kg)": "Cooked ham (per kg)",
+  "La interfaz es real; las respuestas del API fueron grabadas y nada se guarda.": "The interface is real; API responses were recorded in advance and nothing is saved.",
+  "Lavaderos": "Car wash",
+  "Liquidaciones": "Settlements",
+  "Liquidaciones y eventos": "Settlements and events",
+  "Llamada": "Call",
+  "Llamada efectivamente atendida.": "Call actually answered.",
+  "Llamar": "Call",
+  "Lo que no se puede confundir": "What must not be confused",
+  "Lo que ve una persona": "What a person sees",
+  "Los datos del catálogo local son ficticios y sirven para validar el recorrido; no son ofertas reales ni socios contratados.": "Local catalog data is fictional and exists to validate the journey; these are not real offers or contracted partners.",
+  "Manicura clásica": "Classic manicure",
+  "Manicura y uñas": "Manicure & nails",
+  "Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.": "Manicure, pedicure and sculpted nails. Appointments via WhatsApp.",
+  "Mantenimiento": "Maintenance",
+  "Marca: Nails Mburucuyá": "Brand: Nails Mburucuyá",
+  "Margen": "Margin",
+  "Margen de contribución": "Contribution margin",
+  "Mascotas": "Pets",
+  "Mecánica ligera, cambio de aceite, frenos y alineación.": "Light mechanics, oil change, brakes and alignment.",
+  "Mensaje": "Message",
+  "Mensaje recibido o conversación sostenida.": "Message received or conversation held.",
+  "Menú del día (almuerzo)": "Set lunch of the day",
+  "Migración, modelo o test en verde ≠ servicio de producción listo para vender.": "A migration, model or green test ≠ a production service ready to sell.",
+  "Mis solicitudes": "My requests",
+  "Mostrado en los resultados de búsqueda.": "Shown in search results.",
+  "Motivo": "Reason",
+  "Mudanzas de departamentos, oficinas y fletes dentro del Gran Asunción.": "Apartment and office moves, freight within Greater Asunción.",
+  "Mudanzas y fletes": "Moving & freight",
+  "Muebles y decoración": "Furniture & décor",
+  "No es ingreso de PRTDS": "Not PRTDS revenue",
+  "No se pudo cargar la búsqueda:": "Could not load the search:",
+  "No se pudo cargar:": "Could not load:",
+  "Nombre": "Name",
+  "Nombre (es)": "Name (es)",
+  "Nombre A–Z": "Name A–Z",
+  "Nota: Turno confirmado viernes 17:00": "Note: appointment confirmed Friday 17:00",
+  "Nota: smoke": "Note: smoke",
+  "Notebooks, impresoras, insumos y soporte para oficinas.": "Laptops, printers, supplies and office support.",
+  "Nuevo estado": "New status",
+  "Odontología": "Dentistry",
+  "Ofertas activas": "Active offers",
+  "Ofertas con datos vencidos": "Offers with expired data",
+  "Orden": "Order",
+  "Orden por relevancia, verificación de datos y actualidad. La publicidad se muestra por separado y siempre etiquetada.": "Ranked by relevance, data verification and freshness. Advertising is shown separately and always labelled.",
+  "Organizador de eventos: shows en vivo, festivales y teatro.": "Event organizer: live shows, festivals and theatre.",
+  "Origen": "Source",
+  "PRTDS conecta a la persona con la empresa. El pago se hace directamente al comercio; la plataforma no es vendedora de productos de terceros.": "PRTDS connects the person with the company. Payment goes directly to the merchant; the platform is not a seller of third-party products.",
+  "PRTDS no lee tu conversación de WhatsApp y no guarda el contenido del chat.": "PRTDS does not read your WhatsApp conversation and does not store chat content.",
+  "PRTDS no vende productos de terceros: el pago se hace directamente al comercio. La plataforma cobra únicamente a socios con contrato y por resultados confirmados.": "PRTDS does not sell third-party products: payment goes directly to the merchant. The platform charges only contracted partners and only for confirmed results.",
+  "PRTDS · Para todos. Para todo.": "PRTDS · For everyone. For everything.",
+  "PRTDS — Buscá empresas, productos y servicios en Paraguay": "PRTDS — Search companies, products and services in Paraguay",
+  "Pago realizado.": "Payment made.",
+  "Pan francés (por kg)": "French bread (per kg)",
+  "Panel de socios · PRTDS": "Partners panel · PRTDS",
+  "Panel del comercio": "Merchant panel",
+  "Panel §15 — lo que no se puede confundir": "Panel §15 — what must not be confused",
+  "Para todos. Para todo.": "For everyone. For everything.",
+  "Parrilla familiar: cortes a la parrilla, menú del día y guarniciones.": "Family grill house: grilled cuts, set lunch and sides.",
+  "Parrillada para 2 personas": "Grill platter for 2",
+  "Pedicura spa": "Spa pedicure",
+  "Peluquerías": "Hair salons",
+  "Pendiente de conciliación": "Pending reconciliation",
+  "Pendiente de conciliación con el socio.": "Pending reconciliation with the partner.",
+  "Pendiente de verificación": "Pending verification",
+  "Persona jurídica: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. Persona jurídica del registro maestro; no es la ficha pública.": "Legal entity: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. A master-registry legal entity; not the public listing.",
+  "Personas jurídicas": "Legal entities",
+  "Personas jurídicas en el registro ≠ fichas publicadas y operativas.": "Legal entities in the registry ≠ published, operating listings.",
+  "Personas jurídicas en el registro:": "Legal entities in the registry:",
+  "Personas jurídicas en la base ≠ empresas publicadas y operativas.": "Legal entities in the database ≠ published, operating companies.",
+  "Pipeline de publicación": "Publication pipeline",
+  "Pollo entero (por kg)": "Whole chicken (per kg)",
+  "Por tu privacidad, esta página no muestra datos de contacto ni información comercial interna. Solo el estado de tu solicitud.": "For your privacy, this page shows no contact data and no internal commercial information. Only the status of your request.",
+  "Posiciones contratadas. No equivalen a la mejor oferta objetiva.": "Paid placements. They are not the best objective offer.",
+  "Precio más bajo": "Lowest price",
+  "Precio máximo (G.)": "Max price (G.)",
+  "Productos y servicios": "Products and services",
+  "Proveedores verificados de tipo de cambio y clima.": "Verified exchange-rate and weather providers.",
+  "Prueba": "Try",
+  "Publicada": "Published",
+  "Publicadas recientemente": "Recently published",
+  "Publicidad": "Advertising",
+  "Página 1 de 2": "Page 1 of 2",
+  "Páginas:": "Pages:",
+  "Que la persona esté interesada o haya comprado.": "That the person was interested or bought.",
+  "Que la solicitud no existiera o no fuera atendida.": "That the request never existed or was not served.",
+  "Que la solicitud no existiera.": "That the request never existed.",
+  "Quiero turno para uñas esculpidas": "I want an appointment for sculpted nails",
+  "Quiero un turno para uñas esculpidas el viernes": "I want an appointment for sculpted nails on Friday",
+  "Qué NO prueba": "What it does NOT prove",
+  "Qué prueba": "What it proves",
+  "Qué prueba cada evento": "What each event proves",
+  "Qué significa cada paso": "What each step means",
+  "Rechazo documentado del vendedor.": "Documented rejection by the seller.",
+  "Recompras": "Repeat purchases",
+  "Reconstruir índice de búsqueda": "Rebuild search index",
+  "Recorrido": "Journey",
+  "Referencia": "Reference",
+  "Registro maestro ≠ fichas": "Master registry ≠ listings",
+  "Registro maestro; NO son fichas": "Master registry; these are NOT listings",
+  "Registros de empresa": "Registry records",
+  "Reiniciar datos de demostración": "Reset demo data",
+  "Relevancia": "Relevance",
+  "Repuestos y accesorios": "Parts & accessories",
+  "Reserva / turno": "Booking / appointment",
+  "Respuesta de IA ≠ stock verificado, turno confirmado o descuento jurídicamente exacto.": "An AI answer ≠ verified stock, a confirmed booking or a legally exact discount.",
+  "Restaurante de barrio con atención de martes a domingo. Acepta reservas para grupos.": "Neighborhood restaurant, open Tuesday to Sunday. Group reservations accepted.",
+  "Restaurantes": "Restaurants",
+  "Resultado confirmado": "Confirmed result",
+  "Resultado confirmado con evidencia.": "Result confirmed with evidence.",
+  "Resultado confirmado con evidencia. Una solicitud entregada no es una venta: el comercio debe confirmar el resultado.": "Result confirmed with evidence. A delivered request is not a sale: the merchant must confirm the result.",
+  "Resultados": "Results",
+  "Retiro en local": "Pickup in store",
+  "Retiro en local disponible": "Pickup available",
+  "Retiro y delivery": "Pickup and delivery",
+  "Revisar las liquidaciones marcadas con margen no positivo.": "Review settlements flagged with a non-positive margin.",
+  "SUV — fin de semana (2 días)": "SUV — weekend (2 days)",
+  "Salida hacia el sitio del vendedor.": "Exit to the seller's site.",
+  "Salir": "Sign out",
+  "Salud": "Health",
+  "Secciones": "Sections",
+  "Servicio realizado": "Service done",
+  "Servicios profesionales": "Professional services",
+  "Shows y música en vivo": "Live shows & music",
+  "Siguiente →": "Next →",
+  "Sin alertas: todas las operaciones tienen margen positivo y contrato.": "No alerts: every operation has a positive margin and a contract.",
+  "Sin consentimiento": "Without consent",
+  "Sin datos": "No data",
+  "Sin delivery propio": "No own delivery",
+  "Sin límite": "No limit",
+  "Sin resultados para esta búsqueda. Probá con menos palabras, sin acentos u otro barrio.": "No results for this search. Try fewer words, without accents or another neighborhood.",
+  "Sin transiciones disponibles.": "No transitions available.",
+  "Sinónimos de búsqueda (separados por coma)": "Search synonyms (comma separated)",
+  "Smartphone gama media 128 GB": "Mid-range smartphone 128 GB",
+  "Socios": "Partners",
+  "Solicitud": "Request",
+  "Solicitud aceptada, visita u pago.": "Request accepted, visit or payment.",
+  "Solicitud entregada a PRTDS.": "Request delivered to PRTDS.",
+  "Solicitud entregada:": "Request delivered:",
+  "Solicitudes": "Requests",
+  "Solicitudes entregadas": "Requests delivered",
+  "Solicitudes nuevas": "New requests",
+  "Solo comisión contractual": "Contractual commission only",
+  "Solo fuente registrada": "Registered source only",
+  "Spa y masajes": "Spa & massage",
+  "Sucursal": "Branch",
+  "Sucursales": "Branches",
+  "Sucursales / ofertas": "Branches / offers",
+  "Sugerencia: para buscar por precio usá el filtro «Precio máximo» y el orden «Precio más bajo».": "Tip: to search by price use the “Max price” filter and the “Lowest price” sort.",
+  "Supermercados": "Supermarkets",
+  "Supermercados y almacenes": "Supermarkets & grocery",
+  "Sushi y comida japonesa con delivery propio en Asunción.": "Sushi and Japanese food with own delivery in Asunción.",
+  "Sí": "Yes",
+  "Talleres mecánicos": "Auto repair",
+  "Tareas sugeridas": "Suggested tasks",
+  "Tasa": "Rate",
+  "Tasa de aceptación": "Acceptance rate",
+  "Taxonomía, pipeline de publicación, contratos y mantenimiento del índice de búsqueda.": "Taxonomy, publication pipeline, contracts and search index maintenance.",
+  "Teatro": "Theatre",
+  "Tecnología y electrodomésticos": "Tech & appliances",
+  "Teléfono / WhatsApp": "Phone / WhatsApp",
+  "Todas": "All",
+  "Todos": "All",
+  "Token de administración": "Admin token",
+  "Token de socio": "Partner token",
+  "Tu mensaje: «Quiero turno para uñas esculpidas»": "Your message: “I want an appointment for sculpted nails”",
+  "Tu nombre": "Your name",
+  "Turismo y alojamiento": "Tourism & lodging",
+  "Turno confirmado": "Booking confirmed",
+  "Turno/reserva confirmada por el proveedor.": "Appointment/booking confirmed by the provider.",
+  "Un lead calificado.": "A qualified lead.",
+  "Una compra en ese sitio.": "A purchase on that site.",
+  "Una solicitud entregada no es una venta: el comercio debe confirmar el resultado.": "A delivered request is not a sale: the merchant must confirm the result.",
+  "Una solicitud entregada no es una venta: el comercio debe confirmarla.": "A delivered request is not a sale: the merchant must confirm it.",
+  "Una visita efectivamente realizada.": "A visit that actually happened.",
+  "Uñas esculpidas (set completo)": "Sculpted nails (full set)",
+  "Van familiar — por día": "Family van — per day",
+  "Vehículos": "Vehicles",
+  "Venta con evidencia aportada por el vendedor.": "Sale with evidence provided by the seller.",
+  "Venta conciliada contra un comprobante.": "Sale reconciled against a receipt.",
+  "Venta confirmada": "Confirmed sale",
+  "Ventas confirmadas": "Confirmed sales",
+  "Ventas confirmadas; NO es ingreso de PRTDS": "Confirmed sales; NOT PRTDS revenue",
+  "Ventas de los comercios": "Merchant sales",
+  "Ver estado": "Check status",
+  "Ver ficha": "View listing",
+  "Verificación": "Verification",
+  "Verificado en campo": "Field verified",
+  "Veterinarias": "Veterinarians",
+  "Visibles en la búsqueda": "Visible in search",
+  "Visita/servicio marcado como realizado por el proveedor.": "Visit/service marked as done by the provider.",
+  "Viveros y jardinería": "Plant nurseries and gardening",
+  "Volver a la ficha": "Back to listing",
+  "WhatsApp / llamada:": "WhatsApp / call:",
+  "Yerba mate tradicional 1 kg": "Traditional yerba mate 1 kg",
+  "card · manual_reconciliation · confianza high": "card · manual_reconciliation · confidence high",
+  "card · utm · confianza high": "card · utm · confidence high",
+  "corte-1: funnel de punta a punta": "slice 1: end-to-end funnel",
+  "el comercio acepta o confirma el resultado; solo entonces puede existir una comisión contractual.": "the merchant accepts or confirms the result; only then can a contractual commission exist.",
+  "el comercio la recibe con tu consentimiento.": "the merchant receives it with your consent.",
+  "ficha": "listing",
+  "fichas": "listings",
+  "hace 18 h": "18 h ago",
+  "hogar (opcional)": "home (optional)",
+  "impresiones registradas": "impressions recorded",
+  "la taxonomía es dato, no código": "taxonomy is data, not code",
+  "no son fichas": "they are not listings",
+  "opcional": "optional",
+  "para que me contacte. Puedo revocar este consentimiento en cualquier momento.": "so it can contact me. I can revoke this consent at any time.",
+  "plantas, jardin, vivero": "plants, garden, nursery",
+  "qué prueba cada uno": "what each one proves",
+  "registramos el intento de contacto, no una venta.": "we record an attempt to contact, not a sale.",
+  "requerido": "required",
+  "staging → validación → moderación → publicación. Una fila del registro maestro no es una ficha pública.": "staging → validation → moderation → publication. A master-registry row is not a public listing.",
+  "sí": "yes",
+  "sí, con contrato": "yes, with contract",
+  "ve todas las empresas; los tokens por comercio están en": "sees all companies; per-merchant tokens are in",
+  "viernes 17:00": "Friday 17:00",
+  "· comprobante FACT-0042": "· receipt FACT-0042",
+  "· comprobante FACT-DEMO-01": "· receipt FACT-DEMO-01",
+  "· comprobante SMOKE-0001": "· receipt SMOKE-0001",
+  "¿Cuándo lo necesitás?": "When do you need it?",
+  "Última observación": "Last observed",
+  "Última observación de datos": "Last data observation",
+  "Últimos eventos del ledger": "Latest ledger events",
+  "Única base de cobro": "The only billing basis",
+  "← Volver a la búsqueda": "← Back to search",
+};
+
+/* Шаблоны для строк с подстановками: [регулярное выражение, ru, en]. */
+const PATTERNS = [
+  ["^Hoy: (.+)$", "Сегодня: $1", "Today: $1"],
+  ["^(\\d+) fichas · (\\d+) impresiones registradas$", "$1 карточек · $2 показов записано", "$1 listings · $2 impressions recorded"],
+  ["^(\\d+) fichas$", "карточек: $1", "$1 listings"],
+  ["^(\\d+) ficha$", "$1 карточка", "$1 listing"],
+  ["^Página (\\d+) de (\\d+)$", "Страница $1 из $2", "Page $1 of $2"],
+  ["^(\\d+) sucursales$", "$1 филиала", "$1 branches"],
+  ["^(\\d+) ofertas activas$", "$1 активных предложения", "$1 active offers"],
+  ["^\\(verificado hace (.+)\\)$", "(подтверждено $1 назад)", "(verified $1 ago)"],
+  ["^Datos observados hace (.+) · fuente: (.+)$", "Данные получены $1 назад · источник: $2", "Data observed $1 ago · source: $2"],
+  ["^SKU (.+?) · observado hace (.+?) · válido hasta (.+?) · fuente: (.+)$", "SKU $1 · наблюдалось $2 назад · действительно до $3 · источник: $4", "SKU $1 · observed $2 ago · valid until $3 · source: $4"],
+  ["^Actualizada hace (.+)$", "Обновлено $1 назад", "Updated $1 ago"],
+  ["^hace (\\d+) días$", "$1 дн. назад", "$1 days ago"],
+  ["^hace (\\d+) h$", "$1 ч назад", "$1 h ago"],
+  ["^hace (\\d+) min$", "$1 мин назад", "$1 min ago"],
+  ["^hace (.+)$", "$1 назад", "$1 ago"],
+  ["^Marca: (.+)$", "Бренд: $1", "Brand: $1"],
+  ["^Cuándo lo necesitás: (.+)$", "Когда нужно: $1", "When needed: $1"],
+  ["^Tu mensaje: «(.+)»$", "Ваше сообщение: «$1»", "Your message: “$1”"],
+  ["^Nota: (.+)$", "Примечание: $1", "Note: $1"],
+  ["^· comprobante (.+)$", "· чек $1", "· receipt $1"],
+  ["^Solicitud entregada: (.+)$", "Заявка передана: $1", "Request delivered: $1"],
+  ["^Confirmada: (.+)$", "Подтверждена: $1", "Confirmed: $1"],
+  ["^Entorno de demostración: (.+)$", "Демонстрационное окружение: $1", "Demo environment: $1"],
+  ["^No se pudo cargar la búsqueda: (.+)$", "Не удалось загрузить поиск: $1", "Could not load the search: $1"],
+  ["^No se pudo cargar: (.+)$", "Не удалось загрузить: $1", "Could not load: $1"],
+  ["^válido hasta (.+)$", "действительно до $1", "valid until $1"],
+  ["^observado hace (.+)$", "наблюдалось $1 назад", "observed $1 ago"],
+  ["^fuente: (.+)$", "источник: $1", "source: $1"],
+  ["^Persona jurídica: (.+)$", "Юридическое лицо: $1", "Legal entity: $1"],
+  ["^Los datos del catálogo local son ficticios y sirven para validar el recorrido; no son ofertas reales ni socios contratados\\. Fichas publicadas en este entorno: (\\d+)\\. Personas jurídicas en el registro: (\\d+) \\(no son fichas\\)\\.$", "Данные локального каталога вымышлены и служат для проверки пути; это не реальные предложения и не подписанные партнёры. Карточек опубликовано в этом окружении: $1. Юридических лиц в реестре: $2 (это не карточки).", "Local catalog data is fictional and exists to validate the journey; these are not real offers or contracted partners. Listings published in this environment: $1. Legal entities in the registry: $2 (they are not listings)."],
+  ["^Fichas publicadas en este entorno: (\\d+)\\. Personas jurídicas en el registro: (\\d+) \\(no son fichas\\)\\.$", "Карточек в этом окружении: $1. Юридических лиц в реестре: $2 (это не карточки).", "Listings published in this environment: $1. Legal entities in the registry: $2 (they are not listings)."],
+  ["^(\\d+) (\\d+) fichas · (\\d+) impresiones registradas$", "$2 карточек · $3 показов записано", "$2 listings · $3 impressions recorded"],
+  ["^Estado de la ficha$", "Статус карточки", "Listing status"],
+  ["^(.+) · PRTDS$", "$1 · PRTDS", "$1 · PRTDS"],
+];
+
+/* Обозначения месяцев и времени внутри дат. */
+const DATE_BITS = {
+  "ru": {
+    "ene.": "янв.",
+    "feb.": "февр.",
+    "mar.": "мар.",
+    "abr.": "апр.",
+    "may.": "мая",
+    "jun.": "июн.",
+    "jul.": "июл.",
+    "ago.": "авг.",
+    "sep.": "сент.",
+    "oct.": "окт.",
+    "nov.": "нояб.",
+    "dic.": "дек.",
+    "a. m.": "ДП",
+    "p. m.": "ПП"
+  },
+  "en": {
+    "ene.": "Jan",
+    "feb.": "Feb",
+    "mar.": "Mar",
+    "abr.": "Apr",
+    "may.": "May",
+    "jun.": "Jun",
+    "jul.": "Jul",
+    "ago.": "Aug",
+    "sep.": "Sep",
+    "oct.": "Oct",
+    "nov.": "Nov",
+    "dic.": "Dec",
+    "a. m.": "AM",
+    "p. m.": "PM"
+  }
+};
+
+
+/* ---- i18n.js ---- */
+/* Переключатель языков интерфейса: es (по умолчанию) / ru / en.
+ *
+ * Как это работает и почему именно так
+ * ------------------------------------
+ * Продукт остаётся Spanish-first (§02 концепции): испанский — язык по умолчанию,
+ * русский и английский добавлены как языки просмотра для команды и партнёров.
+ *
+ * Перевод применяется поверх уже отрисованного DOM, а не через переписывание
+ * шаблонов: ключ словаря — испанский оригинал строки. Это даёт три вещи:
+ *   1. рабочий код экранов не меняется (нет риска сломать проверенное);
+ *   2. переводятся и статические надписи, и то, что пришло из API;
+ *   3. покрытие можно измерить (scripts/check_i18n_coverage.py).
+ *
+ * Не переводятся названия компаний, брендов, баррио, адреса, телефоны, SKU,
+ * номера обращений и коды событий — это данные продавцов и идентификаторы,
+ * а не текст платформы.
+ */
+
+
+
+const LANGS = ["es", "ru", "en"];
+const LANG_LABELS = { es: "ES", ru: "RU", en: "EN" };
+const STORAGE_KEY = "prtds.lang";
+const HTML_LANG = { es: "es-PY", ru: "ru", en: "en" };
+
+const HINTS = {
+  es: "Interfaz traducible. Los nombres de comercios, marcas y barrios quedan en español: son datos de los vendedores.",
+  ru: "Интерфейс переводится. Названия компаний, брендов и районов остаются на испанском — это данные продавцов.",
+  en: "The interface is translated. Merchant, brand and neighborhood names stay in Spanish: that is seller data.",
+};
+const GROUP_LABEL = { es: "Idioma", ru: "Язык интерфейса", en: "Interface language" };
+
+const DICTS = { es: null, ru: RU, en: EN };
+const COMPILED = PATTERNS.map(([source, ru, en]) => [new RegExp(source), ru, en]);
+
+/* --- состояние ---------------------------------------------------------- */
+
+function readStored() {
+  for (const store of [window.localStorage, window.sessionStorage]) {
+    try {
+      const value = store.getItem(STORAGE_KEY);
+      if (value && LANGS.includes(value)) return value;
+    } catch {
+      /* приватный режим или file:// — просто идём дальше */
+    }
+  }
+  return "es";
+}
+
+let current = readStored();
+
+function lang() {
+  return current;
+}
+
+function setLang(code) {
+  if (!LANGS.includes(code)) return;
+  current = code;
+  for (const store of [window.localStorage, window.sessionStorage]) {
+    try {
+      store.setItem(STORAGE_KEY, code);
+    } catch {
+      /* не критично: язык просто не запомнится */
+    }
+  }
+  apply();
+}
+
+/* --- перевод строки ----------------------------------------------------- */
+
+function normalize(text) {
+  return text.replace(/\s+/g, " ");
+}
+
+function translateDateBits(text, code) {
+  const bits = DATE_BITS[code];
+  if (!bits) return text;
+  return text.replace(
+    /\b(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\.|\b(a\. m\.|p\. m\.)/g,
+    (match) => bits[match] || match
+  );
+}
+
+/** Переводит строку; если перевода нет — возвращает оригинал. */
+function tr(raw) {
+  if (typeof raw !== "string" || !raw.trim()) return raw;
+  if (current === "es") return raw;
+
+  const dict = DICTS[current];
+  // текстовые узлы в HTML окружены переносами и отступами, поэтому ключ ищется
+  // по строке без краевых пробелов; отступы возвращаются переводу обратно
+  const text = normalize(raw).trim();
+  const lead = raw.slice(0, raw.length - raw.replace(/^\s+/, "").length);
+  const tail = raw.slice(raw.replace(/\s+$/, "").length);
+
+  if (dict && Object.prototype.hasOwnProperty.call(dict, text)) {
+    return lead + dict[text] + tail;
+  }
+  for (const [pattern, ru, en] of COMPILED) {
+    const replacement = current === "ru" ? ru : en;
+    if (pattern.test(text)) {
+      return lead + translateDateBits(text.replace(pattern, replacement), current) + tail;
+    }
+  }
+  // даты и прочие строки с испанскими месяцами, не попавшие в шаблоны
+  const withDates = translateDateBits(text, current);
+  if (withDates !== text) return lead + withDates + tail;
+  return raw;
+}
+
+/* --- применение к DOM --------------------------------------------------- */
+
+const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE", "TEXTAREA", "CODE", "PRE"]);
+const TRANSLATABLE_ATTRS = ["placeholder", "title", "aria-label", "alt"];
+
+const textOrigin = new WeakMap();
+const attrOrigin = new WeakMap();
+
+let applying = false;
+
+function translateTextNode(node) {
+  if (!node || node.nodeType !== 3) return;
+  const parent = node.parentElement;
+  if (parent && SKIP_TAGS.has(parent.tagName)) return;
+  if (!textOrigin.has(node)) textOrigin.set(node, node.nodeValue);
+  const source = textOrigin.get(node);
+  const target = tr(source);
+  if (target !== node.nodeValue) node.nodeValue = target;
+}
+
+function translateElement(element) {
+  if (!element || element.nodeType !== 1 || SKIP_TAGS.has(element.tagName)) return;
+
+  let store = attrOrigin.get(element);
+  if (!store) {
+    store = {};
+    attrOrigin.set(element, store);
+  }
+
+  const attrs =
+    element.tagName === "META" && element.getAttribute("name") === "description"
+      ? [...TRANSLATABLE_ATTRS, "content"]
+      : TRANSLATABLE_ATTRS;
+
+  for (const attr of attrs) {
+    if (!element.hasAttribute(attr)) continue;
+    if (!(attr in store)) store[attr] = element.getAttribute(attr);
+    const target = tr(store[attr]);
+    if (target !== element.getAttribute(attr)) element.setAttribute(attr, target);
+  }
+}
+
+function translateTree(node) {
+  if (!node) return;
+  if (node.nodeType === 3) {
+    translateTextNode(node);
+    return;
+  }
+  if (node.nodeType !== 1 && node.nodeType !== 11) return;
+  if (node.dataset && node.dataset.noTranslate !== undefined) return;
+  if (node.classList && node.classList.contains("lang-switch")) return;
+  translateElement(node);
+  const walker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT);
+  let child = walker.nextNode();
+  while (child) {
+    if (child.nodeType === 3) translateTextNode(child);
+    else if (!(child.dataset && child.dataset.noTranslate !== undefined) &&
+             !(child.classList && child.classList.contains("lang-switch"))) {
+      translateElement(child);
+    }
+    child = walker.nextNode();
+  }
+}
+
+function translateDocumentTitle() {
+  if (!titleOrigin) return;
+  document.title = tr(titleOrigin);
+}
+
+let titleOrigin = "";
+
+function apply() {
+  applying = true;
+  try {
+    document.documentElement.lang = HTML_LANG[current] || current;
+    translateTree(document.body);
+    translateDocumentTitle();
+    renderSwitcher();
+  } finally {
+    applying = false;
+  }
+}
+
+/* --- переключатель ------------------------------------------------------ */
+
+function renderSwitcher() {
+  const host = document.querySelector(".topbar-inner");
+  if (!host) return;
+  let box = host.querySelector(".lang-switch");
+  if (!box) {
+    box = document.createElement("div");
+    box.className = "lang-switch";
+    box.setAttribute("role", "group");
+    box.dataset.noTranslate = "";
+    host.appendChild(box);
+  }
+  box.setAttribute("aria-label", GROUP_LABEL[current]);
+  box.title = HINTS[current];
+  box.innerHTML =
+    LANGS.map(
+      (code) =>
+        `<button type="button" data-lang="${code}" class="${code === current ? "on" : ""}"
+           aria-pressed="${code === current}">${LANG_LABELS[code]}</button>`
+    ).join("") + `<span class="lang-hint" data-no-translate>${HINTS[current]}</span>`;
+
+  box.querySelectorAll("button[data-lang]").forEach((button) => {
+    button.addEventListener("click", () => setLang(button.dataset.lang));
+  });
+}
+
+/* --- наблюдение за динамической отрисовкой ------------------------------ */
+
+function startObserver() {
+  if (!window.MutationObserver || !document.body) return;
+  const observer = new MutationObserver((records) => {
+    if (applying || current === "es") return;
+    applying = true;
+    try {
+      for (const record of records) {
+        if (record.type === "attributes") translateElement(record.target);
+        for (const node of record.addedNodes || []) translateTree(node);
+      }
+    } finally {
+      applying = false;
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true,
+    attributeFilter: TRANSLATABLE_ATTRS });
+}
+
+function init() {
+  titleOrigin = document.title || "";
+  renderSwitcher();
+  if (current !== "es") apply();
+  startObserver();
+  window.PRTDS_I18N = { lang, setLang, tr, apply, LANGS };
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init, { once: true });
+} else {
+  init();
+}
+
+
 /* ---- offline shim (solo en esta сборка) ---- */
 (function () {
   const memory = {};
@@ -615,6 +1843,33 @@ function queryParam(name) {
   return new URLSearchParams("").get(name);
 }
 
+/* Нормализация строки запроса поиска: браузер собирает её сам, поэтому ключ
+   приводится к каноническому виду, а при отсутствии точной записи параметры
+   отбрасываются по очереди — фильтр показывает ближайший записанный результат. */
+function canonicalSearch(rawSearch) {
+  const incoming = new URLSearchParams(rawSearch || "");
+  const order = ["q", "category", "barrio", "channel", "max_price", "sort", "campaign_id", "page", "limit"];
+  const out = new URLSearchParams();
+  for (const key of order) {
+    const value = incoming.get(key);
+    if (value) out.set(key, value);
+  }
+  if (!out.has("page")) out.set("page", "1");
+  if (!out.has("limit")) out.set("limit", "20");
+  return out;
+}
+
+function searchCandidates(rawSearch) {
+  const params = canonicalSearch(rawSearch);
+  const keys = ["GET /api/search?" + params.toString()];
+  for (const key of ["max_price", "channel", "barrio", "category", "sort", "q"]) {
+    if (!params.has(key)) continue;
+    params.delete(key);
+    keys.push("GET /api/search?" + params.toString());
+  }
+  return keys;
+}
+
 /* la red se sustituye por respuestas grabadas del API real */
 window.__PRTDS_OFFLINE__ = true;
 const OFFLINE_NOTES = [];
@@ -627,10 +1882,7 @@ window.fetch = async function offlineFetch(input, init = {}) {
     `${method} ${path}${search}`,
     `${method} ${path}`,
   ];
-  if (method === "GET" && path === "/api/search") {
-    candidates.push("GET /api/search?limit=12");
-    candidates.push("GET /api/search?q=manicura&limit=12");
-  }
+  if (method === "GET" && path === "/api/search") candidates.push(...searchCandidates(search));
   if (method === "GET" && path === "/api/partner/leads") candidates.push("GET /api/partner/leads?limit=50");
   if (method === "GET" && path.startsWith("/api/leads/")) candidates.push("GET /api/leads/PRTDS-2026-000001");
   if (method === "GET" && path.startsWith("/api/companies/")) candidates.push("GET /api/companies/nails-mburucuya");

@@ -40,7 +40,7 @@ JS_DIR = FRONTEND / "assets" / "js"
 
 #: shared modules first, then the page module (order matters: the offline shim
 #: re-declares pathParam/queryParam *after* api.js but *before* the page code).
-SHARED = ["api.js", "format.js", "tracking.js"]
+SHARED = ["api.js", "format.js", "tracking.js", "i18n-dict.js", "i18n.js"]
 
 #: file → module, route it pretends to be on, and the API prefixes it needs.
 #: Filtering keeps every page small: the full dump is ~200 KB, a page needs a
@@ -99,7 +99,48 @@ def subset(snapshot: dict[str, Any], needs: list[str]) -> dict[str, Any]:
 PARTNER_TOKEN = "prtds-socio-nails"
 ADMIN_TOKEN = "prtds-demo-admin-token"
 
-SEARCH_QUERIES = ["", "manicura", "yerba mate", "celular", "alquiler de autos", "sushi", "farmacia"]
+#: порядок параметров совпадает с search.js, иначе ключ записи не совпадёт
+#: со строкой запроса, которую построит браузер.
+SEARCH_PARAM_ORDER = ["q", "category", "barrio", "channel", "max_price", "sort", "campaign_id", "page", "limit"]
+
+SEARCH_QUERIES = ["manicura", "yerba mate", "celular", "alquiler de autos", "sushi", "farmacia", "belleza", "pizza"]
+SEARCH_CATEGORIES = ["gastronomia", "supermercados", "belleza", "vehiculos", "tecnologia", "salud",
+                     "hogar", "educacion", "servicios", "eventos", "turismo", "mascotas"]
+SEARCH_BARRIOS = ["Centro", "Villa Morra", "Santísima Trinidad", "San Lorenzo", "Sajonia", "Recoleta",
+                  "Manorá", "Luque", "Las Mercedes", "Lambaré", "Fernando de la Mora", "Barrio Jara"]
+SEARCH_CHANNELS = ["whatsapp", "phone", "delivery", "pickup"]
+SEARCH_SORTS = ["relevance", "name", "recent", "price_asc"]
+SEARCH_PRICES = ["100000", "500000"]
+
+
+def search_combos() -> list[dict[str, str]]:
+    """Комбинации фильтров, которые записываются с живого API."""
+    combos: list[dict[str, str]] = [{"page": "1", "limit": "20"}]
+    for query in SEARCH_QUERIES:
+        combos.append({"q": query, "page": "1", "limit": "20"})
+    for key, values in (
+        ("category", SEARCH_CATEGORIES),
+        ("barrio", SEARCH_BARRIOS),
+        ("channel", SEARCH_CHANNELS),
+        ("sort", SEARCH_SORTS),
+        ("max_price", SEARCH_PRICES),
+    ):
+        for value in values:
+            combos.append({key: value, "page": "1", "limit": "20"})
+    combos += [
+        {"q": "celular", "sort": "price_asc", "page": "1", "limit": "20"},
+        {"q": "manicura", "barrio": "Las Mercedes", "page": "1", "limit": "20"},
+        {"category": "belleza", "channel": "whatsapp", "page": "1", "limit": "20"},
+        {"category": "gastronomia", "sort": "name", "page": "1", "limit": "20"},
+        {"q": "yerba mate", "max_price": "100000", "page": "1", "limit": "20"},
+        {"category": "vehiculos", "barrio": "Centro", "page": "1", "limit": "20"},
+    ]
+    return combos
+
+
+def search_query_string(params: dict[str, str]) -> str:
+    ordered = [(key, params[key]) for key in SEARCH_PARAM_ORDER if key in params]
+    return urllib.parse.urlencode(ordered)
 
 
 def http(base: str, path: str, *, method: str = "GET", body: Any = None, headers: dict[str, str] | None = None):
@@ -136,9 +177,8 @@ def record(base: str) -> dict[str, Any]:
         put("GET", path)
 
     # --- search page -----------------------------------------------------
-    for query in SEARCH_QUERIES:
-        suffix = f"?q={urllib.parse.quote(query)}&limit=12" if query else "?limit=12"
-        put("GET", f"/api/search{suffix}")
+    for params in search_combos():
+        put("GET", f"/api/search?{search_query_string(params)}")
 
     # --- company cards ---------------------------------------------------
     slugs = ["nails-mburucuya", "tecnomovil-guarani", "supermercado-kaaguy", "parrilla-yvoty", "rentcar-terere"]
@@ -256,6 +296,33 @@ function queryParam(name) {{
   return new URLSearchParams("").get(name);
 }}
 
+/* Нормализация строки запроса поиска: браузер собирает её сам, поэтому ключ
+   приводится к каноническому виду, а при отсутствии точной записи параметры
+   отбрасываются по очереди — фильтр показывает ближайший записанный результат. */
+function canonicalSearch(rawSearch) {{
+  const incoming = new URLSearchParams(rawSearch || "");
+  const order = ["q", "category", "barrio", "channel", "max_price", "sort", "campaign_id", "page", "limit"];
+  const out = new URLSearchParams();
+  for (const key of order) {{
+    const value = incoming.get(key);
+    if (value) out.set(key, value);
+  }}
+  if (!out.has("page")) out.set("page", "1");
+  if (!out.has("limit")) out.set("limit", "20");
+  return out;
+}}
+
+function searchCandidates(rawSearch) {{
+  const params = canonicalSearch(rawSearch);
+  const keys = ["GET /api/search?" + params.toString()];
+  for (const key of ["max_price", "channel", "barrio", "category", "sort", "q"]) {{
+    if (!params.has(key)) continue;
+    params.delete(key);
+    keys.push("GET /api/search?" + params.toString());
+  }}
+  return keys;
+}}
+
 /* la red se sustituye por respuestas grabadas del API real */
 window.__PRTDS_OFFLINE__ = true;
 const OFFLINE_NOTES = [];
@@ -268,10 +335,7 @@ window.fetch = async function offlineFetch(input, init = {{}}) {{
     `${{method}} ${{path}}${{search}}`,
     `${{method}} ${{path}}`,
   ];
-  if (method === "GET" && path === "/api/search") {{
-    candidates.push("GET /api/search?limit=12");
-    candidates.push("GET /api/search?q=manicura&limit=12");
-  }}
+  if (method === "GET" && path === "/api/search") candidates.push(...searchCandidates(search));
   if (method === "GET" && path === "/api/partner/leads") candidates.push("GET /api/partner/leads?limit=50");
   if (method === "GET" && path.startsWith("/api/leads/")) candidates.push("GET /api/leads/PRTDS-2026-000001");
   if (method === "GET" && path.startsWith("/api/companies/")) candidates.push("GET /api/companies/nails-mburucuya");
@@ -328,8 +392,8 @@ def build(base: str, out_dir: Path) -> Path:
     )
     banner = (
         '<div class="offline-banner"><strong>Demostración sin conexión.</strong> '
-        "Интерфейс настоящий, данные записаны с работающего API и не сохраняются. "
-        f'Переходы:{nav}</div>'
+        "<span>La interfaz es real; las respuestas del API fueron grabadas y nada se guarda.</span> "
+        f'<span>Páginas:</span>{nav}</div>'
     )
 
     for name, meta in PAGES.items():
@@ -388,6 +452,12 @@ def build(base: str, out_dir: Path) -> Path:
 | socio.html | кабинет компании: заявки, подтверждение продажи, ликвидации | токен `{PARTNER_TOKEN}` |
 | admin.html | таксономия, публикации, журнал событий, статистика | токен `{ADMIN_TOKEN}` |
 | salud.html | честное состояние платформы и словарь воронки | — |
+
+## Язык интерфейса
+В правом верхнем углу каждой страницы — переключатель **ES / RU / EN**. Выбор
+запоминается в браузере. Продукт остаётся испаноязычным (§02 концепции): русский
+и английский — языки просмотра для команды и партнёров. Названия компаний,
+брендов и баррио не переводятся, потому что это данные продавцов.
 
 ## Что попробовать
 1. index.html → поиск `manicura` (записан) → карточка → кнопка WhatsApp.

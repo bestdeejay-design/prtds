@@ -261,3 +261,15 @@ ul.clean li { margin-bottom: 6px; }
 .skeleton { background: linear-gradient(90deg, #eef0f6 25%, #f7f8fc 50%, #eef0f6 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 8px; height: 14px; }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .error { color: var(--danger); font-size: .84rem; }
+
+/* --- переключатель языка интерфейса (i18n.js) ------------------------- */
+.lang-switch{display:flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap}
+.lang-switch button{border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;
+  font:600 12px/1 system-ui,sans-serif;padding:5px 8px;border-radius:8px;cursor:pointer}
+.lang-switch button.on{background:#fff;color:#2f3aa8;border-color:#fff}
+.lang-switch .lang-hint{display:none}
+.lang-switch:hover .lang-hint,.lang-switch:focus-within .lang-hint{
+  display:block;position:absolute;top:52px;right:12px;max-width:min(92vw,360px);
+  background:#fff;color:#333;border:1px solid #ddd;border-radius:10px;padding:8px 10px;
+  font:400 12px/1.45 system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.14);z-index:70}
+@media (max-width:520px){.lang-switch{margin-left:0}}
