@@ -87,11 +87,31 @@ async function render(file, lang) {
   return { strings, errors, htmlLang };
 }
 
+/* Регрессионная защита: переключатель языков однажды был оформлен белым по
+ * белой шапке — в DOM он был, а на экране нет. Проверяем, что цвета кнопок не
+ * совпадают с белым фоном шапки. */
+function checkSwitcherContrast() {
+  const problems = [];
+  const css = fs.readFileSync(path.join(ROOT, "frontend", "assets", "css", "app.css"), "utf8");
+  const topbar = css.match(/\.topbar\s*\{[^}]*\}/);
+  const lightHeader = !topbar || /rgba?\(\s*255\s*,\s*255\s*,\s*255|#fff|#ffffff/i.test(topbar[0]);
+  const rule = css.match(/\.lang-switch\s+button\s*\{[^}]*\}/);
+  if (!rule) {
+    problems.push("в app.css нет правила .lang-switch button");
+  } else if (lightHeader && /color:\s*(#fff|#ffffff|white|rgba?\(\s*255\s*,\s*255\s*,\s*255)/i.test(rule[0])) {
+    problems.push("кнопки переключателя белые на светлой шапке — их не будет видно");
+  }
+  return problems;
+}
+
 (async () => {
   if (!fs.existsSync(DIR)) {
     console.error(`нет папки ${DIR} — сначала соберите демо: python scripts/build_offline_demo.py`);
     process.exit(2);
   }
+
+  const contrastProblems = checkSwitcherContrast();
+  for (const problem of contrastProblems) console.log("  ! " + problem);
 
   const baseline = {};
   for (const file of PAGES) baseline[file] = (await render(file, "es")).strings;
@@ -121,6 +141,9 @@ async function render(file, lang) {
     }
   }
 
-  console.log(`\nИТОГО: непереведённых испанских строк ${untranslatedTotal}, ошибок консоли ${errorsTotal}`);
-  process.exit(untranslatedTotal > 0 || errorsTotal > 0 ? 1 : 0);
+  console.log(
+    `\nИТОГО: непереведённых испанских строк ${untranslatedTotal}, ошибок консоли ${errorsTotal}` +
+      `, проблем с видимостью переключателя ${contrastProblems.length}`
+  );
+  process.exit(untranslatedTotal > 0 || errorsTotal > 0 || contrastProblems.length > 0 ? 1 : 0);
 })();

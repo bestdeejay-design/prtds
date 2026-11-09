@@ -270,17 +270,27 @@ ul.clean li { margin-bottom: 6px; }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 .error { color: var(--danger); font-size: .84rem; }
 
-/* --- переключатель языка интерфейса (i18n.js) ------------------------- */
-.lang-switch{display:flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap}
-.lang-switch button{border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;
-  font:600 12px/1 system-ui,sans-serif;padding:5px 8px;border-radius:8px;cursor:pointer}
-.lang-switch button.on{background:#fff;color:#2f3aa8;border-color:#fff}
+/* --- переключатель языка интерфейса (i18n.js) -------------------------
+ * Шапка светлая: background .topbar = rgba(255,255,255,.96). Цвета берутся из
+ * токенов дизайна, иначе кнопки сливаются с фоном (белое по белому уже было —
+ * переключатель присутствовал в DOM, но не отображался).
+ * Регрессию ловит scripts/check_i18n_coverage.js. */
+.lang-switch{display:flex;align-items:center;gap:4px;margin-left:6px;flex:0 0 auto}
+.lang-switch button{
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+  font:600 12px/1 system-ui,sans-serif;padding:6px 9px;border-radius:999px;cursor:pointer;
+}
+.lang-switch button:hover{background:var(--brand-soft);color:var(--brand);border-color:var(--brand-soft)}
+.lang-switch button.on{background:var(--brand);border-color:var(--brand);color:#fff}
 .lang-switch .lang-hint{display:none}
 .lang-switch:hover .lang-hint,.lang-switch:focus-within .lang-hint{
-  display:block;position:absolute;top:52px;right:12px;max-width:min(92vw,360px);
-  background:#fff;color:#333;border:1px solid #ddd;border-radius:10px;padding:8px 10px;
-  font:400 12px/1.45 system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.14);z-index:70}
-@media (max-width:520px){.lang-switch{margin-left:0}}
+  display:block;position:absolute;top:54px;right:12px;max-width:min(92vw,360px);
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;
+  padding:8px 10px;font:400 12px/1.45 system-ui,sans-serif;box-shadow:var(--shadow);z-index:70}
+@media (max-width:600px){
+  .topbar-inner{flex-wrap:wrap}
+  .lang-switch{margin-left:auto}
+}
 
 
 /* ---- aviso de demostración sin conexión ---- */
