@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ficha de empresa · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/company.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">
+        <strong>PRTDS</strong>
+        <span>Para todos. Para todo.</span>
+      </a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="/">Buscar</a>
+        <a href="/salud">Estado</a>
+        <a href="/socio">Socios</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <p class="muted small"><a href="/">← Volver a la búsqueda</a></p>
+    <div id="loading" class="stack">
+      <div class="card"><div class="skeleton" style="width:55%;height:22px"></div><div class="skeleton" style="margin-top:12px"></div><div class="skeleton" style="margin-top:8px;width:80%"></div></div>
+    </div>
+    <div id="error"></div>
+    <div id="content" class="grid two hidden">
+      <div class="stack" id="left"></div>
+      <div class="stack" id="right"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p style="margin:0" id="footer-notice">
+        PRTDS conecta a la persona con la empresa. El pago se hace directamente al comercio;
+        la plataforma no es vendedora de productos de terceros.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

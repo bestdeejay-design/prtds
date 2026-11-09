@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local dev database and secrets (never commit credentials — see docs/architecture.md)
+*.db
+*.sqlite3
+dev.db
+.env
+.env.*
+!.env.example
+
+# Node (frontend has no build step, kept for future tooling)
+node_modules/
+dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local artifacts
+data/
+/tmp/
+*.log

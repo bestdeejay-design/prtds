@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PRTDS — Buscá empresas, productos y servicios en Paraguay</title>
+  <meta name="description" content="Buscador de empresas, productos y servicios en Asunción y Gran Asunción. Contactá por WhatsApp, llamá o enviá una solicitud en un paso." />
+  <meta name="theme-color" content="#2f3aa8" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/search.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">
+        <strong>PRTDS</strong>
+        <span>Para todos. Para todo.</span>
+      </a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="/">Buscar</a>
+        <a href="/solicitud/">Mis solicitudes</a>
+        <a href="/salud">Estado</a>
+        <a href="/socio">Socios</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Encontrá lo que necesitás</h1>
+      <p class="tagline">
+        Empresas, productos y servicios de Asunción y Gran Asunción. Buscá, compará y
+        contactá en un paso: WhatsApp, llamada o solicitud.
+      </p>
+
+      <form class="searchbar" id="search-form" role="search" autocomplete="off">
+        <label class="hidden" for="q">Buscar</label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          placeholder="Ej.: alquiler de autos, manicura, yerba mate, farmacia 24 horas"
+          inputmode="search"
+        />
+        <button class="btn primary" type="submit">Buscar</button>
+      </form>
+
+      <div class="chips" id="chips" aria-label="Categorías"></div>
+
+      <div class="filters">
+        <div>
+          <label for="barrio">Barrio / ciudad</label>
+          <select id="barrio"><option value="">Todos</option></select>
+        </div>
+        <div>
+          <label for="channel">Cómo contactar</label>
+          <select id="channel">
+            <option value="">Cualquiera</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="phone">Llamada</option>
+            <option value="delivery">Con delivery</option>
+            <option value="pickup">Retiro en local</option>
+          </select>
+        </div>
+        <div>
+          <label for="sort">Orden</label>
+          <select id="sort">
+            <option value="relevance">Relevancia</option>
+            <option value="name">Nombre A–Z</option>
+            <option value="recent">Publicadas recientemente</option>
+            <option value="price_asc">Precio más bajo</option>
+          </select>
+        </div>
+        <div>
+          <label for="max_price">Precio máximo (G.)</label>
+          <input id="max_price" type="number" min="0" step="1000" placeholder="Sin límite" />
+        </div>
+      </div>
+    </section>
+
+    <div id="notice" class="stack"></div>
+
+    <section id="sponsored" class="stack" aria-live="polite"></section>
+
+    <section class="spread" id="results-header" style="margin: 18px 0 10px">
+      <h2 style="margin:0" id="results-title">Resultados</h2>
+      <span class="muted small" id="results-count"></span>
+    </section>
+
+    <section id="results" class="stack" aria-live="polite"></section>
+
+    <p class="muted small" id="ranking-note" style="margin-top:14px"></p>
+    <div id="pager" class="btn-row" style="margin-top:12px"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <strong>PRTDS · Para todos. Para todo.</strong>
+      <p style="margin:0">
+        PRTDS no vende productos de terceros: el pago se hace directamente al comercio.
+        La plataforma cobra únicamente a socios con contrato y por resultados confirmados.
+      </p>
+      <p style="margin:0" id="footer-notice"></p>
+      <p style="margin:0">
+        <a href="/salud">Estado de la plataforma</a> ·
+        <a href="/admin">Administración</a> ·
+        <a href="/docs" rel="noopener">API</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

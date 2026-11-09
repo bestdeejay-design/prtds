@@ -1,0 +1,446 @@
+{"es": "Buscar", "ru": "Искать", "en": "Search"}
+{"es": "Búsqueda", "ru": "Поиск", "en": "Search"}
+{"es": "Estado", "ru": "Статус", "en": "Status"}
+{"es": "Socios", "ru": "Партнёры", "en": "Partners"}
+{"es": "Admin", "ru": "Админка", "en": "Admin"}
+{"es": "Ficha", "ru": "Карточка", "en": "Listing"}
+{"es": "Solicitud", "ru": "Заявка", "en": "Request"}
+{"es": "Mis solicitudes", "ru": "Мои заявки", "en": "My requests"}
+{"es": "Secciones", "ru": "Разделы", "en": "Sections"}
+{"es": "Para todos. Para todo.", "ru": "Для всех. Для всего.", "en": "For everyone. For everything."}
+{"es": "PRTDS · Para todos. Para todo.", "ru": "PRTDS · Для всех. Для всего.", "en": "PRTDS · For everyone. For everything."}
+{"es": "Llamar", "ru": "Позвонить", "en": "Call"}
+{"es": "Llamada", "ru": "Звонок", "en": "Call"}
+{"es": "WhatsApp", "ru": "WhatsApp", "en": "WhatsApp"}
+{"es": "Cómo llegar", "ru": "Как добраться", "en": "Get directions"}
+{"es": "Ver ficha", "ru": "Открыть карточку", "en": "View listing"}
+{"es": "Ver estado", "ru": "Проверить статус", "en": "Check status"}
+{"es": "Enviar solicitud", "ru": "Отправить заявку", "en": "Send request"}
+{"es": "Enviar una solicitud", "ru": "Отправить заявку", "en": "Send a request"}
+{"es": "Consultar por WhatsApp", "ru": "Спросить в WhatsApp", "en": "Ask on WhatsApp"}
+{"es": "Volver a la ficha", "ru": "Вернуться к карточке", "en": "Back to listing"}
+{"es": "Buscar otra cosa", "ru": "Искать другое", "en": "Search something else"}
+{"es": "← Volver a la búsqueda", "ru": "← Вернуться к поиску", "en": "← Back to search"}
+{"es": "Actualizar", "ru": "Обновить", "en": "Refresh"}
+{"es": "Aplicar", "ru": "Применить", "en": "Apply"}
+{"es": "Entrar", "ru": "Войти", "en": "Sign in"}
+{"es": "Salir", "ru": "Выйти", "en": "Sign out"}
+{"es": "Prueba", "ru": "Проверить", "en": "Try"}
+{"es": "Desde", "ru": "От", "en": "From"}
+{"es": "Disponible", "ru": "В наличии", "en": "Available"}
+{"es": "Cantidad", "ru": "Количество", "en": "Quantity"}
+{"es": "Importe", "ru": "Сумма", "en": "Amount"}
+{"es": "Motivo", "ru": "Причина", "en": "Reason"}
+{"es": "Cuándo", "ru": "Когда", "en": "When"}
+{"es": "Nombre", "ru": "Название", "en": "Name"}
+{"es": "Nombre (es)", "ru": "Название (исп.)", "en": "Name (es)"}
+{"es": "Descripción (es)", "ru": "Описание (исп.)", "en": "Description (es)"}
+{"es": "Categoría", "ru": "Категория", "en": "Category"}
+{"es": "Categorías", "ru": "Категории", "en": "Categories"}
+{"es": "Crear categoría", "ru": "Создать категорию", "en": "Create category"}
+{"es": "Desactivar", "ru": "Деактивировать", "en": "Deactivate"}
+{"es": "Slug", "ru": "Slug (идентификатор)", "en": "Slug"}
+{"es": "Empresa (slug)", "ru": "Компания (slug)", "en": "Company (slug)"}
+{"es": "Categoría padre (slug)", "ru": "Родительская категория (slug)", "en": "Parent category (slug)"}
+{"es": "Sinónimos de búsqueda (separados por coma)", "ru": "Поисковые синонимы (через запятую)", "en": "Search synonyms (comma separated)"}
+{"es": "Barrio / ciudad", "ru": "Район / город", "en": "Neighborhood / city"}
+{"es": "Cualquiera", "ru": "Любой", "en": "Any"}
+{"es": "Todos", "ru": "Все", "en": "All"}
+{"es": "Todas", "ru": "Все", "en": "All"}
+{"es": "Sin límite", "ru": "Без ограничения", "en": "No limit"}
+{"es": "Precio máximo (G.)", "ru": "Максимальная цена (G.)", "en": "Max price (G.)"}
+{"es": "Con delivery", "ru": "С доставкой", "en": "With delivery"}
+{"es": "Relevancia", "ru": "По релевантности", "en": "Relevance"}
+{"es": "Nombre A–Z", "ru": "Название А–Я", "en": "Name A–Z"}
+{"es": "Precio más bajo", "ru": "Сначала дешёвые", "en": "Lowest price"}
+{"es": "Publicadas recientemente", "ru": "Недавно опубликованные", "en": "Recently published"}
+{"es": "Orden", "ru": "Порядок", "en": "Order"}
+{"es": "Origen", "ru": "Источник", "en": "Source"}
+{"es": "Etapa", "ru": "Этап", "en": "Stage"}
+{"es": "Evento", "ru": "Событие", "en": "Event"}
+{"es": "Acción principal", "ru": "Основное действие", "en": "Primary action"}
+{"es": "Verificación", "ru": "Подтверждение", "en": "Verification"}
+{"es": "Verificado en campo", "ru": "Проверено на месте", "en": "Field verified"}
+{"es": "Confirmado por el comercio", "ru": "Подтверждено продавцом", "en": "Confirmed by the merchant"}
+{"es": "Solo fuente registrada", "ru": "Только зарегистрированный источник", "en": "Registered source only"}
+{"es": "Pendiente de verificación", "ru": "Ожидает проверки", "en": "Pending verification"}
+{"es": "Última observación", "ru": "Последнее наблюдение", "en": "Last observed"}
+{"es": "Última observación de datos", "ru": "Последнее обновление данных", "en": "Last data observation"}
+{"es": "Datos observados hace 18 h · fuente: OpenStreetMap contributors", "ru": "Данные получены 18 ч назад · источник: OpenStreetMap contributors", "en": "Data observed 18 h ago · source: OpenStreetMap contributors"}
+{"es": "hace 18 h", "ru": "18 ч назад", "en": "18 h ago"}
+{"es": "Actualizada hace 4 días", "ru": "Обновлено 4 дня назад", "en": "Updated 4 days ago"}
+{"es": "(verificado hace 8 h)", "ru": "(подтверждено 8 ч назад)", "en": "(verified 8 h ago)"}
+{"es": "(verificado hace 18 h)", "ru": "(подтверждено 18 ч назад)", "en": "(verified 18 h ago)"}
+{"es": "Horarios", "ru": "Часы работы", "en": "Opening hours"}
+{"es": "Canales verificados", "ru": "Проверенные каналы", "en": "Verified channels"}
+{"es": "Retiro y delivery", "ru": "Самовывоз и доставка", "en": "Pickup and delivery"}
+{"es": "Retiro en local", "ru": "Самовывоз из точки", "en": "Pickup in store"}
+{"es": "Retiro en local disponible", "ru": "Есть самовывоз", "en": "Pickup available"}
+{"es": "Sin delivery propio", "ru": "Собственной доставки нет", "en": "No own delivery"}
+{"es": "Productos y servicios", "ru": "Товары и услуги", "en": "Products and services"}
+{"es": "Sucursales", "ru": "Филиалы", "en": "Branches"}
+{"es": "Sucursales / ofertas", "ru": "Филиалы / предложения", "en": "Branches / offers"}
+{"es": "Ofertas activas", "ru": "Активные предложения", "en": "Active offers"}
+{"es": "Empresa", "ru": "Компания", "en": "Company"}
+{"es": "Sucursal", "ru": "Филиал", "en": "Branch"}
+{"es": "Cliente", "ru": "Клиент", "en": "Customer"}
+{"es": "Mensaje", "ru": "Сообщение", "en": "Message"}
+{"es": "Atribución", "ru": "Атрибуция", "en": "Attribution"}
+{"es": "Referencia", "ru": "Номер обращения", "en": "Reference"}
+{"es": "Recorrido", "ru": "Путь заявки", "en": "Journey"}
+{"es": "Resultado confirmado", "ru": "Подтверждённый результат", "en": "Confirmed result"}
+{"es": "Venta confirmada", "ru": "Продажа подтверждена", "en": "Confirmed sale"}
+{"es": "Turno confirmado", "ru": "Запись подтверждена", "en": "Booking confirmed"}
+{"es": "Servicio realizado", "ru": "Услуга оказана", "en": "Service done"}
+{"es": "Reserva / turno", "ru": "Бронь / запись", "en": "Booking / appointment"}
+{"es": "Aceptada", "ru": "Принята", "en": "Accepted"}
+{"es": "Aceptadas", "ru": "Принятые", "en": "Accepted"}
+{"es": "Entregada", "ru": "Передана", "en": "Delivered"}
+{"es": "Publicada", "ru": "Опубликована", "en": "Published"}
+{"es": "Compra", "ru": "Покупка", "en": "Purchase"}
+{"es": "Recompras", "ru": "Повторные покупки", "en": "Repeat purchases"}
+{"es": "Mantenimiento", "ru": "Обслуживание", "en": "Maintenance"}
+{"es": "Panel", "ru": "Панель", "en": "Panel"}
+{"es": "Liquidaciones", "ru": "Расчёты комиссии", "en": "Settlements"}
+{"es": "Liquidaciones y eventos", "ru": "Расчёты и события", "en": "Settlements and events"}
+{"es": "Comisión", "ru": "Комиссия", "en": "Commission"}
+{"es": "Margen", "ru": "Маржа", "en": "Margin"}
+{"es": "Margen de contribución", "ru": "Маржинальный вклад", "en": "Contribution margin"}
+{"es": "Tasa", "ru": "Ставка", "en": "Rate"}
+{"es": "Tasa de aceptación", "ru": "Доля принятых заявок", "en": "Acceptance rate"}
+{"es": "Base (GMV)", "ru": "База (GMV)", "en": "Base (GMV)"}
+{"es": "Ingreso PRTDS", "ru": "Доход PRTDS", "en": "PRTDS revenue"}
+{"es": "GMV del comercio", "ru": "Оборот магазина", "en": "Merchant GMV"}
+{"es": "GMV de comercios", "ru": "Оборот магазинов", "en": "Merchant GMV"}
+{"es": "GMV confirmado", "ru": "Подтверждённый оборот", "en": "Confirmed GMV"}
+{"es": "Ventas confirmadas", "ru": "Подтверждённые продажи", "en": "Confirmed sales"}
+{"es": "Ventas de los comercios", "ru": "Продажи магазинов", "en": "Merchant sales"}
+{"es": "Solicitudes", "ru": "Заявки", "en": "Requests"}
+{"es": "Solicitudes nuevas", "ru": "Новые заявки", "en": "New requests"}
+{"es": "Contratos activos", "ru": "Действующие договоры", "en": "Active contracts"}
+{"es": "Personas jurídicas", "ru": "Юридические лица", "en": "Legal entities"}
+{"es": "Empresas publicadas", "ru": "Опубликованные компании", "en": "Published companies"}
+{"es": "Fichas publicadas", "ru": "Опубликованные карточки", "en": "Published listings"}
+{"es": "Fichas", "ru": "Карточки", "en": "Listings"}
+{"es": "Registros de empresa", "ru": "Записи реестра", "en": "Registry records"}
+{"es": "Publicidad", "ru": "Реклама", "en": "Advertising"}
+{"es": "Qué prueba", "ru": "Что доказывает", "en": "What it proves"}
+{"es": "Qué NO prueba", "ru": "Чего НЕ доказывает", "en": "What it does NOT prove"}
+{"es": "Qué prueba cada evento", "ru": "Что доказывает каждое событие", "en": "What each event proves"}
+{"es": "qué prueba cada uno", "ru": "что доказывает каждое", "en": "what each one proves"}
+{"es": "Qué significa cada paso", "ru": "Что означает каждый шаг", "en": "What each step means"}
+{"es": "Mostrado en los resultados de búsqueda.", "ru": "Показ в результатах поиска.", "en": "Shown in search results."}
+{"es": "Impresión de una tarjeta en un listado.", "ru": "Показ карточки в списке.", "en": "A card impression in a listing."}
+{"es": "Interés en la empresa (ficha abierta).", "ru": "Интерес к компании (открыта карточка).", "en": "Interest in the company (listing opened)."}
+{"es": "Intento de iniciar contacto por WhatsApp.", "ru": "Попытка начать общение в WhatsApp.", "en": "Attempt to start contact on WhatsApp."}
+{"es": "Intento de iniciar contacto por llamada.", "ru": "Попытка начать общение по телефону.", "en": "Attempt to start contact by phone."}
+{"es": "Salida hacia el sitio del vendedor.", "ru": "Переход на сайт продавца.", "en": "Exit to the seller's site."}
+{"es": "Mensaje recibido o conversación sostenida.", "ru": "Сообщение получено или диалог состоялся.", "en": "Message received or conversation held."}
+{"es": "Llamada efectivamente atendida.", "ru": "Звонок действительно принят.", "en": "Call actually answered."}
+{"es": "Solicitud entregada a PRTDS.", "ru": "Заявка передана в PRTDS.", "en": "Request delivered to PRTDS."}
+{"es": "Un lead calificado.", "ru": "Квалифицированный лид.", "en": "A qualified lead."}
+{"es": "Aceptación / confirmación por parte del vendedor.", "ru": "Принятие или подтверждение продавцом.", "en": "Acceptance / confirmation by the seller."}
+{"es": "Hay día y hora confirmados.", "ru": "Есть подтверждённые дата и время.", "en": "Date and time are confirmed."}
+{"es": "Turno/reserva confirmada por el proveedor.", "ru": "Запись подтверждена продавцом.", "en": "Appointment/booking confirmed by the provider."}
+{"es": "Solicitud aceptada, visita u pago.", "ru": "Заявка принята, визит или оплата.", "en": "Request accepted, visit or payment."}
+{"es": "Venta con evidencia aportada por el vendedor.", "ru": "Продажа с доказательством от продавца.", "en": "Sale with evidence provided by the seller."}
+{"es": "Resultado confirmado con evidencia.", "ru": "Результат подтверждён доказательством.", "en": "Result confirmed with evidence."}
+{"es": "Venta conciliada contra un comprobante.", "ru": "Продажа сверена с чеком.", "en": "Sale reconciled against a receipt."}
+{"es": "Pago realizado.", "ru": "Оплата произведена.", "en": "Payment made."}
+{"es": "Compra repetida dentro de los consentimientos otorgados.", "ru": "Повторная покупка в рамках выданных согласий.", "en": "Repeat purchase within granted consents."}
+{"es": "Una visita efectivamente realizada.", "ru": "Визит действительно состоялся.", "en": "A visit that actually happened."}
+{"es": "Intención de llegar al local.", "ru": "Намерение прийти в точку.", "en": "Intent to reach the store."}
+{"es": "Una compra en ese sitio.", "ru": "Покупка на этом сайте.", "en": "A purchase on that site."}
+{"es": "Rechazo documentado del vendedor.", "ru": "Задокументированный отказ продавца.", "en": "Documented rejection by the seller."}
+{"es": "Cancelación documentada (cliente o vendedor).", "ru": "Задокументированная отмена (клиентом или продавцом).", "en": "Documented cancellation (customer or seller)."}
+{"es": "Cálculo de comisión registrado en el ledger.", "ru": "Расчёт комиссии записан в реестр.", "en": "Commission calculation recorded in the ledger."}
+{"es": "Única base de cobro", "ru": "Единственное основание для расчёта", "en": "The only billing basis"}
+{"es": "Genera comisión", "ru": "Даёт комиссию", "en": "Generates commission"}
+{"es": "Dentro de los consentimientos", "ru": "В рамках согласий", "en": "Within consents"}
+{"es": "Append-only, con idempotencia", "ru": "Только добавление, с идемпотентностью", "en": "Append-only, with idempotency"}
+{"es": "Diccionario único del recorrido; lo usan la UI, el panel del comercio y cualquier reporte.", "ru": "Единый словарь пути: его используют интерфейс, кабинет партнёра и любые отчёты.", "en": "A single journey dictionary used by the UI, the merchant panel and every report."}
+{"es": "Lo que no se puede confundir", "ru": "Что нельзя путать", "en": "What must not be confused"}
+{"es": "Panel §15 — lo que no se puede confundir", "ru": "Панель §15 — что нельзя путать", "en": "Panel §15 — what must not be confused"}
+{"es": "Registro maestro ≠ fichas", "ru": "Мастер-реестр ≠ карточки", "en": "Master registry ≠ listings"}
+{"es": "Registro maestro; NO son fichas", "ru": "Мастер-реестр; это НЕ карточки", "en": "Master registry; these are NOT listings"}
+{"es": "Personas jurídicas en el registro ≠ fichas publicadas y operativas.", "ru": "Юридические лица в реестре ≠ опубликованные и работающие карточки.", "en": "Legal entities in the registry ≠ published, operating listings."}
+{"es": "Personas jurídicas en la base ≠ empresas publicadas y operativas.", "ru": "Юридические лица в базе ≠ опубликованные и работающие компании.", "en": "Legal entities in the database ≠ published, operating companies."}
+{"es": "Impresión/clic/WhatsApp abierto ≠ cliente traído, y mucho menos venta confirmada.", "ru": "Показ/клик/открытый WhatsApp ≠ приведённый клиент и тем более ≠ подтверждённая продажа.", "en": "Impression/click/opened WhatsApp ≠ a customer brought in, let alone a confirmed sale."}
+{"es": "Impresión, clic o WhatsApp abierto NO equivalen a un cliente traído ni a una venta confirmada. Solo el contrato define qué se paga.", "ru": "Показ, клик или открытый WhatsApp НЕ означают приведённого клиента и не означают подтверждённую продажу. Что оплачивается — определяет только договор.", "en": "An impression, click or opened WhatsApp is NOT a customer brought in, nor a confirmed sale. Only the contract defines what is paid."}
+{"es": "GMV de la tienda ≠ ingreso de PRTDS; los puntos/bonos ≠ dinero en cuenta.", "ru": "Оборот магазина ≠ доход PRTDS; баллы и бонусы ≠ деньги на счёте.", "en": "Store GMV ≠ PRTDS revenue; points/bonus ≠ money in the account."}
+{"es": "GMV del comercio ≠ ingreso de PRTDS.", "ru": "Оборот магазина ≠ доход PRTDS.", "en": "Merchant GMV ≠ PRTDS revenue."}
+{"es": "Migración, modelo o test en verde ≠ servicio de producción listo para vender.", "ru": "Миграция, модель или зелёный тест ≠ готовый к продажам продакшн-сервис.", "en": "A migration, model or green test ≠ a production service ready to sell."}
+{"es": "Respuesta de IA ≠ stock verificado, turno confirmado o descuento jurídicamente exacto.", "ru": "Ответ ИИ ≠ проверенный остаток, подтверждённая запись или юридически точная скидка.", "en": "An AI answer ≠ verified stock, a confirmed booking or a legally exact discount."}
+{"es": "Crecimiento de tráfico ≠ modelo de negocio viable.", "ru": "Рост трафика ≠ жизнеспособная бизнес-модель.", "en": "Traffic growth ≠ a viable business model."}
+{"es": "Comisión, no GMV", "ru": "Комиссия, а не оборот", "en": "Commission, not GMV"}
+{"es": "No es ingreso de PRTDS", "ru": "Это не доход PRTDS", "en": "Not PRTDS revenue"}
+{"es": "Ventas confirmadas; NO es ingreso de PRTDS", "ru": "Подтверждённые продажи; это НЕ доход PRTDS", "en": "Confirmed sales; NOT PRTDS revenue"}
+{"es": "Base = venta del comercio (GMV). Comisión = ingreso de PRTDS. Sin contrato activo la comisión es cero, aunque la venta esté confirmada.", "ru": "База — продажа магазина (GMV). Комиссия — доход PRTDS. Без действующего договора комиссия равна нулю, даже если продажа подтверждена.", "en": "Base = the merchant's sale (GMV). Commission = PRTDS revenue. Without an active contract the commission is zero, even if the sale is confirmed."}
+{"es": "Dinero efectivamente cobrado por PRTDS.", "ru": "Деньги, фактически полученные PRTDS.", "en": "Money actually collected by PRTDS."}
+{"es": "Dinero recibido por el vendedor.", "ru": "Деньги, полученные продавцом.", "en": "Money received by the seller."}
+{"es": "El importe cobrado.", "ru": "Взысканная сумма.", "en": "The amount charged."}
+{"es": "Comisión − costos variables", "ru": "Комиссия − переменные затраты", "en": "Commission − variable costs"}
+{"es": "Solo comisión contractual", "ru": "Только договорная комиссия", "en": "Contractual commission only"}
+{"es": "Derecho automático a comisión sin contrato.", "ru": "Автоматическое право на комиссию без договора.", "en": "Automatic commission claim without a contract."}
+{"es": "Alertas de economía", "ru": "Экономические предупреждения", "en": "Economics alerts"}
+{"es": "Sin alertas: todas las operaciones tienen margen positivo y contrato.", "ru": "Предупреждений нет: у всех операций положительная маржа и есть договор.", "en": "No alerts: every operation has a positive margin and a contract."}
+{"es": "Pendiente de conciliación", "ru": "Ожидает сверки", "en": "Pending reconciliation"}
+{"es": "Pendiente de conciliación con el socio.", "ru": "Ожидает сверки с партнёром.", "en": "Pending reconciliation with the partner."}
+{"es": "Revisar las liquidaciones marcadas con margen no positivo.", "ru": "Проверить расчёты, помеченные как неположительная маржа.", "en": "Review settlements flagged with a non-positive margin."}
+{"es": "Estado honesto de la plataforma", "ru": "Честное состояние платформы", "en": "Honest platform status"}
+{"es": "Estado de la plataforma", "ru": "Состояние платформы", "en": "Platform status"}
+{"es": "Esta página existe para que nadie confunda «hay código y datos» con «hay un servicio terminado». Muestra qué existe en este entorno, qué falta verificar y qué significa cada evento del recorrido.", "ru": "Эта страница нужна, чтобы никто не путал «есть код и данные» с «есть готовый сервис». Она показывает, что существует в этом окружении, что ещё надо проверить и что означает каждое событие пути.", "en": "This page exists so nobody confuses “there is code and data” with “there is a finished service”. It shows what exists in this environment, what still needs verification and what each journey event means."}
+{"es": "Documento interno en forma de página. No es una promesa de ingresos ni una confirmación de que todos los servicios descritos estén en producción.", "ru": "Внутренний документ в виде страницы. Это не обещание выручки и не подтверждение, что все описанные сервисы запущены в продакшн.", "en": "An internal document in page form. It is not a revenue promise nor a confirmation that every described service is in production."}
+{"es": "Catálogo y dinero", "ru": "Каталог и деньги", "en": "Catalog and money"}
+{"es": "Fichas por estado:", "ru": "Карточки по статусам:", "en": "Listings by status:"}
+{"es": "Incluye staging y borradores", "ru": "Включая staging и черновики", "en": "Including staging and drafts"}
+{"es": "Visibles en la búsqueda", "ru": "Видны в поиске", "en": "Visible in search"}
+{"es": "Eventos registrados", "ru": "Зарегистрированные события", "en": "Recorded events"}
+{"es": "Eventos del ledger", "ru": "События реестра", "en": "Ledger events"}
+{"es": "Últimos eventos del ledger", "ru": "Последние события реестра", "en": "Latest ledger events"}
+{"es": "Lo que ve una persona", "ru": "Что видит человек", "en": "What a person sees"}
+{"es": "Tareas sugeridas", "ru": "Рекомендуемые задачи", "en": "Suggested tasks"}
+{"es": "Auditoría read-only de producción (Neon, Render, Cloudflare).", "ru": "Read-only аудит продакшна (Neon, Render, Cloudflare).", "en": "Read-only production audit (Neon, Render, Cloudflare)."}
+{"es": "Identidad real de usuarios y socios (no tokens de demostración).", "ru": "Настоящая идентификация пользователей и партнёров (не демо-токены).", "en": "Real user and partner identity (not demo tokens)."}
+{"es": "Proveedores verificados de tipo de cambio y clima.", "ru": "Проверенные поставщики курсов валют и погоды.", "en": "Verified exchange-rate and weather providers."}
+{"es": "Integración POS/feed con cadenas grandes.", "ru": "POS/feed-интеграция с крупными сетями.", "en": "POS/feed integration with large chains."}
+{"es": "Pipeline de publicación", "ru": "Конвейер публикации", "en": "Publication pipeline"}
+{"es": "staging → validación → moderación → publicación. Una fila del registro maestro no es una ficha pública.", "ru": "staging → валидация → модерация → публикация. Строка мастер-реестра не является публичной карточкой.", "en": "staging → validation → moderation → publication. A master-registry row is not a public listing."}
+{"es": "El catálogo es universal: se crea una categoría y sus sinónimos de búsqueda sin despliegue.", "ru": "Каталог универсален: категория и её поисковые синонимы создаются без деплоя.", "en": "The catalog is universal: a category and its search synonyms are created without a deployment."}
+{"es": "la taxonomía es dato, no código", "ru": "таксономия — это данные, а не код", "en": "taxonomy is data, not code"}
+{"es": "Reconstruir índice de búsqueda", "ru": "Перестроить поисковый индекс", "en": "Rebuild search index"}
+{"es": "Reiniciar datos de demostración", "ru": "Сбросить демонстрационные данные", "en": "Reset demo data"}
+{"es": "Administración", "ru": "Администрирование", "en": "Administration"}
+{"es": "Administración del catálogo", "ru": "Управление каталогом", "en": "Catalog administration"}
+{"es": "Taxonomía, pipeline de publicación, contratos y mantenimiento del índice de búsqueda.", "ru": "Таксономия, конвейер публикации, договоры и обслуживание поискового индекса.", "en": "Taxonomy, publication pipeline, contracts and search index maintenance."}
+{"es": "corte-1: funnel de punta a punta", "ru": "срез 1: воронка от начала до конца", "en": "slice 1: end-to-end funnel"}
+{"es": "Los datos del catálogo local son ficticios y sirven para validar el recorrido; no son ofertas reales ni socios contratados.", "ru": "Данные локального каталога вымышлены и служат для проверки пути; это не реальные предложения и не подписанные партнёры.", "en": "Local catalog data is fictional and exists to validate the journey; these are not real offers or contracted partners."}
+{"es": "Encontrá lo que necesitás", "ru": "Найдите то, что вам нужно", "en": "Find what you need"}
+{"es": "Empresas, productos y servicios de Asunción y Gran Asunción. Buscá, compará y contactá en un paso: WhatsApp, llamada o solicitud.", "ru": "Компании, товары и услуги Асунсьона и Большого Асунсьона. Ищите, сравнивайте и связывайтесь в один шаг: WhatsApp, звонок или заявка.", "en": "Companies, products and services of Asunción and Greater Asunción. Search, compare and get in touch in one step: WhatsApp, call or request."}
+{"es": "Buscador de empresas, productos y servicios en Asunción y Gran Asunción. Contactá por WhatsApp, llamá o enviá una solicitud en un paso.", "ru": "Поиск компаний, товаров и услуг в Асунсьоне и Большом Асунсьоне. Свяжитесь через WhatsApp, позвоните или отправьте заявку в один шаг.", "en": "Search engine for companies, products and services in Asunción and Greater Asunción. Contact by WhatsApp, call or send a request in one step."}
+{"es": "PRTDS — Buscá empresas, productos y servicios en Paraguay", "ru": "PRTDS — поиск компаний, товаров и услуг в Парагвае", "en": "PRTDS — Search companies, products and services in Paraguay"}
+{"es": "Ej.: alquiler de autos, manicura, yerba mate, farmacia 24 horas", "ru": "Например: аренда авто, маникюр, йерба мате, аптека 24 часа", "en": "E.g.: car rental, manicure, yerba mate, 24-hour pharmacy"}
+{"es": "Orden por relevancia, verificación de datos y actualidad. La publicidad se muestra por separado y siempre etiquetada.", "ru": "Порядок — по релевантности, подтверждённости данных и свежести. Реклама показывается отдельно и всегда помечена.", "en": "Ranked by relevance, data verification and freshness. Advertising is shown separately and always labelled."}
+{"es": "Posiciones contratadas. No equivalen a la mejor oferta objetiva.", "ru": "Оплаченные позиции. Они не означают лучшее объективное предложение.", "en": "Paid placements. They are not the best objective offer."}
+{"es": "Sin resultados para esta búsqueda. Probá con menos palabras, sin acentos u otro barrio.", "ru": "Ничего не найдено. Попробуйте меньше слов, без акцентов или другой район.", "en": "No results for this search. Try fewer words, without accents or another neighborhood."}
+{"es": "Sugerencia: para buscar por precio usá el filtro «Precio máximo» y el orden «Precio más bajo».", "ru": "Подсказка: для поиска по цене используйте фильтр «Максимальная цена» и порядок «Сначала дешёвые».", "en": "Tip: to search by price use the “Max price” filter and the “Lowest price” sort."}
+{"es": "No se pudo cargar la búsqueda:", "ru": "Не удалось загрузить поиск:", "en": "Could not load the search:"}
+{"es": "Resultados", "ru": "Результаты", "en": "Results"}
+{"es": "Empresas publicadas", "ru": "Опубликованные компании", "en": "Published companies"}
+{"es": "ficha", "ru": "карточка", "en": "listing"}
+{"es": "fichas", "ru": "карточек", "en": "listings"}
+{"es": "impresiones registradas", "ru": "показов записано", "en": "impressions recorded"}
+{"es": "Página 1 de 2", "ru": "Страница 1 из 2", "en": "Page 1 of 2"}
+{"es": "Siguiente →", "ru": "Дальше →", "en": "Next →"}
+{"es": "Hoy: Cerrado hoy", "ru": "Сегодня: закрыто", "en": "Today: closed"}
+{"es": "Hoy: 00:00–23:59", "ru": "Сегодня: круглосуточно", "en": "Today: 00:00–23:59"}
+{"es": "2 sucursales", "ru": "2 филиала", "en": "2 branches"}
+{"es": "Marca: Nails Mburucuyá", "ru": "Бренд: Nails Mburucuyá", "en": "Brand: Nails Mburucuyá"}
+{"es": "/ servicio", "ru": "/ услуга", "en": "/ service"}
+{"es": "Datos aportados por fuentes registradas; la disponibilidad y los precios requieren confirmación del vendedor.", "ru": "Данные предоставлены зарегистрированными источниками; наличие и цены требуют подтверждения продавца.", "en": "Data provided by registered sources; availability and prices require seller confirmation."}
+{"es": "PRTDS conecta a la persona con la empresa. El pago se hace directamente al comercio; la plataforma no es vendedora de productos de terceros.", "ru": "PRTDS связывает человека с компанией. Оплата идёт напрямую продавцу; платформа не является продавцом чужих товаров.", "en": "PRTDS connects the person with the company. Payment goes directly to the merchant; the platform is not a seller of third-party products."}
+{"es": "PRTDS no vende productos de terceros: el pago se hace directamente al comercio. La plataforma cobra únicamente a socios con contrato y por resultados confirmados.", "ru": "PRTDS не продаёт чужие товары: оплата идёт напрямую магазину. Платформа берёт деньги только с партнёров по договору и только за подтверждённые результаты.", "en": "PRTDS does not sell third-party products: payment goes directly to the merchant. The platform charges only contracted partners and only for confirmed results."}
+{"es": "Cómo contactar", "ru": "Как связаться", "en": "How to contact"}
+{"es": "El comercio recibe tu mensaje y te responde. PRTDS no cobra por enviar una solicitud y no guarda tu teléfono más allá de lo necesario para este contacto.", "ru": "Продавец получает ваше сообщение и отвечает. PRTDS не берёт денег за отправку заявки и не хранит ваш телефон дольше, чем нужно для этого обращения.", "en": "The merchant receives your message and replies. PRTDS does not charge for sending a request and does not keep your phone number beyond what this contact requires."}
+{"es": "PRTDS no lee tu conversación de WhatsApp y no guarda el contenido del chat.", "ru": "PRTDS не читает вашу переписку в WhatsApp и не хранит содержимое чата.", "en": "PRTDS does not read your WhatsApp conversation and does not store chat content."}
+{"es": "registramos el intento de contacto, no una venta.", "ru": "мы фиксируем попытку связаться, а не продажу.", "en": "we record an attempt to contact, not a sale."}
+{"es": "Persona jurídica: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. Persona jurídica del registro maestro; no es la ficha pública.", "ru": "Юридическое лицо: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. Запись из мастер-реестра; это не публичная карточка.", "en": "Legal entity: Mburucuyá Beauty E.I.R.L. · RUC 80011007-7. A master-registry legal entity; not the public listing."}
+{"es": "Estado de la ficha", "ru": "Статус карточки", "en": "Listing status"}
+{"es": "Ofertas con datos vencidos", "ru": "Предложения с просроченными данными", "en": "Offers with expired data"}
+{"es": "Tu nombre", "ru": "Ваше имя", "en": "Your name"}
+{"es": "Teléfono / WhatsApp", "ru": "Телефон / WhatsApp", "en": "Phone / WhatsApp"}
+{"es": "hogar (opcional)", "ru": "домашний (необязательно)", "en": "home (optional)"}
+{"es": "Contá qué necesitás: producto, cantidad, detalles", "ru": "Опишите, что нужно: товар, количество, детали", "en": "Tell what you need: product, quantity, details"}
+{"es": "Quiero turno para uñas esculpidas", "ru": "Хочу записаться на наращивание ногтей", "en": "I want an appointment for sculpted nails"}
+{"es": "Quiero un turno para uñas esculpidas el viernes", "ru": "Хочу записаться на наращивание ногтей в пятницу", "en": "I want an appointment for sculpted nails on Friday"}
+{"es": "Consulta del smoke test", "ru": "Запрос из smoke-теста", "en": "Smoke test query"}
+{"es": "¿Cuándo lo necesitás?", "ru": "Когда вам это нужно?", "en": "When do you need it?"}
+{"es": "Cuándo lo necesitás: viernes 17:00", "ru": "Когда нужно: пятница 17:00", "en": "When needed: Friday 17:00"}
+{"es": "viernes 17:00", "ru": "пятница 17:00", "en": "Friday 17:00"}
+{"es": "Ej.: viernes 18:00, o lo antes posible", "ru": "Например: пятница 18:00 или как можно скорее", "en": "E.g.: Friday 18:00, or as soon as possible"}
+{"es": "Autorizo a PRTDS a compartir estos datos con", "ru": "Я разрешаю PRTDS передать эти данные компании", "en": "I authorize PRTDS to share this data with"}
+{"es": "para que me contacte. Puedo revocar este consentimiento en cualquier momento.", "ru": "чтобы она связалась со мной. Я могу отозвать это согласие в любой момент.", "en": "so it can contact me. I can revoke this consent at any time."}
+{"es": "el comercio la recibe con tu consentimiento.", "ru": "продавец получает её с вашего согласия.", "en": "the merchant receives it with your consent."}
+{"es": "Tu mensaje: «Quiero turno para uñas esculpidas»", "ru": "Ваше сообщение: «Хочу записаться на наращивание ногтей»", "en": "Your message: “I want an appointment for sculpted nails”"}
+{"es": "Consultá el estado de una solicitud", "ru": "Проверьте статус заявки", "en": "Check the status of a request"}
+{"es": "Ingresá la referencia que te dimos al enviar la solicitud o al abrir WhatsApp (por ejemplo", "ru": "Введите номер обращения, который мы дали при отправке заявки или при открытии WhatsApp (например", "en": "Enter the reference we gave you when sending the request or opening WhatsApp (for example"}
+{"es": "Por tu privacidad, esta página no muestra datos de contacto ni información comercial interna. Solo el estado de tu solicitud.", "ru": "В целях конфиденциальности эта страница не показывает контактные данные и внутреннюю коммерческую информацию. Только статус вашей заявки.", "en": "For your privacy, this page shows no contact data and no internal commercial information. Only the status of your request."}
+{"es": "El comercio aún no respondió.", "ru": "Продавец ещё не ответил.", "en": "The merchant has not replied yet."}
+{"es": "El comercio confirmó la solicitud.", "ru": "Продавец подтвердил заявку.", "en": "The merchant confirmed the request."}
+{"es": "El comercio marcó la visita como realizada.", "ru": "Продавец отметил визит как состоявшийся.", "en": "The merchant marked the visit as done."}
+{"es": "Una solicitud entregada no es una venta: el comercio debe confirmar el resultado.", "ru": "Переданная заявка — это не продажа: продавец должен подтвердить результат.", "en": "A delivered request is not a sale: the merchant must confirm the result."}
+{"es": "Una solicitud entregada no es una venta: el comercio debe confirmarla.", "ru": "Переданная заявка — это не продажа: продаец должен её подтвердить.", "en": "A delivered request is not a sale: the merchant must confirm it."}
+{"es": "Resultado confirmado con evidencia. Una solicitud entregada no es una venta: el comercio debe confirmar el resultado.", "ru": "Результат подтверждён доказательством. Переданная заявка — не продажа: продавец должен подтвердить результат.", "en": "Result confirmed with evidence. A delivered request is not a sale: the merchant must confirm the result."}
+{"es": "Solicitud entregada:", "ru": "Заявка передана:", "en": "Request delivered:"}
+{"es": "WhatsApp / llamada:", "ru": "WhatsApp / звонок:", "en": "WhatsApp / call:"}
+{"es": "Confirmada:", "ru": "Подтверждена:", "en": "Confirmed:"}
+{"es": "Sin transiciones disponibles.", "ru": "Доступных переходов нет.", "en": "No transitions available."}
+{"es": "Nuevo estado", "ru": "Новый статус", "en": "New status"}
+{"es": "Entregadas, aún sin respuesta", "ru": "Переданы, ещё без ответа", "en": "Delivered, no reply yet"}
+{"es": "Aceptadas / entregadas", "ru": "Принято / передано", "en": "Accepted / delivered"}
+{"es": "Estado de mi solicitud · PRTDS", "ru": "Статус моей заявки · PRTDS", "en": "Status of my request · PRTDS"}
+{"es": "Panel del comercio", "ru": "Кабинет компании", "en": "Merchant panel"}
+{"es": "Panel de socios · PRTDS", "ru": "Панель партнёров · PRTDS", "en": "Partners panel · PRTDS"}
+{"es": "Ingresá con el token de tu cuenta de socio. Aquí confirmás o rechazás las solicitudes y cargás los resultados realmente ocurridos: esa conciliación es la base de cualquier liquidación.", "ru": "Войдите с токеном вашей партнёрской учётной записи. Здесь вы подтверждаете или отклоняете заявки и вносите реально случившиеся результаты: эта сверка — основание любого расчёта.", "en": "Sign in with your partner account token. Here you confirm or reject requests and record the results that actually happened: that reconciliation is the basis of any settlement."}
+{"es": "Entorno de demostración: token", "ru": "Демонстрационное окружение: токен", "en": "Demo environment: token"}
+{"es": "Entorno de demostración: el token de operaciones", "ru": "Демонстрационное окружение: операционный токен", "en": "Demo environment: the operations token"}
+{"es": "ve todas las empresas; los tokens por comercio están en", "ru": "видит все компании; токены отдельных компаний находятся в", "en": "sees all companies; per-merchant tokens are in"}
+{"es": ". En producción la entrada será con identidad real y roles separados.", "ru": ". В продакшне вход будет по настоящей идентификации и с разделением ролей.", "en": ". In production, sign-in will use real identity and separate roles."}
+{"es": ". En producción: identidad real, roles separados y auditoría; secretos fuera del repositorio.", "ru": ". В продакшне: настоящая идентификация, разделённые роли и аудит; секреты вне репозитория.", "en": ". In production: real identity, separate roles and audit; secrets kept out of the repository."}
+{"es": "Token de socio", "ru": "Токен партнёра", "en": "Partner token"}
+{"es": "Token de administración", "ru": "Токен администратора", "en": "Admin token"}
+{"es": "Cargar el importe y el comprobante de las ventas efectivamente realizadas.", "ru": "Внесите сумму и чек по фактически состоявшимся продажам.", "en": "Enter the amount and receipt of sales that actually happened."}
+{"es": "Confirmar o rechazar las solicitudes nuevas del día.", "ru": "Подтвердите или отклоните новые заявки за день.", "en": "Confirm or reject the day's new requests."}
+{"es": "Confirmar un resultado que no ocurrió distorsiona la atribución y las liquidaciones. Una impresión o un clic de WhatsApp no es un cliente traído.", "ru": "Подтверждение несостоявшегося результата искажает атрибуцию и расчёты. Показ или клик по WhatsApp — это не приведённый клиент.", "en": "Confirming a result that did not happen distorts attribution and settlements. An impression or a WhatsApp click is not a customer brought in."}
+{"es": "Con evidencia", "ru": "С доказательством", "en": "With evidence"}
+{"es": "Con evidencia cargada", "ru": "С загруженным доказательством", "en": "With evidence uploaded"}
+{"es": "Confirmadas por el comercio", "ru": "Подтверждено продавцом", "en": "Confirmed by the merchant"}
+{"es": "el comercio acepta o confirma el resultado; solo entonces puede existir una comisión contractual.", "ru": "продавец принимает или подтверждает результат; только тогда может возникнуть договорная комиссия.", "en": "the merchant accepts or confirms the result; only then can a contractual commission exist."}
+{"es": "Que la persona esté interesada o haya comprado.", "ru": "Что человек заинтересовался или купил.", "en": "That the person was interested or bought."}
+{"es": "Que la solicitud no existiera.", "ru": "Что заявки не существовало.", "en": "That the request never existed."}
+{"es": "Que la solicitud no existiera o no fuera atendida.", "ru": "Что заявки не существовало или её не обслужили.", "en": "That the request never existed or was not served."}
+{"es": "Causalidad de una campaña sin verificación.", "ru": "Причинность кампании без проверки.", "en": "Campaign causality without verification."}
+{"es": "Interés real, lead o venta.", "ru": "Реальный интерес, лид или продажа.", "en": "Real interest, lead or sale."}
+{"es": "Nota: smoke", "ru": "Примечание: smoke", "en": "Note: smoke"}
+{"es": "Nota: Turno confirmado viernes 17:00", "ru": "Примечание: запись подтверждена, пятница 17:00", "en": "Note: appointment confirmed Friday 17:00"}
+{"es": "· comprobante FACT-DEMO-01", "ru": "· чек FACT-DEMO-01", "en": "· receipt FACT-DEMO-01"}
+{"es": "· comprobante SMOKE-0001", "ru": "· чек SMOKE-0001", "en": "· receipt SMOKE-0001"}
+{"es": "· comprobante FACT-0042", "ru": "· чек FACT-0042", "en": "· receipt FACT-0042"}
+{"es": "sí, con contrato", "ru": "да, с договором", "en": "yes, with contract"}
+{"es": "card · utm · confianza high", "ru": "карточка · utm · уверенность high", "en": "card · utm · confidence high"}
+{"es": "card · manual_reconciliation · confianza high", "ru": "карточка · ручная сверка · уверенность high", "en": "card · manual_reconciliation · confidence high"}
+{"es": "Encargada Nails Mburucuyá · manager · alcance una empresa", "ru": "Ответственная Nails Mburucuyá · manager · доступ к одной компании", "en": "Manager of Nails Mburucuyá · manager · scope: one company"}
+{"es": "Administración · PRTDS", "ru": "Администрирование · PRTDS", "en": "Administration · PRTDS"}
+{"es": "Demostración sin conexión.", "ru": "Демонстрация без подключения.", "en": "Offline demonstration."}
+{"es": "API", "ru": "API", "en": "API"}
+{"es": "README.md", "ru": "README.md", "en": "README.md"}
+{"es": "Nails Mburucuyá · PRTDS", "ru": "Nails Mburucuyá · PRTDS", "en": "Nails Mburucuyá · PRTDS"}
+{"es": "Gastronomía", "ru": "Гастрономия", "en": "Food & dining"}
+{"es": "Restaurantes", "ru": "Рестораны", "en": "Restaurants"}
+{"es": "Cafeterías", "ru": "Кофейни", "en": "Cafés"}
+{"es": "Delivery de comida", "ru": "Доставка еды", "en": "Food delivery"}
+{"es": "Bares y cervecerías", "ru": "Бары", "en": "Bars & breweries"}
+{"es": "Supermercados y almacenes", "ru": "Супермаркеты и магазины", "en": "Supermarkets & grocery"}
+{"es": "Supermercados", "ru": "Супермаркеты", "en": "Supermarkets"}
+{"es": "Almacenes de barrio", "ru": "Продуктовые лавки", "en": "Neighborhood grocery"}
+{"es": "Bebidas y licorerías", "ru": "Напитки", "en": "Drinks & liquor"}
+{"es": "Belleza y cuidado personal", "ru": "Красота и уход", "en": "Beauty & personal care"}
+{"es": "Peluquerías", "ru": "Парикмахерские", "en": "Hair salons"}
+{"es": "Manicura y uñas", "ru": "Маникюр", "en": "Manicure & nails"}
+{"es": "Barberías", "ru": "Барбершопы", "en": "Barbershops"}
+{"es": "Spa y masajes", "ru": "Спа и массаж", "en": "Spa & massage"}
+{"es": "Vehículos", "ru": "Транспорт", "en": "Vehicles"}
+{"es": "Alquiler de vehículos", "ru": "Аренда авто", "en": "Car rental"}
+{"es": "Talleres mecánicos", "ru": "Автосервис", "en": "Auto repair"}
+{"es": "Repuestos y accesorios", "ru": "Запчасти", "en": "Parts & accessories"}
+{"es": "Lavaderos", "ru": "Автомойки", "en": "Car wash"}
+{"es": "Tecnología y electrodomésticos", "ru": "Техника и электроника", "en": "Tech & appliances"}
+{"es": "Celulares y accesorios", "ru": "Смартфоны", "en": "Phones & accessories"}
+{"es": "Informática", "ru": "Компьютеры", "en": "Computers"}
+{"es": "Electrodomésticos", "ru": "Бытовая техника", "en": "Home appliances"}
+{"es": "Salud", "ru": "Здоровье", "en": "Health"}
+{"es": "Farmacias", "ru": "Аптеки", "en": "Pharmacies"}
+{"es": "Clínicas y consultorios", "ru": "Клиники", "en": "Clinics & practices"}
+{"es": "Odontología", "ru": "Стоматология", "en": "Dentistry"}
+{"es": "Hogar y construcción", "ru": "Дом и строительство", "en": "Home & construction"}
+{"es": "Ferreterías", "ru": "Хозтовары", "en": "Hardware stores"}
+{"es": "Muebles y decoración", "ru": "Мебель", "en": "Furniture & décor"}
+{"es": "Educación", "ru": "Образование", "en": "Education"}
+{"es": "Idiomas", "ru": "Языки", "en": "Languages"}
+{"es": "Apoyo escolar", "ru": "Репетиторы", "en": "Tutoring"}
+{"es": "Servicios profesionales", "ru": "Услуги", "en": "Professional services"}
+{"es": "Contadores y trámites", "ru": "Бухгалтерия", "en": "Accounting & paperwork"}
+{"es": "Mudanzas y fletes", "ru": "Переезды", "en": "Moving & freight"}
+{"es": "Abogados", "ru": "Юристы", "en": "Lawyers"}
+{"es": "Eventos y agenda", "ru": "События и афиша", "en": "Events & agenda"}
+{"es": "Shows y música en vivo", "ru": "Концерты", "en": "Live shows & music"}
+{"es": "Teatro", "ru": "Театр", "en": "Theatre"}
+{"es": "Turismo y alojamiento", "ru": "Туризм и проживание", "en": "Tourism & lodging"}
+{"es": "Hoteles", "ru": "Отели", "en": "Hotels"}
+{"es": "Excursiones", "ru": "Экскурсии", "en": "Excursions"}
+{"es": "Mascotas", "ru": "Животные", "en": "Pets"}
+{"es": "Veterinarias", "ru": "Ветклиники", "en": "Veterinarians"}
+{"es": "Pet shops", "ru": "Зоомагазины", "en": "Pet shops"}
+{"es": "Manicura, pedicura y uñas esculpidas. Turnos por WhatsApp.", "ru": "Маникюр, педикюр и наращивание ногтей. Запись через WhatsApp.", "en": "Manicure, pedicure and sculpted nails. Appointments via WhatsApp."}
+{"es": "Celulares, accesorios y servicio técnico. Precios en guaraníes, garantía local.", "ru": "Смартфоны, аксессуары и сервисное обслуживание. Цены в гуарани, местная гарантия.", "en": "Phones, accessories and technical service. Prices in guaraníes, local warranty."}
+{"es": "Almacén de barrio: fideos, aceite, limpieza y fiambres al corte.", "ru": "Районный магазин: макароны, масло, бытовая химия и нарезка.", "en": "Neighborhood grocery: pasta, oil, cleaning products and sliced deli."}
+{"es": "Farmacia de turno con delivery y medicamentos de venta libre.", "ru": "Дежурная аптека с доставкой и безрецептурными препаратами.", "en": "Duty pharmacy with delivery and over-the-counter medicines."}
+{"es": "Café de especialidad, medialunas y tortilla paraguaya.", "ru": "Спешелти-кофе, медиауны и парагвайская тортилья.", "en": "Specialty coffee, medialunas and Paraguayan tortilla."}
+{"es": "Corte masculino, barba y afeitado clásico.", "ru": "Мужские стрижки, борода и классическое бритьё.", "en": "Men's cuts, beard and classic shave."}
+{"es": "Consultas clínicas, chequeos y laboratorio básico.", "ru": "Приём врачей, чекапы и базовая лаборатория.", "en": "Clinical consultations, check-ups and basic lab."}
+{"es": "Asesoría contable, inscripción de RUC e IVA para pymes.", "ru": "Бухгалтерские консультации, регистрация RUC и НДС для малого бизнеса.", "en": "Accounting advice, RUC and VAT registration for SMEs."}
+{"es": "Análisis jurídico de bonos, cashback y productos financieros.", "ru": "Юридический анализ бонусов, кэшбэка и финансовых продуктов.", "en": "Legal analysis of bonuses, cashback and financial products."}
+{"es": "Herramientas, pintura, eléctricos y materiales de construcción.", "ru": "Инструменты, краски, электрика и стройматериалы.", "en": "Tools, paint, electrical goods and construction materials."}
+{"es": "Hotel céntrico: habitaciones dobles, desayuno buffet y sala de reuniones.", "ru": "Отель в центре: двухместные номера, завтрак-буфет и переговорная.", "en": "Downtown hotel: double rooms, buffet breakfast and meeting room."}
+{"es": "Mudanzas de departamentos, oficinas y fletes dentro del Gran Asunción.", "ru": "Переезды квартир и офисов, грузоперевозки по Большому Асунсьону.", "en": "Apartment and office moves, freight within Greater Asunción."}
+{"es": "Notebooks, impresoras, insumos y soporte para oficinas.", "ru": "Ноутбуки, принтеры, расходники и поддержка офисов.", "en": "Laptops, printers, supplies and office support."}
+{"es": "Organizador de eventos: shows en vivo, festivales y teatro.", "ru": "Организатор событий: живые выступления, фестивали и театр.", "en": "Event organizer: live shows, festivals and theatre."}
+{"es": "Cursos de inglés y guaraní, presenciales y en línea.", "ru": "Курсы английского и гуарани, очно и онлайн.", "en": "English and Guaraní courses, in person and online."}
+{"es": "Viveros y jardinería", "ru": "Питомники растений и садоводство", "en": "Plant nurseries and gardening"}
+{"es": "plantas, jardin, vivero", "ru": "растения, сад, питомник", "en": "plants, garden, nursery"}
+{"es": "Agenda Yvoty Shows", "ru": "Афиша Yvoty Shows", "en": "Yvoty Shows agenda"}
+{"es": "No se pudo cargar:", "ru": "Не удалось загрузить:", "en": "Could not load:"}
+{"es": "Sin datos", "ru": "Нет данных", "en": "No data"}
+{"es": "Guardado", "ru": "Сохранено", "en": "Saved"}
+{"es": "Error", "ru": "Ошибка", "en": "Error"}
+{"es": "Cargando…", "ru": "Загрузка…", "en": "Loading…"}
+{"es": "Cerrar", "ru": "Закрыть", "en": "Close"}
+{"es": "Sí", "ru": "Да", "en": "Yes"}
+{"es": "No", "ru": "Нет", "en": "No"}
+{"es": "sí", "ru": "да", "en": "yes"}
+{"es": "no", "ru": "нет", "en": "no"}
+{"es": "opcional", "ru": "необязательно", "en": "optional"}
+{"es": "requerido", "ru": "обязательно", "en": "required"}
+{"es": "Idioma", "ru": "Язык", "en": "Language"}
+{"es": "Estado de la plataforma · PRTDS", "ru": "Состояние платформы · PRTDS", "en": "Platform status · PRTDS"}
+{"es": "Entregadas con consentimiento", "ru": "Переданы с согласием", "en": "Delivered with consent"}
+{"es": "Visita/servicio marcado como realizado por el proveedor.", "ru": "Визит или услуга отмечены продавцом как выполненные.", "en": "Visit/service marked as done by the provider."}
+{"es": "Entregadas con consentimiento explícito antes de compartir el contacto.", "ru": "Переданы с явным согласием до передачи контакта.", "en": "Delivered with explicit consent before the contact was shared."}
+{"es": "Fichas publicadas en este entorno:", "ru": "Карточек опубликовано в этом окружении:", "en": "Listings published in this environment:"}
+{"es": "Personas jurídicas en el registro:", "ru": "Юридических лиц в реестре:", "en": "Legal entities in the registry:"}
+{"es": "no son fichas", "ru": "это не карточки", "en": "they are not listings"}
+{"es": "Solicitudes entregadas", "ru": "Заявки переданы", "en": "Requests delivered"}
+{"es": "Con consentimiento", "ru": "С согласием", "en": "With consent"}
+{"es": "Sin consentimiento", "ru": "Без согласия", "en": "Without consent"}
+{"es": "La interfaz es real; las respuestas del API fueron grabadas y nada se guarda.", "ru": "Интерфейс настоящий; ответы API записаны заранее и никуда не сохраняются.", "en": "The interface is real; API responses were recorded in advance and nothing is saved."}
+{"es": "Páginas:", "ru": "Страницы:", "en": "Pages:"}
+{"es": "Alquiler de autos económicos, SUV y vans con entrega en Asunción.", "ru": "Аренда эконом-авто, внедорожников и минивэнов с подачей в Асунсьоне.", "en": "Economy car, SUV and van rental with delivery in Asunción."}
+{"es": "Cadena de supermercados: almacén, carnicería, verdulería y limpieza.", "ru": "Сеть супермаркетов: продукты, мясной отдел, овощи и бытовая химия.", "en": "Supermarket chain: grocery, butcher, produce and cleaning."}
+{"es": "Consultas, vacunas, baño y corte; alimentos y accesorios para mascotas.", "ru": "Приём, прививки, стрижка и купание; корма и аксессуары для питомцев.", "en": "Consultations, vaccines, grooming; pet food and accessories."}
+{"es": "Corte mixto, guarnición y salsa de la casa.", "ru": "Смешанный отруб, гарнир и фирменный соус.", "en": "Mixed cut, side dish and house sauce."}
+{"es": "Corte, coloración y tratamientos. Atención con turno.", "ru": "Стрижки, окрашивание и уход. Приём по записи.", "en": "Cuts, coloring and treatments. By appointment."}
+{"es": "Mecánica ligera, cambio de aceite, frenos y alineación.", "ru": "Лёгкий ремонт, замена масла, тормоза и развал-схождение.", "en": "Light mechanics, oil change, brakes and alignment."}
+{"es": "Parrilla familiar: cortes a la parrilla, menú del día y guarniciones.", "ru": "Семейный гриль-ресторан: мясо на углях, обеденное меню и гарниры.", "en": "Family grill house: grilled cuts, set lunch and sides."}
+{"es": "Restaurante de barrio con atención de martes a domingo. Acepta reservas para grupos.", "ru": "Районный ресторан, работает со вторника по воскресенье. Принимает групповые брони.", "en": "Neighborhood restaurant, open Tuesday to Sunday. Group reservations accepted."}
+{"es": "Sushi y comida japonesa con delivery propio en Asunción.", "ru": "Суши и японская кухня с собственной доставкой в Асунсьоне.", "en": "Sushi and Japanese food with own delivery in Asunción."}
+{"es": "Aceite de girasol 900 ml", "ru": "Подсолнечное масло 900 мл", "en": "Sunflower oil 900 ml"}
+{"es": "Asesoría mensual para pyme", "ru": "Ежемесячное сопровождение малого бизнеса", "en": "Monthly advisory for SMEs"}
+{"es": "Auriculares bluetooth", "ru": "Bluetooth-наушники", "en": "Bluetooth headphones"}
+{"es": "Auto económico — por día", "ru": "Эконом-авто — в сутки", "en": "Economy car — per day"}
+{"es": "Bife ancho 400 g", "ru": "Бифе анчо 400 г", "en": "Ribeye 400 g"}
+{"es": "Chequeo básico + laboratorio", "ru": "Базовый чекап + лаборатория", "en": "Basic check-up + lab"}
+{"es": "Chipa guasú casera", "ru": "Домашняя чипа гуасу", "en": "Homemade chipa guasú"}
+{"es": "Consulta clínica", "ru": "Приём врача", "en": "Clinical consultation"}
+{"es": "Detergente en polvo 800 g", "ru": "Стиральный порошок 800 г", "en": "Powder detergent 800 g"}
+{"es": "Entrega y retiro en el aeropuerto", "ru": "Подача и возврат в аэропорту", "en": "Airport delivery and pickup"}
+{"es": "Fideos secos 500 g", "ru": "Макароны 500 г", "en": "Dry pasta 500 g"}
+{"es": "Funda + vidrio templado", "ru": "Чехол + защитное стекло", "en": "Case + tempered glass"}
+{"es": "Gaseosa 2 L (segunda marca)", "ru": "Газировка 2 л (вторая марка)", "en": "Soda 2 L (second brand)"}
+{"es": "Gaseosa cola 2 L", "ru": "Кола 2 л", "en": "Cola soda 2 L"}
+{"es": "Inscripción RUC (trámite completo)", "ru": "Регистрация RUC (полная процедура)", "en": "RUC registration (full procedure)"}
+{"es": "Jamón cocido (por kg)", "ru": "Варёная ветчина (за кг)", "en": "Cooked ham (per kg)"}
+{"es": "Manicura clásica", "ru": "Классический маникюр", "en": "Classic manicure"}
+{"es": "Menú del día (almuerzo)", "ru": "Обеденное меню дня", "en": "Set lunch of the day"}
+{"es": "Pan francés (por kg)", "ru": "Французский хлеб (за кг)", "en": "French bread (per kg)"}
+{"es": "Parrillada para 2 personas", "ru": "Гриль-сэт на двоих", "en": "Grill platter for 2"}
+{"es": "Pedicura spa", "ru": "Спа-педикюр", "en": "Spa pedicure"}
+{"es": "Pollo entero (por kg)", "ru": "Курица целиком (за кг)", "en": "Whole chicken (per kg)"}
+{"es": "SUV — fin de semana (2 días)", "ru": "Внедорожник — выходные (2 дня)", "en": "SUV — weekend (2 days)"}
+{"es": "Smart TV 43\" 4K", "ru": "Smart TV 43\" 4K", "en": "Smart TV 43\" 4K"}
+{"es": "Smartphone gama media 128 GB", "ru": "Смартфон среднего класса 128 ГБ", "en": "Mid-range smartphone 128 GB"}
+{"es": "Uñas esculpidas (set completo)", "ru": "Наращивание ногтей (полный набор)", "en": "Sculpted nails (full set)"}
+{"es": "Van familiar — por día", "ru": "Семейный минивэн — в сутки", "en": "Family van — per day"}
+{"es": "Yerba mate tradicional 1 kg", "ru": "Традиционная йерба мате 1 кг", "en": "Traditional yerba mate 1 kg"}
+{"es": "No hay fichas orgánicas para esta búsqueda.", "ru": "Органических карточек по этому запросу нет.", "en": "There are no organic listings for this search."}
+{"es": "Abajo hay una posición contratada que coincide con el filtro.", "ru": "Ниже — оплаченная позиция, которая подходит под фильтр.", "en": "Below is a paid placement that matches the filter."}
+{"es": "La publicidad nunca ocupa el lugar de la mejor oferta objetiva.", "ru": "Реклама никогда не занимает место лучшего объективного предложения.", "en": "Advertising never takes the place of the best objective offer."}

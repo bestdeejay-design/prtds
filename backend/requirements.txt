@@ -1,0 +1,17 @@
+# PRTDS backend — development / production dependencies
+#
+# Dev in the sandbox runs on SQLite (no PostgreSQL available locally).
+# Production target per docs/architecture.md: Neon PostgreSQL 18.x + PostGIS on Render.
+# psycopg is listed here so the same code base connects to PostgreSQL without changes.
+
+fastapi>=0.115
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0
+alembic>=1.13
+pydantic>=2.7
+pydantic-settings>=2.3
+psycopg[binary]>=3.2
+
+# tests
+pytest>=8.0
+httpx>=0.27

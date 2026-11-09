@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es-PY">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Estado de la plataforma · PRTDS</title>
+  <meta name="theme-color" content="#2f3aa8" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/status.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><strong>PRTDS</strong><span>Para todos. Para todo.</span></a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="/">Buscar</a>
+        <a href="/solicitud/">Mis solicitudes</a>
+        <a href="/socio">Socios</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap stack">
+    <section class="card">
+      <h1 style="margin-bottom:6px">Estado honesto de la plataforma</h1>
+      <p class="muted">
+        Esta página existe para que nadie confunda «hay código y datos» con «hay un servicio
+        terminado». Muestra qué existe en este entorno, qué falta verificar y qué significa cada
+        evento del recorrido.
+      </p>
+      <div id="summary"></div>
+    </section>
+
+    <section class="card">
+      <h2>Catálogo y dinero</h2>
+      <div id="numbers" class="metrics"></div>
+      <div id="numbers-notes" class="stack" style="margin-top:12px"></div>
+    </section>
+
+    <section class="card">
+      <h2>Qué prueba cada evento</h2>
+      <p class="muted small">Diccionario único del recorrido; lo usan la UI, el panel del comercio y cualquier reporte.</p>
+      <div class="table-wrap" id="funnel"></div>
+    </section>
+
+    <section class="card">
+      <h2>Lo que no se puede confundir</h2>
+      <ul class="clean small" id="not-equivalent"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Pendiente de verificación</h2>
+      <ul class="clean small" id="pending"></ul>
+      <p class="tiny muted" id="demo-notice"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p style="margin:0">
+        Documento interno en forma de página. No es una promesa de ingresos ni una confirmación
+        de que todos los servicios descritos estén en producción.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
