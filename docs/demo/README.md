@@ -34,3 +34,19 @@
     cd prtds && python3 -m venv .venv
     .venv/bin/pip install -r backend/requirements.txt
     ./scripts/dev.sh          # → http://127.0.0.1:8000
+
+## Как опубликовать это демо по ссылке (GitHub Pages)
+
+Файлы уже лежат там, где их ожидает Pages. Включается один раз в настройках
+репозитория (нужны права владельца — автоматика их не имеет):
+
+1. `prtds` → **Settings** → **Pages**
+2. Source: **Deploy from a branch**
+3. Branch: **`arena/36f33834-prtds`** (или `main` после слияния), папка **`/docs`** → **Save**
+4. Через минуту демо откроется по адресу
+   `https://bestdeejay-design.github.io/prtds/demo/`
+
+Почему это нельзя сделать из кода: установка интеграции не имеет доступа к
+Pages API (`403 Resource not accessible by integration`), а workflow-токен в этом
+репозитории работает только на чтение, поэтому запрос `pages: write` не даёт
+запустить job. Оба факта проверены 09.11.2026.
